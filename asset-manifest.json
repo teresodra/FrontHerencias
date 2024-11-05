@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/FrontHerencias/static/css/main.6474f55f.css",
-    "main.js": "/FrontHerencias/static/js/main.675039ef.js",
+    "main.css": "/FrontHerencias/static/css/main.aaf1b1fd.css",
+    "main.js": "/FrontHerencias/static/js/main.db9dfcb7.js",
     "static/js/453.dfb5b3c0.chunk.js": "/FrontHerencias/static/js/453.dfb5b3c0.chunk.js",
     "static/media/index.cjs": "/FrontHerencias/static/media/index.1282334337c6cac7deca.cjs",
     "index.html": "/FrontHerencias/index.html",
-    "main.6474f55f.css.map": "/FrontHerencias/static/css/main.6474f55f.css.map",
-    "main.675039ef.js.map": "/FrontHerencias/static/js/main.675039ef.js.map",
+    "main.aaf1b1fd.css.map": "/FrontHerencias/static/css/main.aaf1b1fd.css.map",
+    "main.db9dfcb7.js.map": "/FrontHerencias/static/js/main.db9dfcb7.js.map",
     "453.dfb5b3c0.chunk.js.map": "/FrontHerencias/static/js/453.dfb5b3c0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6474f55f.css",
-    "static/js/main.675039ef.js"
+    "static/css/main.aaf1b1fd.css",
+    "static/js/main.db9dfcb7.js"
   ]
 }
