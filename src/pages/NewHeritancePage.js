@@ -69,9 +69,19 @@ const NewHeritancePage = () => {
         }
     }
 
+    // It is required at least 2 heirs and 1 ownership
     const isNextButtonDisabled = () => {
-        // It is required at least 2 heirs and 1 ownership
         return (heirDataStep === 1 && heirsList.length < 2) || (heirDataStep === 2 && ownershipList.length < 1);
+    }
+
+    // It is required at least one asset
+    const isSaveButtonDisabled = () => {
+        for  (let key in assetsObj){
+            if (assetsObj[key].length > 0) {
+                return true
+            }
+        }
+        return false
     }
 
     
@@ -252,7 +262,7 @@ const NewHeritancePage = () => {
                         </div>
                     ): (
                         <div className='button-container'>
-                            <button className='custom-button'>
+                            <button className='custom-button' disabled={isSaveButtonDisabled()}>
                                 Guardar
                             </button>
                         </div>

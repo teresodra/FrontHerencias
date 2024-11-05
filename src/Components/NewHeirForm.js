@@ -66,7 +66,6 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
         setHeirsList(auxHeirsList);
     }
 
-
     return (
         <div>
             <form className='modal-form' onSubmit={handleSubmit}>
