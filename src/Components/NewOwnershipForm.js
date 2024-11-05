@@ -3,16 +3,18 @@ import SimpleReactValidator from 'simple-react-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownershipData, setOwnershipData, closeModal}) => {
-    console.log(ownershipData)
+
     const [ownership, setOwnership] = useState(ownershipData ? ownershipData : {})
+    const [heirPercObj, setHeirPercObj] = useState({});
+
     const [validator] = useState(new SimpleReactValidator());
     const nameRef = React.createRef();
-
-    console.log(heirsList);
 
     useEffect(() => {
         if (ownershipData) {
             nameRef.current.value = ownershipData.name;
+        } else {
+            initializeHeirPercObj();
         }
     }, [])
     
@@ -29,9 +31,7 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
             } else {
                 addNewOwnership();
             }
-            
             closeModal();
-            console.log('entro')
         } else {
             validator.showMessages();
         }
@@ -40,13 +40,11 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
     const changeState = () => {
         setOwnership({
             ...ownership, // To keep id if it is being edited
-            name: nameRef.current.value
+            name: nameRef.current.value,
         })
     };
 
     const addNewOwnership = () => {
-        console.log(ownership)
-        console.log(ownershipList)
         setOwnershipList([
             ...ownershipList,
             {...ownership, id: uuidv4()} // Create id so it has a reference to be edited
@@ -61,9 +59,30 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
         setOwnershipList(auxOwnershipList);
     }
 
+    const initializeHeirPercObj = () =>{
+        let auxObj = {};
+        for (let heir of heirsList){
+            auxObj[heir.id] = {pp: null, np: null, uv: null}
+        }
+        setOwnership({...ownership, heirPercObj: auxObj});
+    }
+
     const changeHeirsData = () => {
 
     }
+
+    const handleInputChange = (heirId, field, value) => {
+        setOwnership((prev) => ({
+            ...prev,
+            heirPercObj: {
+                ...prev.heirPercObj,
+                [heirId]: {
+                    ...prev.heirPercObj[heirId],
+                    [field]: value
+                }
+            }
+        }));
+    };
 
     return (
         <div>
@@ -85,13 +104,13 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
                         <div>{heir.name}</div>
 
                         <label>Plena propiedad:</label>
-                        <input type='number' min="0" max="100"/>
+                        <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'pp', e.target.value)}/>
 
                         <label>Nuda propiedad:</label>
-                        <input type='number' min="0" max="100"/>
+                        <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'np', e.target.value)}/>
 
                         <label>Usfructo vitalicio:</label>
-                        <input type='number' min="0" max="100"/>
+                        <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'uv', e.target.value)}/>
 
 
                     </div>

@@ -54,6 +54,12 @@ body {
     margin: 0px auto;
 }
 
+.content {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .button-container {
     width: 100%;
     display: flex;
@@ -150,6 +156,7 @@ body {
 
 .step-buttons-container{
     display: flex;
+    margin-top: auto; /* Pushes this child to the bottom */
 }
 
 .custom-form{

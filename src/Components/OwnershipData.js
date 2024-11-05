@@ -3,7 +3,7 @@ import NewOwnershipModal from './NewOwnershipModal';
 
 const OwnershipData = ({ownership, removeOwnership, editOwnership}) => {
                 
-
+    console.log(ownership)
     
     return (
         <div className='card-data-container'>
@@ -24,10 +24,15 @@ const OwnershipData = ({ownership, removeOwnership, editOwnership}) => {
                     <div>{ownership.name}</div>
                 </div>
 
-                <div className='card-data-item'>
-                    <div>Id:</div>
-                    <div>{ownership.id}</div>
-                </div>
+                {Object.entries(ownership.heirPercObj).map(([heirId, values]) => (
+                    <div key={heirId} className='card-data-item'>
+                        <div>{values.pp}</div>
+                        <div>{values.np}</div>
+                        <div>{values.uv}</div>
+                    </div>
+                ))}
+
+
 
             </div>
         </div>
