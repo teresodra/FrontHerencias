@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const DivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, removeAsset, editAsset}) => {
+const DivisibleAsset = ({asset, ownershipList, removeAsset, editAsset}) => {
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     console.log(asset)
     const ownership = ownershipList.find(ownership => ownership.id === asset.ownership )
     
@@ -48,7 +47,7 @@ const DivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, removeAs
                 </div>
             </div>
 
-            <NewAssetModal
+            {/* <NewAssetModal
                 modalIsOpen={modalIsOpen}
                 setModalIsOpen={setModalIsOpen}
                 assetsObj={assetsObj}
@@ -56,7 +55,7 @@ const DivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, removeAs
                 ownershipList={ownershipList}
                 assetData={asset}
                 assetDataType={'divisible'}
-            />
+            /> */}
         </div>
     )
 };

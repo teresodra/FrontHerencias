@@ -133,15 +133,20 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
 
                         <div>{heir.name}</div>
 
-                        <label>Plena propiedad:</label>
-                        <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'pp', e.target.value)}/>
+                        <div className='ownership-values-container'>
+                            <label>Plena propiedad:</label>
+                            <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'pp', e.target.value)}/>
+                        </div>
 
-                        <label>Nuda propiedad:</label>
-                        <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'np', e.target.value)}/>
+                        <div className='ownership-values-container'>
+                            <label>Nuda propiedad:</label>
+                            <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'np', e.target.value)}/>
+                        </div>
 
-                        <label>Usfructo vitalicio:</label>
-                        <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'uv', e.target.value)}/>
-
+                        <div className='ownership-values-container'>
+                            <label>Usfructo vitalicio:</label>
+                            <input type='number' min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'uv', e.target.value)}/>
+                        </div>
 
                     </div>
                 ))}

@@ -197,7 +197,8 @@ input[type="text"]{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 2%;
+    column-gap: 2%;
+    row-gap: 1rem;
     /* justify-content: center; */
 }
 
@@ -223,6 +224,12 @@ input[type="text"]{
     border: solid 1px var(--color-card-border);
     border-radius: 5px;
     width: 23.5%;
+
+    transition: max-height 0.3s ease; /* Smooth transition */
+}
+
+.card-data-container.unwrapped {
+    max-height: 1000px; /* A sufficiently large value to fit the expanded content */
 }
 
 .card-data-button-container{
@@ -244,7 +251,19 @@ input[type="text"]{
 .card-data-item {
     display: flex;
     flex-direction: column;
+    /* align-items: flex-start; */
     gap: 0.1rem;
+    width: 80%;
+}
+
+.unwrapped-content {
+    display: flex;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
 }
 
 .assets-container{
@@ -389,4 +408,15 @@ input[type="text"]{
 
 .pagination-bar.active {
     background-color: var(--color-button-background);
+}
+
+.ownership-values-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8rem;
+    gap: 0.5rem;
+}
+
+.ownership-values-container input[type="number"]{
+    width: 2rem;
 }

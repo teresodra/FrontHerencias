@@ -13,10 +13,10 @@ const NewHeritancePage = () => {
     // const [heirsList, setHeirsList] = useState([]);
     // To avoid doing it when testing ownership
     const [heirsList, setHeirsList] = useState([
-        {name: "mario", id: "sdgfsdfds", age: 26},
-        {name: "tereso", id: "adsfsaf", age: 26},
-        {name: "raul", id: "dsadad", age: 26},
-        {name: "miguel", id: "3wersfresf", age: 26},
+        {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
+        {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
+        {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
+        {name: "Miguel Jimenez Garcia", id: "", age: 66},
     ]);
     const [ownershipList, setOwnershipList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});
@@ -32,7 +32,13 @@ const NewHeritancePage = () => {
     const [heirDataStep, setHeirDataStep] = useState(1);
 
     const handleSave = () => {
+        const auxInheritance = {
+            heirsList: heirsList,
+            ownershipList: ownershipList,
+            assetsObj: assetsObj
+        }
 
+        console.log(JSON.stringify(auxInheritance))
     }
 
     const removeHeir = (heirId) => {
@@ -85,10 +91,10 @@ const NewHeritancePage = () => {
     const isSaveButtonDisabled = () => {
         for  (let key in assetsObj){
             if (assetsObj[key].length > 0) {
-                return true
+                return false
             }
         }
-        return false
+        return true
     }
 
     
@@ -270,7 +276,7 @@ const NewHeritancePage = () => {
                         </div>
                     ): (
                         <div className='button-container'>
-                            <button className='custom-button' disabled={isSaveButtonDisabled()}>
+                            <button className='custom-button' disabled={isSaveButtonDisabled()} onClick={handleSave}>
                                 Guardar
                             </button>
                         </div>

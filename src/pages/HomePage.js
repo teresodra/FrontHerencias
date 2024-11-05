@@ -16,8 +16,8 @@ const HomePage = () => {
                     Nueva herencia
                 </div>
 
-                <div className='custom-button' onClick={() => {navigate('/new-heritance')}}>
-                    Ver herencias
+                <div className='custom-button' onClick={() => {navigate('/valoration')}}>
+                    Valoration
                 </div>
             </div>
 

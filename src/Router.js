@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import HeritancePage from "./pages/HeritancePage";
 import NewHeritancePage from "./pages/NewHeritancePage";
 import Header from "./Components/Header";
+import ValorationPage from "./pages/ValorationPage";
 
 const Router = () => {
 
@@ -18,6 +19,8 @@ const Router = () => {
 
                         <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} />
                         <Route exact path="/new-heritance" element={<NewHeritancePage/>} />
+                        <Route exact path="/valoration" element={<ValorationPage/>} />
+                        
                     </Route>
                 </Routes>
                 </div>
