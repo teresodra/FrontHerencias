@@ -7,7 +7,25 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
     const [ownership, setOwnership] = useState(ownershipData ? ownershipData : {})
     const [heirPercObj, setHeirPercObj] = useState({});
 
-    const [validator] = useState(new SimpleReactValidator());
+    const [validator] = useState(new SimpleReactValidator({
+        validators: {
+            allFilled: {
+                message: 'Please fill all heir percentage inputs.',
+                rule: (val) => {
+                    const { heirPercObj } = val;
+                    for (let heirId in heirPercObj) {
+                        const heir = heirPercObj[heirId];
+                        if (heir.pp === null || heir.np === null || heir.uv === null) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }, 
+                required: true
+            }
+        }
+    }));
+
     const nameRef = React.createRef();
 
     useEffect(() => {
@@ -84,6 +102,18 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
         }));
     };
 
+    // Validator to check that all the percentages are filled
+    const validateHeirPercObj = () => {
+        const { heirPercObj } = ownership;
+        for (let heirId in heirPercObj) {
+            const heir = heirPercObj[heirId];
+            if (heir.pp === null || heir.np === null || heir.uv === null) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     return (
         <div>
             <form className='modal-form' onSubmit={handleSubmit}>
@@ -115,6 +145,7 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
 
                     </div>
                 ))}
+                {validator.message('heirPercObj', ownership, 'allFilled')}
 
 
                 <button type="submit" className='custom-button'>

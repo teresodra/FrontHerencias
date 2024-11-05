@@ -137,6 +137,7 @@ const NewHeritancePage = () => {
                                 <OwnershipData
                                     key={ownership.id}
                                     ownership={ownership}
+                                    heirsList={heirsList}
                                     removeOwnership={removeOwnership}
                                     editOwnership={editOwnership}
                                 />

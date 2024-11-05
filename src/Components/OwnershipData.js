@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NewOwnershipModal from './NewOwnershipModal';
 
-const OwnershipData = ({ownership, removeOwnership, editOwnership}) => {
+const OwnershipData = ({ownership, heirsList, removeOwnership, editOwnership}) => {
                 
     console.log(ownership)
     
@@ -26,13 +26,12 @@ const OwnershipData = ({ownership, removeOwnership, editOwnership}) => {
 
                 {Object.entries(ownership.heirPercObj).map(([heirId, values]) => (
                     <div key={heirId} className='card-data-item'>
+                        <div>{heirsList.find(heir => heir.id === heirId).name}</div>
                         <div>{values.pp}</div>
                         <div>{values.np}</div>
                         <div>{values.uv}</div>
                     </div>
                 ))}
-
-
 
             </div>
         </div>
