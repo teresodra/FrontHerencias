@@ -12,7 +12,12 @@ const NewHeritancePage = () => {
 
     // const [heirsList, setHeirsList] = useState([]);
     // To avoid doing it when testing ownership
-    const [heirsList, setHeirsList] = useState([{name: "mario", id: "sdgfsdfds", age: 26}, {name: "tereso", id: "adsfsaf", age: 26}]);
+    const [heirsList, setHeirsList] = useState([
+        {name: "mario", id: "sdgfsdfds", age: 26},
+        {name: "tereso", id: "adsfsaf", age: 26},
+        {name: "raul", id: "dsadad", age: 26},
+        {name: "miguel", id: "3wersfresf", age: 26},
+    ]);
     const [ownershipList, setOwnershipList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});
     const [heirModalIsOpen, setHeirModalIsOpen] = useState(false);
