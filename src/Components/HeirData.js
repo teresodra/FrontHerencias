@@ -23,8 +23,8 @@ const HeirData = ({heir, removeHeir, editHeir}) => {
                 </div>
 
                 <div className='card-data-item'>
-                    <div>Porcentaje:</div>
-                    <div>{heir.percentage}</div>
+                    <div>Edad:</div>
+                    <div>{heir.age}</div>
                 </div>
             </div>
 

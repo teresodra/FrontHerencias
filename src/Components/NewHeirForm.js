@@ -9,14 +9,14 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
     const [heir, setHeir] = useState(heirData ? heirData : {})
     
     const nameRef = React.createRef();
-    const percentageRef = React.createRef();
+    const ageRef = React.createRef();
 
     const [validator] = useState(new SimpleReactValidator());
     
     useEffect(() => {
         if (heirData) {
             nameRef.current.value = heirData.name;
-            percentageRef.current.value = heirData.percentage;
+            ageRef.current.value = heirData.age;
         }
     }, [])
     
@@ -45,7 +45,7 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
         setHeir({
             ...heir, // To keep id if it is being edited
             name: nameRef.current.value,
-            percentage: percentageRef.current.value
+            age: ageRef.current.value
         })
     }
 
@@ -82,14 +82,14 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
                 </div>
 
                 <div className='form-group'>
-                    <label htmlFor="percentage">Porcentaje</label>
+                    <label htmlFor="age">Edad</label>
                     <input
                         type='text'
-                        name="percentage"
-                        ref={percentageRef}
+                        name="age"
+                        ref={ageRef}
                         onChange={changeState}
                     />
-                    {validator.message('percentage', heir.percentage, 'required|numeric|min:0,num|max:100,num')}
+                    {validator.message('age', heir.age, 'required|numeric|min:0,num|max:130,num')}
                     
                 </div>
 
