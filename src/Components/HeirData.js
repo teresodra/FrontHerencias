@@ -18,12 +18,12 @@ const HeirData = ({heir, removeHeir, editHeir}) => {
 
             <div className='card-data-content'>
                 <div className='card-data-item'>
-                    <div>Nombre:</div>
+                    <label>Nombre:</label>
                     <div>{heir.name}</div>
                 </div>
 
                 <div className='card-data-item'>
-                    <div>Edad:</div>
+                    <label>Edad:</label>
                     <div>{heir.age}</div>
                 </div>
             </div>

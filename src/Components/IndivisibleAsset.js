@@ -22,17 +22,17 @@ const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, remove
 
             <div className='card-data-content'>
                 <div className='card-data-item'>
-                    <div>Nombre:</div>
+                    <label>Nombre:</label>
                     <div>{asset.name}</div>
                 </div>
 
                 <div className='card-data-item'>
-                    <div>Valor mercado:</div>
+                    <label>Valor mercado:</label>
                     <div>{asset.marketValue}</div>
                 </div>
 
                 <div className='card-data-item'>
-                    <div>Ownership:</div>
+                    <label>Ownership:</label>
                     <div>{ownership.name}</div>
                 </div>
             </div>

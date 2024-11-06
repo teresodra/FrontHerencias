@@ -20,7 +20,7 @@ const OwnershipData = ({ownership, heirsList, removeOwnership, editOwnership}) =
 
             <div className='card-data-content'>
                 <div className='card-data-item'>
-                    <div>Nombre:</div>
+                    <label>Nombre:</label>
                     <div>{ownership.name}</div>
                 </div>
 

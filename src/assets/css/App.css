@@ -226,6 +226,7 @@ input[type="text"]{
     width: 23.5%;
 
     transition: max-height 0.3s ease; /* Smooth transition */
+    height: 50%;
 }
 
 .card-data-container.unwrapped {
@@ -246,6 +247,10 @@ input[type="text"]{
     justify-content: flex-start;
     gap: 2rem;
     margin-bottom: 2rem;
+}
+
+.card-data-content label{
+    font-weight: bold;
 }
 
 .card-data-item {
