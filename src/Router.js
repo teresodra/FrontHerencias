@@ -4,6 +4,7 @@ import HeritancePage from "./pages/HeritancePage";
 import NewHeritancePage from "./pages/NewHeritancePage";
 import Header from "./Components/Header";
 import ValorationPage from "./pages/ValorationPage";
+import Footer from "./Components/Footer";
 
 const Router = () => {
 
@@ -24,6 +25,7 @@ const Router = () => {
                     </Route>
                 </Routes>
                 </div>
+                <Footer/>
             </div>
         </BrowserRouter>
     )

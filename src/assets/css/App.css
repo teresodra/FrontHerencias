@@ -49,6 +49,12 @@ body {
     justify-content: space-between;
 }
 
+.footer {
+    height: 1rem;
+    background: var(--color-theme);
+    margin-top: 2rem;
+}
+
 .center {
     width: 50%;
     margin: 0px auto;
