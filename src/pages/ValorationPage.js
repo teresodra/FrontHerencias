@@ -12,14 +12,16 @@ const ValorationPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
 
     const numSteps = Object.keys(inheritance.assetsObj).length + 1; // +1 because in first step they ask about money 
-    console.log(inheritance)
-    console.log(inheritance.assetsObj)
-
 
     useEffect(() => {
         initializeValorationObj();
-        console.log(valorationObj)
     }, []);
+
+    const saveValoration = () => {
+        console.log('save')
+        console.log(valorationObj)
+        console.log(JSON.stringify(valorationObj))
+    }
 
     const initializeValorationObj = () => {
         let auxObj = {money: 0, assetsValoration: {}};
@@ -30,9 +32,12 @@ const ValorationPage = () => {
             }
             auxObj.assetsValoration[assetType] = auxList;
         }
-        console.log(auxObj)
         setValorationObj(auxObj);
-    }   
+    } 
+
+    const updateMoney = (event) => {
+        setValorationObj({...valorationObj, money: event.target.value})
+    }
 
 
     return(
@@ -44,7 +49,12 @@ const ValorationPage = () => {
                     <form className="custom-form">
                         <div className="form-group">
                             <label>Dinero dispuesto a invertir €</label>
-                            <input type="number" defaultValue={0}/>
+                            <input
+                                type="number"
+                                defaultValue={0}
+                                min="0"
+                                onChange={updateMoney}
+                            />
                         </div>
                     </form>
                 )}
@@ -115,7 +125,7 @@ const ValorationPage = () => {
                         </div>
                     ): (
                         <div className='button-container'>
-                            <button className='custom-button'>
+                            <button className='custom-button' onClick={saveValoration}>
                                 Guardar
                             </button>
                         </div>

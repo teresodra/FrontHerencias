@@ -20,10 +20,6 @@ const IndivisibleAssetValoration = ({asset, ownershipList, valorationObj, setVal
             }
            
         })
-        console.log({
-            ...valorationObj,
-            indivisibleAssetsList: auxValList
-        })
     }
     
     return (

@@ -32,13 +32,6 @@ const DivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValor
             }
            
         })
-        console.log({
-            ...valorationObj,
-            assetsValoration: {
-                ...valorationObj.assetsValoration,
-                divisibleAssetsList: auxValList
-            }
-        })
     }
 
     return (
