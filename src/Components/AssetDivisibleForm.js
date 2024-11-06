@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal, assetData, setAssetData}) => {
 
-    const [asset, setAsset] = useState({});
+    const [asset, setAsset] = useState(assetData ? assetData : {});
     const [ownership, setOwnership] = useState(null);
     const [category, setCategory] = useState(null);
 
@@ -30,10 +30,10 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
 
     const loadData = () => {
         nameRef.current.value = assetData.name;
-            quantityRef.current.value = assetData.quantity;
-            marketValueRef.current.value = assetData.marketValue;
-            setOwnership(ownerShipOptions.find(owShip => owShip.value === assetData.ownership))
-            setCategory(categoryOptionsList.find(cat => cat.value === assetData.category))
+        quantityRef.current.value = assetData.quantity;
+        marketValueRef.current.value = assetData.marketValue;
+        setOwnership(ownerShipOptions.find(owShip => owShip.value === assetData.ownership))
+        setCategory(categoryOptionsList.find(cat => cat.value === assetData.category))
     }
 
     const handleSubmit = (e) => {
@@ -60,7 +60,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
             ...asset,
             name: nameRef.current.value,
             quantity: quantityRef.current.value,
-            marketValue: marketValueRef.current.value
+            marketValue: marketValueRef.current.value,
         })
     }
 

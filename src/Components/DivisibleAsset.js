@@ -15,7 +15,7 @@ const DivisibleAsset = ({asset, ownershipList, removeAsset, editAsset}) => {
                 </div>
 
                 {/* <div onClick={() => {setModalIsOpen(true);}}> */}
-                <div onClick={() => {editAsset(asset.id);}}>
+                <div onClick={() => {editAsset(asset.id, 'divisible');}}>
                     <span className="material-symbols-outlined">edit</span>
                 </div>
             </div>

@@ -16,11 +16,15 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
 
     useEffect(() => {
         if (assetData) {
-            nameRef.current.value = assetData.name;
-            marketValueRef.current.value = assetData.marketValue;
-            setOwnership(ownerShipOptions.find(owShip => owShip.value === assetData.ownership))
+            loadData();
         }
     }, [])
+
+    const loadData = () => {
+        nameRef.current.value = assetData.name;
+        marketValueRef.current.value = assetData.marketValue;
+        setOwnership(ownerShipOptions.find(owShip => owShip.value === assetData.ownership));
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();

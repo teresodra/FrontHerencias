@@ -16,7 +16,7 @@ const NewHeritancePage = () => {
         {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
         {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
         {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
-        {name: "Miguel Jimenez Garcia", id: "", age: 66},
+        {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66},
     ]);
     const [ownershipList, setOwnershipList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});
