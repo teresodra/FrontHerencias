@@ -1,17 +1,29 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const IndivisibleAssetValoration = ({asset, ownershipList, removeAsset, editAsset}) => {
+const IndivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValorationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
     const ownership = ownershipList.find(ownership => ownership.id === asset.ownership );
-    
+        
     const addValoration = (event) => {
         event.stopPropagation(); // Prevent unwrapping when typing the value
-
-
-
+        let auxValList = [...valorationObj.assetsValoration.indivisibleAssetsList];
+        const index = auxValList.findIndex(assetVal => assetVal.id === asset.id);
+        auxValList[index] = {...auxValList[index], value: event.target.value}
+        setValorationObj({
+            ...valorationObj,
+            assetsValoration: {
+                ...valorationObj.assetsValoration,
+                indivisibleAssetsList: auxValList
+            }
+           
+        })
+        console.log({
+            ...valorationObj,
+            indivisibleAssetsList: auxValList
+        })
     }
     
     return (

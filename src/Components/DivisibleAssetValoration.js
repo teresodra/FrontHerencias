@@ -1,13 +1,45 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const DivisibleAssetValoration = ({asset, ownershipList, removeAsset, editAsset}) => {
+const DivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValorationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
     const ownership = ownershipList.find(ownership => ownership.id === asset.ownership )
 
+    useEffect(() => {
+        // If it is cash value = market value
+        if(asset.category === "cash") {
+            addValoration(asset.marketValue)
+        }
+    }, []);
+
+    const handleInputChange = (event) => {
+        event.stopPropagation(); // Prevent unwrapping when typing the value
+        addValoration(event.target.value)
+
+    }
     
+    const addValoration = (value) => {
+        let auxValList = [...valorationObj.assetsValoration.divisibleAssetsList];
+        const index = auxValList.findIndex(assetVal => assetVal.id === asset.id);
+        auxValList[index] = {...auxValList[index], value: value}
+        setValorationObj({
+            ...valorationObj,
+            assetsValoration: {
+                ...valorationObj.assetsValoration,
+                divisibleAssetsList: auxValList
+            }
+           
+        })
+        console.log({
+            ...valorationObj,
+            assetsValoration: {
+                ...valorationObj.assetsValoration,
+                divisibleAssetsList: auxValList
+            }
+        })
+    }
 
     return (
         <div
@@ -58,7 +90,11 @@ const DivisibleAssetValoration = ({asset, ownershipList, removeAsset, editAsset}
                                         value={asset.marketValue}
                                     /> 
                                 ) : (
-                                    <input type="number" onClick={(event) => event.stopPropagation()}/> 
+                                    <input
+                                        type="number"
+                                        onChange={handleInputChange}
+                                        onClick={(event) => event.stopPropagation()}
+                                    /> 
                                 )}
                             </div>
                         </div>
