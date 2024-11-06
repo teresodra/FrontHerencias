@@ -11,45 +11,59 @@ const DivisibleAssetValoration = ({asset, ownershipList, removeAsset, editAsset}
 
     return (
         <div
-            // className='card-data-container'
             className={`card-data-container ${!isWrapped ? 'unwrapped' : ''}`} 
             onClick={() => {setIsWrapped(!isWrapped)}}>
-            {/* <div className='card-data-button-container'>
-                <div onClick={() => {removeAsset(asset.id);}}>
-                    <span className="material-symbols-outlined">close</span>
+
+            <div className='card-data-button-container'>
+                <div>
+                    <span className="material-symbols-outlined">arrow_drop_down</span>
                 </div>
-                <div onClick={() => {editAsset(asset.id);}}>
-                    <span className="material-symbols-outlined">edit</span>
-                </div>
-            </div> */}
+            </div>
 
             <div className='card-data-content'>
                 <div className='card-data-item'>
-                    <div>Nombre</div>
+                    <label>Nombre</label>
                     <div>{asset.name}</div>
                 </div>
 
                 {!isWrapped && (
                     <div className="unwrapped-content">
                         <div className='card-data-item'>
-                            <div>Cantidad</div>
+                            <label>Cantidad</label>
                             <div>{asset.quantity}</div>
                         </div>
 
                         <div className='card-data-item'>
-                            <div>Valor de mercado por unidad</div>
+                            <label>Valor de mercado por unidad</label>
                             <div>{asset.marketValue} {"€"}</div>
                         </div>
 
                         <div className='card-data-item'>
-                            <div>Categoría</div>
+                            <label>Categoría</label>
                             <div>{asset.category}</div>
                         </div>
 
                         <div className='card-data-item'>
-                            <div>Ownership</div>
+                            <label>Ownership</label>
                             <div>{ownership.name}</div>
                         </div>
+
+                        
+                        <div className='custom-form'>
+                            <div className="form-group">
+                                <label>Valoracion</label>
+                                {(asset.category === "cash") ? (
+                                    <input type="number"
+                                        disabled={true}
+                                        value={asset.marketValue}
+                                    /> 
+                                ) : (
+                                    <input type="number" onClick={(event) => event.stopPropagation()}/> 
+                                )}
+                            </div>
+                        </div>
+                        
+
                     </div>
                 )}
 
