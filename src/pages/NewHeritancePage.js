@@ -38,6 +38,7 @@ const NewHeritancePage = () => {
             assetsObj: assetsObj
         }
 
+        console.log(auxInheritance)
         console.log(JSON.stringify(auxInheritance))
     }
 

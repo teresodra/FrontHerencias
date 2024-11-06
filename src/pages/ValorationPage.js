@@ -93,9 +93,6 @@ const ValorationPage = () => {
                     </>
                 )}
 
-
-
-
                 <div className='step-buttons-container'>
                     <div className='button-container'>
                         <button className='custom-button' disabled={currentStep === 1} onClick={() => {setCurrentStep(currentStep - 1)}}>
