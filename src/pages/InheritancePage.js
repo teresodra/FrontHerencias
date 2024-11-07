@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { apiGetInheritance } from '../services/api';
+import HeirWrap from '../Components/HeirWrap';
 
 const InheritancePage = () => {
 
     const [isLoading, setIsLoading] = useState(true);
+    const [inheritance, setInheritance] = useState(true);
     const {inheritanceId} = useParams();
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
         loadInheritance();
-        setIsLoading(false);
+        
     }, []); 
 
     const loadInheritance = async () => {
@@ -24,17 +26,35 @@ const InheritancePage = () => {
                 console.log('cojo data')
                 console.log(data)
             }
+            setInheritance(data);
+            setIsLoading(false);
+            console.log(isAllValuated())
         } catch (err) {
             console.log(err)
         }
     }
 
     const loadValoration = async () => {
-        
+
     }
 
     const goToHeirsList = () => {
         navigate(`/inheritance/${inheritanceId}/heir`)
+    }
+
+    const isAllValuated = () => {
+        console.log(inheritance)
+        if (!inheritance.heirValuationList) {
+            console.log('treu')
+            return true
+        }
+
+        console.log(inheritance.heirsList.length() !== inheritance.heirValuationList.length())
+        return inheritance.heirsList.length() !== inheritance.heirValuationList.length();
+    }
+
+    const calculateInheritance = () =>{
+
     }
 
     if (isLoading) {
@@ -48,19 +68,31 @@ const InheritancePage = () => {
         <div className='center'>
             <div className='content'>
                 <h1>
-                    Información herencia
+                    {`${inheritance.name}`}
+                    {/* {`Información herencia`} */}
                 </h1>
 
-                <div className='button-container'>
-                    <div className='custom-button' onClick={() => {navigate('/new-heritance')}}>
+                {/* <div className='button-container'>
+                    <button className='custom-button' onClick={() => {navigate('/new-heritance')}}>
                         Datos herencia
+                    </button>
+                </div> */}
+
+                <div className='list-items-container'>
+                    <h3 className="num-items-title">Valoraciones herederos ({inheritance.heirsList.length})</h3>                                       
+                    <div className="list-items-container-content">
+                        <div className="list-items-container-content">
+                            {inheritance.heirsList.map(heir => (
+                                <HeirWrap key={heir.id} heirId={heir.id} inheritance={inheritance}/>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
                 <div className='button-container'>
-                    <div className='custom-button' onClick={goToHeirsList}>
-                        Valoraciones
-                    </div>
+                    <button className='custom-button' disabled={isAllValuated()} onClick={goToHeirsList}>
+                        Calcular
+                    </button>
                 </div>
 
             </div>
