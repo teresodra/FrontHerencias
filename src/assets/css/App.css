@@ -49,6 +49,15 @@ body {
     justify-content: space-between;
 }
 
+.header-icon-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    color: white;
+}
+
 .footer {
     height: 1rem;
     background: var(--color-theme);

@@ -117,7 +117,7 @@ const ValuationPage = () => {
                 {currentStep === 1 && (
                     <form className="custom-form">
                         <div className="form-group">
-                            <label>Dinero dispuesto a invertir €</label>
+                            <label>Dinero dispuesto a invertir (€)</label>
                             <input
                                 type="text"
                                 name="money"
