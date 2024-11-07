@@ -8,6 +8,8 @@ import DivisibleInChunksAsset from '../Components/DivisibleInChunksAsset';
 import NewOwnershipModal from '../Components/NewOwnershipModal';
 import OwnershipData from '../Components/OwnershipData';
 import { apiSaveInheritance } from '../services/api';
+import Swal from 'sweetalert2';
+import messagesObj from "../schemas/messages";
 
 const NewHeritancePage = () => {
 
@@ -42,9 +44,11 @@ const NewHeritancePage = () => {
         console.log(auxInheritance)
         console.log(JSON.stringify(auxInheritance))
         try {
-            await apiSaveInheritance(auxInheritance)
+            await apiSaveInheritance(auxInheritance);
+            Swal.fire(messagesObj.newInheritanceSuccess);
         } catch (err) {
-            console.log(err)
+            console.log(err);
+            Swal.fire(messagesObj.newInheritanceError);
         }
 
     }

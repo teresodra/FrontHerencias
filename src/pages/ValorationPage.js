@@ -20,6 +20,7 @@ const ValuationPage = () => {
     const [valuationObj, setValuationObj] = useState({})
     const [money, setMoney] = useState(0)
     const [currentStep, setCurrentStep] = useState(1);
+    const [stepList, setStepList] = useState([1, 2, 3, 4, 5]); // Only steps with assets to valuate;
 
     // const numSteps = Object.keys(inheritance.assetsObj).length + 1; // +1 because in first step they ask about money 
     const [numSteps, setNumSteps] = useState(1);
@@ -43,12 +44,19 @@ const ValuationPage = () => {
                 data = await apiGetInheritance(inheritanceId);
             }
             console.log(data)
-            setNumSteps(Object.keys(data.assetsObj).length + 1); // +1 because in first step they ask about money )
+            calculateSteps(data);
             setInheritance(data);
             initializeValuationObj(data);
         } catch (err) {
             console.log(err)
         }
+    }
+
+    // If we want to skip steps not used (e.g. there are no assets from one type)
+    const calculateSteps = (data) => {
+        setNumSteps(5);
+        // TODO
+        // setNumSteps(Object.keys(data.assetsObj).length + 1); // +1 because in first step they ask about money )
     }
 
     const saveValuation = async () => {
@@ -141,19 +149,46 @@ const ValuationPage = () => {
                 {currentStep === 3 && (
                     <>
                     <h2>Bienes indivisibles</h2>
-                    <div className='card-container'>
-                        {inheritance.assetsObj.indivisibleAssetsList.map((asset, index) => (
-                            <IndivisibleAssetValuation
-                                key={asset.id}
-                                asset={asset}
-                                ownershipList={inheritance.ownershipList}
-                                valuationObj={valuationObj}
-                                setValuationObj={setValuationObj}
-                            />
-                        ))}
-                    </div>
+                    {inheritance.assetsObj.indivisibleAssetsList ? (
+                        <div className='card-container'>
+                            {inheritance.assetsObj.indivisibleAssetsList.map((asset, index) => (
+                                <IndivisibleAssetValuation
+                                    key={asset.id}
+                                    asset={asset}
+                                    ownershipList={inheritance.ownershipList}
+                                    valuationObj={valuationObj}
+                                    setValuationObj={setValuationObj}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div>No hay bienes de este tipo</div>
+                    )}
                     </>
                 )}
+
+                {currentStep === 4 && (
+                    <>
+                    <h2>Bienes divisibles por partes</h2>
+                    {inheritance.assetsObj.divisibleInPartsAssetsList ? (
+                        <div></div>
+                    ) : (
+                        <div>No hay bienes de este tipo</div>
+                    )}
+                    </>
+                )}
+
+                {currentStep === 5 && (
+                    <>
+                        <h2>Bienes divisibles por trozos</h2>
+                        {inheritance.assetsObj.divisibleInChunksAssetsList ? (
+                            <div></div>
+                        ) : (
+                            <div>No hay bienes de este tipo</div>
+                        )}
+                        </>
+                )}
+
 
                 <div className='step-buttons-container'>
                     <div className='button-container'>
