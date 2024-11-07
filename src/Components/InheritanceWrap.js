@@ -13,7 +13,7 @@ const InheritanceWrap = ({inheritance}) => {
 
     return (
         <div className="list-item" onClick={goToInheritance}>
-            <div>{inheritance.id}</div>
+            <div>{inheritance.name}</div>
         </div>
     )
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import SimpleReactValidator from 'simple-react-validator';
 import HeirData from '../Components/HeirData';
 import NewHeirModal from '../Components/NewHeirModal';
 import NewAssetModal from '../Components/NewAssetModal';
@@ -23,6 +24,7 @@ const NewHeritancePage = () => {
     ]);
     const [ownershipList, setOwnershipList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});
+    const [name, setName] = useState('');
     const [heirModalIsOpen, setHeirModalIsOpen] = useState(false);
     const [assetModalIsOpen, setAssetModalIsOpen] = useState(false);
     const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
@@ -34,8 +36,11 @@ const NewHeritancePage = () => {
 
     const [heirDataStep, setHeirDataStep] = useState(1);
 
+    const [validator] = useState(new SimpleReactValidator());
+
     const handleSave = async () => {
         const auxInheritance = {
+            name: name,
             heirsList: heirsList,
             ownershipList: ownershipList,
             assetsObj: assetsObj
@@ -46,6 +51,7 @@ const NewHeritancePage = () => {
         try {
             await apiSaveInheritance(auxInheritance);
             Swal.fire(messagesObj.newInheritanceSuccess);
+            
         } catch (err) {
             console.log(err);
             Swal.fire(messagesObj.newInheritanceError);
@@ -96,7 +102,7 @@ const NewHeritancePage = () => {
 
     // It is required at least 2 heirs and 1 ownership
     const isNextButtonDisabled = () => {
-        return (heirDataStep === 1 && heirsList.length < 2) || (heirDataStep === 2 && ownershipList.length < 1);
+        return (heirDataStep === 2 && heirsList.length < 2) || (heirDataStep === 3 && ownershipList.length < 1);
     }
 
     // It is required at least one asset
@@ -115,8 +121,22 @@ const NewHeritancePage = () => {
             <div className='content'>
                 <h1>Nueva herencia</h1>
 
-                {/*STEP 1: HEIRS*/}
+                {/*STEP 1: NAME*/}
                 {(heirDataStep === 1) && (
+                    <div className="form-group">
+                    <label>Nombre herencia</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={(event) => {setName(event.target.value)}}
+                    />
+                    {validator.message('name', name, 'required|alpha_num_space')}
+                </div>
+                )}
+                
+                {/*STEP 2: HEIRS*/}
+                {(heirDataStep === 2) && (
                     <>
                         <h2>Herederos</h2>
                         {(heirsList.length > 0) && (
@@ -149,8 +169,8 @@ const NewHeritancePage = () => {
                     </>
                 )}
 
-                {/*STEP 2: OWNERSHIP*/}
-                {(heirDataStep === 2) && (
+                {/*STEP 3: OWNERSHIP*/}
+                {(heirDataStep === 3) && (
                     <>
                         <h2>Ownership</h2>
 
@@ -186,8 +206,8 @@ const NewHeritancePage = () => {
                     </>
                 )}
 
-                {/*STEP 3: ASSETS*/}
-                {(heirDataStep === 3) && (
+                {/*STEP 4: ASSETS*/}
+                {(heirDataStep === 4) && (
                     <>
                         <h2>Bienes</h2>
 
@@ -268,7 +288,7 @@ const NewHeritancePage = () => {
                     </div>
 
                     <div className="pagination-bars-container">
-                        {[1, 2, 3].map((step) => (
+                        {[1, 2, 3, 4].map((step) => (
                         <div
                             key={step}
                             className={`pagination-bar ${heirDataStep >= step ? 'active' : ''}`}
@@ -276,7 +296,7 @@ const NewHeritancePage = () => {
                         ))}
                     </div>
 
-                    {(heirDataStep < 3) ? (
+                    {(heirDataStep < 4) ? (
                         <div className='button-container'>
                             <button
                                 className='custom-button'

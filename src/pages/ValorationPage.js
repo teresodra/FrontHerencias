@@ -132,17 +132,21 @@ const ValuationPage = () => {
                 {currentStep === 2 && (
                     <>
                     <h2>Bienes divisibles</h2>
-                    <div className='card-container'>
-                        {inheritance.assetsObj.divisibleAssetsList.map((asset) => (
-                            <DivisibleAssetValuation
-                                key={asset.id}
-                                asset={asset}
-                                ownershipList={inheritance.ownershipList}
-                                valuationObj={valuationObj}
-                                setValuationObj={setValuationObj}
-                            />
-                        ))}
-                    </div>
+                    {inheritance.assetsObj.divisibleAssetsList ? (
+                        <div className='card-container'>
+                            {inheritance.assetsObj.divisibleAssetsList.map((asset) => (
+                                <DivisibleAssetValuation
+                                    key={asset.id}
+                                    asset={asset}
+                                    ownershipList={inheritance.ownershipList}
+                                    valuationObj={valuationObj}
+                                    setValuationObj={setValuationObj}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div>No hay bienes de este tipo</div>
+                    )}
                     </>
                 )}
 
