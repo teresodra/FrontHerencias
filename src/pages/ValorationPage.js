@@ -77,7 +77,7 @@ const ValuationPage = () => {
         try {
             await apiEditInheritance(auxInheritance)
             Swal.fire(messagesObj.valorationAddedSuccess)
-            navigate(`/inheritance/${inheritance.id}/heir`)
+            navigate(`/inheritance/${inheritance.id}`)
         } catch (err) {
             Swal.fire(messagesObj.valorationAddedError)
         }

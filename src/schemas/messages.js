@@ -17,7 +17,7 @@ const messagesObj = {
     valorationAddedError: {
         title: 'Error',
         text: "Error añadiendo valoracion",
-        icon: "success"
+        icon: "error"
     },
 }
 export default messagesObj;

@@ -49,8 +49,8 @@ const InheritancePage = () => {
             return true
         }
 
-        console.log(inheritance.heirsList.length() !== inheritance.heirValuationList.length())
-        return inheritance.heirsList.length() !== inheritance.heirValuationList.length();
+        console.log(inheritance.heirsList.length !== inheritance.heirValuationList.length)
+        return inheritance.heirsList.length !== inheritance.heirValuationList.length;
     }
 
     const calculateInheritance = () =>{

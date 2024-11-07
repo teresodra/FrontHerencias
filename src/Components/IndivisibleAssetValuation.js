@@ -6,19 +6,21 @@ const IndivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValua
 
     const [isWrapped, setIsWrapped] = useState(true);
     const ownership = ownershipList.find(ownership => ownership.id === asset.ownership );
+
+    console.log(valuationObj)
         
     const addValuation = (event) => {
         event.stopPropagation(); // Prevent unwrapping when typing the value
-        let auxValList = [...valuationObj.assetsValuation.indivisibleAssetsList];
+        let auxValList = [...valuationObj.assetsValuationObj.indivisibleAssetsList];
+        let value = parseFloat(event.target.value) // Convert to float
         const index = auxValList.findIndex(assetVal => assetVal.assetId === asset.id);
-        auxValList[index] = {...auxValList[index], value: event.target.value}
+        auxValList[index] = {...auxValList[index], value: value}
         setValuationObj({
             ...valuationObj,
-            assetsValuation: {
+            assetsValuationObj: {
                 ...valuationObj.assetsValuation,
                 indivisibleAssetsList: auxValList
             }
-           
         })
     }
     
@@ -55,7 +57,8 @@ const IndivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValua
                         <div className='custom-form'>
                             <div className="form-group">
                                 <label>Valoracion</label>
-                                <input type="number"
+                                <input 
+                                    type="text"
                                     onChange={addValuation}
                                     onClick={(event) => event.stopPropagation()}
                                 />

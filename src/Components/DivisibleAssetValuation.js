@@ -63,10 +63,12 @@ const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuati
                             <div>{asset.marketValue} {"€"}</div>
                         </div>
 
-                        <div className='card-data-item'>
-                            <label>Categoría</label>
-                            <div>{asset.category}</div>
-                        </div>
+                        {asset.category === "cash" && (
+                            <div className='card-data-item'>
+                                <label>Categoría</label>
+                                <div>Dinero</div>
+                            </div>
+                        )}
 
                         <div className='card-data-item'>
                             <label>Ownership</label>
@@ -84,7 +86,7 @@ const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuati
                                     /> 
                                 ) : (
                                     <input
-                                        type="number"
+                                        type="text"
                                         onChange={handleInputChange}
                                         onClick={(event) => event.stopPropagation()}
                                     /> 
