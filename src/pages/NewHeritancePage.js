@@ -7,6 +7,7 @@ import IndivisibleAsset from '../Components/IndivisibleAsset';
 import DivisibleInChunksAsset from '../Components/DivisibleInChunksAsset';
 import NewOwnershipModal from '../Components/NewOwnershipModal';
 import OwnershipData from '../Components/OwnershipData';
+import { apiSaveInheritance } from '../services/api';
 
 const NewHeritancePage = () => {
 
@@ -31,7 +32,7 @@ const NewHeritancePage = () => {
 
     const [heirDataStep, setHeirDataStep] = useState(1);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const auxInheritance = {
             heirsList: heirsList,
             ownershipList: ownershipList,
@@ -40,6 +41,12 @@ const NewHeritancePage = () => {
 
         console.log(auxInheritance)
         console.log(JSON.stringify(auxInheritance))
+        try {
+            await apiSaveInheritance(auxInheritance)
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
     const removeHeir = (heirId) => {

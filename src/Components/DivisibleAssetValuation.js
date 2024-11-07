@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const DivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValorationObj}) => {
+const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
@@ -10,24 +10,24 @@ const DivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValor
     useEffect(() => {
         // If it is cash value = market value
         if(asset.category === "cash") {
-            addValoration(asset.marketValue)
+            addValuation(asset.marketValue)
         }
     }, []);
 
     const handleInputChange = (event) => {
         event.stopPropagation(); // Prevent unwrapping when typing the value
-        addValoration(event.target.value)
+        addValuation(event.target.value)
 
     }
     
-    const addValoration = (value) => {
-        let auxValList = [...valorationObj.assetsValoration.divisibleAssetsList];
-        const index = auxValList.findIndex(assetVal => assetVal.id === asset.id);
+    const addValuation = (value) => {
+        let auxValList = [...valuationObj.assetsValuationObj.divisibleAssetsList];
+        const index = auxValList.findIndex(assetVal => assetVal.assetId === asset.id);
         auxValList[index] = {...auxValList[index], value: value}
-        setValorationObj({
-            ...valorationObj,
-            assetsValoration: {
-                ...valorationObj.assetsValoration,
+        setValuationObj({
+            ...valuationObj,
+            assetsValuationObj: {
+                ...valuationObj.assetsValuationObj,
                 divisibleAssetsList: auxValList
             }
            
@@ -100,4 +100,4 @@ const DivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValor
         </div>
     )
 };
-export default DivisibleAssetValoration;
+export default DivisibleAssetValuation;

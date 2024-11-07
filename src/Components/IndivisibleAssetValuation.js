@@ -1,21 +1,21 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const IndivisibleAssetValoration = ({asset, ownershipList, valorationObj, setValorationObj}) => {
+const IndivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
     const ownership = ownershipList.find(ownership => ownership.id === asset.ownership );
         
-    const addValoration = (event) => {
+    const addValuation = (event) => {
         event.stopPropagation(); // Prevent unwrapping when typing the value
-        let auxValList = [...valorationObj.assetsValoration.indivisibleAssetsList];
-        const index = auxValList.findIndex(assetVal => assetVal.id === asset.id);
+        let auxValList = [...valuationObj.assetsValuation.indivisibleAssetsList];
+        const index = auxValList.findIndex(assetVal => assetVal.assetId === asset.id);
         auxValList[index] = {...auxValList[index], value: event.target.value}
-        setValorationObj({
-            ...valorationObj,
-            assetsValoration: {
-                ...valorationObj.assetsValoration,
+        setValuationObj({
+            ...valuationObj,
+            assetsValuation: {
+                ...valuationObj.assetsValuation,
                 indivisibleAssetsList: auxValList
             }
            
@@ -56,7 +56,7 @@ const IndivisibleAssetValoration = ({asset, ownershipList, valorationObj, setVal
                             <div className="form-group">
                                 <label>Valoracion</label>
                                 <input type="number"
-                                    onChange={addValoration}
+                                    onChange={addValuation}
                                     onClick={(event) => event.stopPropagation()}
                                 />
                             </div>
@@ -71,4 +71,4 @@ const IndivisibleAssetValoration = ({asset, ownershipList, valorationObj, setVal
         </div>
     )
 };
-export default IndivisibleAssetValoration;
+export default IndivisibleAssetValuation;
