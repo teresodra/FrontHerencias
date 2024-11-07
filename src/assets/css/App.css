@@ -439,9 +439,12 @@ input[type="text"]{
     flex-direction: row;
     font-size: 0.8rem;
     gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%
 }
 
-.ownership-values-container input[type="number"]{
+.ownership-values-container input[type="text"]{
     width: 2rem;
 }
 
