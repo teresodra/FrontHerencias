@@ -17,12 +17,13 @@ const NewHeritancePage = () => {
 
     // const [heirsList, setHeirsList] = useState([]);
     // To avoid doing it when testing ownership
-    const [heirsList, setHeirsList] = useState([
-        {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
-        {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
-        {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
-        {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66},
-    ]);
+    const [heirsList, setHeirsList] = useState([]);
+    // const [heirsList, setHeirsList] = useState([
+    //     {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
+    //     {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
+    //     {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
+    //     {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66},
+    // ]);
     const [ownershipList, setOwnershipList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});
     const [name, setName] = useState('');
@@ -106,7 +107,7 @@ const NewHeritancePage = () => {
 
     // It is required at least 2 heirs and 1 ownership
     const isNextButtonDisabled = () => {
-        return (heirDataStep === 2 && heirsList.length < 2) || (heirDataStep === 3 && ownershipList.length < 1);
+        return (heirDataStep === 1 && name === '') || (heirDataStep === 2 && heirsList.length < 2) || (heirDataStep === 3 && ownershipList.length < 1);
     }
 
     // It is required at least one asset
