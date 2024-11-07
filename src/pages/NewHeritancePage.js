@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
 import HeirData from '../Components/HeirData';
 import NewHeirModal from '../Components/NewHeirModal';
@@ -38,6 +39,8 @@ const NewHeritancePage = () => {
 
     const [validator] = useState(new SimpleReactValidator());
 
+    const navigate = useNavigate();
+
     const handleSave = async () => {
         const auxInheritance = {
             name: name,
@@ -49,8 +52,9 @@ const NewHeritancePage = () => {
         console.log(auxInheritance)
         console.log(JSON.stringify(auxInheritance))
         try {
-            await apiSaveInheritance(auxInheritance);
+            const result = await apiSaveInheritance(auxInheritance);
             Swal.fire(messagesObj.newInheritanceSuccess);
+            navigate(`/inheritance/${result.id}`)
             
         } catch (err) {
             console.log(err);
@@ -123,16 +127,18 @@ const NewHeritancePage = () => {
 
                 {/*STEP 1: NAME*/}
                 {(heirDataStep === 1) && (
-                    <div className="form-group">
-                    <label>Nombre herencia</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={name}
-                        onChange={(event) => {setName(event.target.value)}}
-                    />
-                    {validator.message('name', name, 'required|alpha_num_space')}
-                </div>
+                    <form className='custom-form'>
+                        <div className="form-group">
+                            <label>Nombre herencia</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={name}
+                                onChange={(event) => {setName(event.target.value)}}
+                            />
+                            {validator.message('name', name, 'required|alpha_num_space')}
+                        </div>
+                    </form>
                 )}
                 
                 {/*STEP 2: HEIRS*/}
