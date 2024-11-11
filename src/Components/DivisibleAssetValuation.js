@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuationObj}) => {
+const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownershipId )
+    console.log(ownershipsList)
+    console.log(asset)
+    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId )
+
 
     useEffect(() => {
         // If it is cash value = ref value
@@ -29,8 +32,7 @@ const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuati
             assetsValuationObj: {
                 ...valuationObj.assetsValuationObj,
                 divisibleAssetsList: auxValList
-            }
-           
+            }  
         })
     }
 

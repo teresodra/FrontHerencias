@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const IndivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuationObj}) => {
+const IndivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownership );
+    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownership );
 
     console.log(valuationObj)
         

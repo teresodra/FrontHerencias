@@ -4,11 +4,11 @@ import Select from 'react-select';
 import { useSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal, assetData, setAssetData}) => {
+const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeModal, assetData, setAssetData}) => {
 
     const [asset, setAsset] = useState(assetData ? assetData : {});
     const [ownershipId, setOwnershipId] = useState(null);
-    const ownerShipOptions = ownershipList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
+    const ownerShipOptions = ownershipsList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
 
     const nameRef = React.createRef();
     const refValueRef = React.createRef();
@@ -108,7 +108,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
 
 
                 <div className="form-group">
-                    <label htmlFor="refValue">Valor de mercado</label>
+                    <label htmlFor="refValue">Valor de referencia</label>
                     <input
                         type="text"
                         name="refValue"

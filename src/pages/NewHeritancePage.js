@@ -17,14 +17,14 @@ const NewHeritancePage = () => {
 
     // const [heirsList, setHeirsList] = useState([]);
     // To avoid doing it when testing ownership
-    const [heirsList, setHeirsList] = useState([]);
-    // const [heirsList, setHeirsList] = useState([
-    //     {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
-    //     {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
-    //     {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
-    //     {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66},
-    // ]);
-    const [ownershipList, setOwnershipList] = useState([]);
+    // const [heirsList, setHeirsList] = useState([]);
+    const [heirsList, setHeirsList] = useState([
+        {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
+        {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
+        {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
+        {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66},
+    ]);
+    const [ownershipsList, setOwnershipsList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});
     const [name, setName] = useState('');
     const [heirModalIsOpen, setHeirModalIsOpen] = useState(false);
@@ -46,7 +46,7 @@ const NewHeritancePage = () => {
         const auxInheritance = {
             name: name,
             heirsList: heirsList,
-            ownershipList: ownershipList,
+            ownershipsList: ownershipsList,
             assetsObj: assetsObj
         }
 
@@ -75,11 +75,11 @@ const NewHeritancePage = () => {
     }
 
     const removeOwnership = (ownershipId) => {
-        setOwnershipList(ownershipList.filter(ownership => ownership.id !== ownershipId))
+        setOwnershipsList(ownershipsList.filter(ownership => ownership.id !== ownershipId))
     };
 
     const editOwnership = (ownershipId) => {
-        let auxOwn = ownershipList.find(ownership => ownership.id === ownershipId);
+        let auxOwn = ownershipsList.find(ownership => ownership.id === ownershipId);
         setOwnershipToEdit({...auxOwn});
         setOwnershipModalIsOpen(true);
     }
@@ -107,7 +107,7 @@ const NewHeritancePage = () => {
 
     // It is required at least 2 heirs and 1 ownership
     const isNextButtonDisabled = () => {
-        return (heirDataStep === 1 && name === '') || (heirDataStep === 2 && heirsList.length < 2) || (heirDataStep === 3 && ownershipList.length < 1);
+        return (heirDataStep === 1 && name === '') || (heirDataStep === 2 && heirsList.length < 2) || (heirDataStep === 3 && ownershipsList.length < 1);
     }
 
     // It is required at least one asset
@@ -181,9 +181,9 @@ const NewHeritancePage = () => {
                     <>
                         <h2>Ownership</h2>
 
-                        {(ownershipList.length > 0) && (
+                        {(ownershipsList.length > 0) && (
                             <div className='card-container'>
-                            {ownershipList.map((ownership) => (
+                            {ownershipsList.map((ownership) => (
                                 <OwnershipData
                                     key={ownership.id}
                                     ownership={ownership}
@@ -204,8 +204,8 @@ const NewHeritancePage = () => {
                         <NewOwnershipModal
                             modalIsOpen={ownershipModalIsOpen}
                             setModalIsOpen={setOwnershipModalIsOpen}
-                            ownershipList={ownershipList}
-                            setOwnershipList={setOwnershipList}
+                            ownershipsList={ownershipsList}
+                            setOwnershipsList={setOwnershipsList}
                             heirsList={heirsList}
                             ownershipData={ownershipToEdit}
                             setOwnershipData={setOwnershipToEdit}
@@ -229,7 +229,7 @@ const NewHeritancePage = () => {
                             setModalIsOpen={setAssetModalIsOpen}
                             assetsObj={assetsObj}
                             setAssetsObj={setAssetsObj}
-                            ownershipList={ownershipList}
+                            ownershipsList={ownershipsList}
                             assetData={assetToEdit}
                             setAssetData={setAssetToEdit}
                             assetDataType={assetType}
@@ -243,7 +243,7 @@ const NewHeritancePage = () => {
                                     <DivisibleAsset
                                         key={asset.id}
                                         asset={asset}
-                                        ownershipList={ownershipList}
+                                        ownershipsList={ownershipsList}
                                         assetsObj={assetsObj}
                                         setAssetsObj={setAssetsObj}
                                         removeAsset={removeAsset}
@@ -262,7 +262,7 @@ const NewHeritancePage = () => {
                                     <IndivisibleAsset
                                         key={asset.id}
                                         asset={asset}
-                                        ownershipList={ownershipList} 
+                                        ownershipsList={ownershipsList} 
                                         assetsObj={assetsObj}
                                         setAssetsObj={setAssetsObj}
                                         removeAsset={removeAsset}

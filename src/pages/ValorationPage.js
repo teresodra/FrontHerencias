@@ -10,7 +10,7 @@ import messagesObj from "../schemas/messages";
 const ValuationPage = () => {
 
     
-    // const [inheritance, setInheritance] = useState(JSON.parse('{"heirsList":[{"name":"Mario Martinez Lafuente","id":"sdgfsdfds","age":26},{"name":"Tereso del Rio Almajano","id":"adsfsaf","age":26},{"name":"Raul Perez Rodriguez","id":"dsadad","age":31},{"name":"Miguel Jimenez Garcia","id":"","age":66}],"ownershipList":[{"heirPercObj":{"sdgfsdfds":{"pp":"1","np":"2","uv":"13"},"adsfsaf":{"pp":"4","np":"5","uv":"6"},"dsadad":{"pp":"7","np":"8","uv":"9"},"":{"pp":"10","np":"11","uv":"12"}},"name":"1","id":"570ea8fe-2754-4915-863b-b25f2605e39c"}],"assetsObj":{"divisibleAssetsList":[{"name":"tierra","quantity":"2","marketValue":"10000","category":"other","ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"fd32fbf3-33e7-4399-858a-d38c98ce524a"},{"name":"sdfdsf","quantity":"1","marketValue":"12","category":"cash","ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"1ce200be-bb67-4294-a6bb-4f3f61ee1ce8"}],"indivisibleAssetsList":[{"name":"coche","marketValue":"500","category":null,"ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"bfcf78e5-6228-4ef7-87b3-5c926093b942"},{"name":"casa","marketValue":"3","category":null,"ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"726d1aea-6251-42bc-a571-fef237a1ddc9"}]}}'));
+    // const [inheritance, setInheritance] = useState(JSON.parse('{"heirsList":[{"name":"Mario Martinez Lafuente","id":"sdgfsdfds","age":26},{"name":"Tereso del Rio Almajano","id":"adsfsaf","age":26},{"name":"Raul Perez Rodriguez","id":"dsadad","age":31},{"name":"Miguel Jimenez Garcia","id":"","age":66}],"ownershipsList":[{"heirPercObj":{"sdgfsdfds":{"pp":"1","np":"2","uv":"13"},"adsfsaf":{"pp":"4","np":"5","uv":"6"},"dsadad":{"pp":"7","np":"8","uv":"9"},"":{"pp":"10","np":"11","uv":"12"}},"name":"1","id":"570ea8fe-2754-4915-863b-b25f2605e39c"}],"assetsObj":{"divisibleAssetsList":[{"name":"tierra","quantity":"2","marketValue":"10000","category":"other","ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"fd32fbf3-33e7-4399-858a-d38c98ce524a"},{"name":"sdfdsf","quantity":"1","marketValue":"12","category":"cash","ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"1ce200be-bb67-4294-a6bb-4f3f61ee1ce8"}],"indivisibleAssetsList":[{"name":"coche","marketValue":"500","category":null,"ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"bfcf78e5-6228-4ef7-87b3-5c926093b942"},{"name":"casa","marketValue":"3","category":null,"ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"726d1aea-6251-42bc-a571-fef237a1ddc9"}]}}'));
     const [inheritance, setInheritance] = useState({});
     // const heirId = "sdgfsdfds"; // poner como parametro
     const [isLoading, setIsLoading] = useState(true);
@@ -65,8 +65,8 @@ const ValuationPage = () => {
         console.log(JSON.stringify(valuationObj))
         let auxInheritance = {
             ...inheritance,
-            heirValuationList: [
-                ...(inheritance?.heirValuationList || []), // Initially is undefined
+            heirValuationsList: [
+                ...(inheritance?.heirValuationsList || []), // Initially is undefined
                 valuationObj
             ]
         }
@@ -138,7 +138,7 @@ const ValuationPage = () => {
                                 <DivisibleAssetValuation
                                     key={asset.id}
                                     asset={asset}
-                                    ownershipList={inheritance.ownershipList}
+                                    ownershipsList={inheritance.ownershipsList}
                                     valuationObj={valuationObj}
                                     setValuationObj={setValuationObj}
                                 />
@@ -159,7 +159,7 @@ const ValuationPage = () => {
                                 <IndivisibleAssetValuation
                                     key={asset.id}
                                     asset={asset}
-                                    ownershipList={inheritance.ownershipList}
+                                    ownershipsList={inheritance.ownershipsList}
                                     valuationObj={valuationObj}
                                     setValuationObj={setValuationObj}
                                 />

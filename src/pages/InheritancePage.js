@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { apiGetInheritance } from '../services/api';
+import { apiCalculate, apiGetInheritance } from '../services/api';
 import HeirWrap from '../Components/HeirWrap';
 
 const InheritancePage = () => {
@@ -44,17 +44,21 @@ const InheritancePage = () => {
 
     const isAllValuated = () => {
         console.log(inheritance)
-        if (!inheritance.heirValuationList) {
+        if (!inheritance.heirValuationsList) {
             console.log('treu')
             return true
         }
 
-        console.log(inheritance.heirsList.length !== inheritance.heirValuationList.length)
-        return inheritance.heirsList.length !== inheritance.heirValuationList.length;
+        console.log(inheritance.heirsList.length !== inheritance.heirValuationsList.length)
+        return inheritance.heirsList.length !== inheritance.heirValuationsList.length;
     }
 
-    const calculateInheritance = () =>{
-
+    const calculateInheritance = async () =>{
+        try {
+            await apiCalculate(inheritanceId);
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     if (isLoading) {
@@ -90,7 +94,7 @@ const InheritancePage = () => {
                 </div>
 
                 <div className='button-container'>
-                    <button className='custom-button' disabled={isAllValuated()} onClick={goToHeirsList}>
+                    <button className='custom-button' disabled={isAllValuated()} onClick={calculateInheritance}>
                         Calcular
                     </button>
                 </div>

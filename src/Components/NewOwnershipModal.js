@@ -6,7 +6,7 @@ import NewOwnershipForm from './NewOwnershipForm';
 
 Modal.setAppElement('#root');  // Required for accessibility
 
-const NewOwnershipModal = ({modalIsOpen, setModalIsOpen, ownershipList, setOwnershipList, heirsList,
+const NewOwnershipModal = ({modalIsOpen, setModalIsOpen, ownershipsList, setOwnershipsList, heirsList,
     ownershipData, setOwnershipData
 }) => {
     
@@ -14,7 +14,7 @@ const NewOwnershipModal = ({modalIsOpen, setModalIsOpen, ownershipList, setOwner
         setModalIsOpen(false);
     }
 
-    console.log(ownershipList)
+    console.log(ownershipsList)
     
     return(
         <Modal
@@ -35,8 +35,8 @@ const NewOwnershipModal = ({modalIsOpen, setModalIsOpen, ownershipList, setOwner
             <div className='modal-content-container'>
                 <div className="modal-content">
                     <NewOwnershipForm
-                        ownershipList={ownershipList}
-                        setOwnershipList={setOwnershipList}
+                        ownershipsList={ownershipsList}
+                        setOwnershipsList={setOwnershipsList}
                         ownershipData={ownershipData}
                         setOwnershipData={setOwnershipData}
                         heirsList={heirsList}

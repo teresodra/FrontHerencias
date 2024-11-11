@@ -21,7 +21,7 @@ const HeirWrap = ({inheritance, heirId}) => {
 
     // Check if heir has already valuated the assets
     const checkIfValuated = () => {
-        return inheritance.heirValuationList && inheritance.heirValuationList.find(val => val.heirId === heirId)
+        return inheritance.heirValuationsList && inheritance.heirValuationsList.find(val => val.heirId === heirId)
     }
     
     const goToValoration = () => {

@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { useSearchParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
-const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal, assetData, setAssetData}) => {
+const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeModal, assetData, setAssetData}) => {
 
     const [asset, setAsset] = useState(assetData ? assetData : {});
     const [ownershipId, setOwnershipId] = useState(null);
@@ -13,7 +13,8 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
     const nameRef = React.createRef();
     const quantityRef = React.createRef();
     const refValueRef = React.createRef();
-    const ownerShipOptions = ownershipList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
+    console.log(ownershipsList)
+    const ownerShipOptions = ownershipsList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
 
     const categoryOptionsList = [
         {label: "Dinero", value: "cash"},
@@ -136,7 +137,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="refValue">Valor de mercado por unidad</label>
+                    <label htmlFor="refValue">Valor de referencia por unidad</label>
                     <input
                         type="text"
                         name="refValue"

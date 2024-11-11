@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import { v4 as uuidv4 } from 'uuid';
 
-const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownershipData, setOwnershipData, closeModal}) => {
+const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownershipData, setOwnershipData, closeModal}) => {
 
     const [ownership, setOwnership] = useState(ownershipData ? ownershipData : {})
     const [heirPercObj, setHeirPercObj] = useState({});
@@ -63,18 +63,18 @@ const NewOwnershipForm = ({ownershipList, setOwnershipList, heirsList, ownership
     };
 
     const addNewOwnership = () => {
-        setOwnershipList([
-            ...ownershipList,
+        setOwnershipsList([
+            ...ownershipsList,
             {...ownership, id: uuidv4()} // Create id so it has a reference to be edited
         ])
     }
 
     const editOwnership = () => {
-        // Find ownership index from ownershipList
-        const index = ownershipList.findIndex((ownObj) => ownObj.id === ownership.id);
-        let auxOwnershipList = [...ownershipList];
-        auxOwnershipList[index] = ownership;
-        setOwnershipList(auxOwnershipList);
+        // Find ownership index from ownershipsList
+        const index = ownershipsList.findIndex((ownObj) => ownObj.id === ownership.id);
+        let auxOwnershipsList = [...ownershipsList];
+        auxOwnershipsList[index] = ownership;
+        setOwnershipsList(auxOwnershipsList);
     }
 
     const initializeHeirPercObj = () =>{

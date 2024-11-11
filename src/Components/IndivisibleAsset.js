@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, removeAsset, editAsset}) => {
+const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipsList, removeAsset, editAsset}) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownershipId );
+    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
     
     return (
         <div className='card-data-container'>

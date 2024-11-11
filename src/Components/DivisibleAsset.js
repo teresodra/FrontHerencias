@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const DivisibleAsset = ({asset, ownershipList, removeAsset, editAsset}) => {
+const DivisibleAsset = ({asset, ownershipsList, removeAsset, editAsset}) => {
 
     console.log(asset)
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownershipId )
+    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId )
     
 
     return (

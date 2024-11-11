@@ -10,11 +10,12 @@ import AssetDivisivleInChunksForm from './AssetDivisivleInChunksForm';
 Modal.setAppElement('#root');  // Required for accessibility
 
 
-const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ownershipList,
+const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ownershipsList,
     assetData, setAssetData, assetDataType //these ones only used when editing an asset
 }) => {
 
     const [assetType, setAssetType] = useState(null);
+    console.log(ownershipsList)
     
     const assetOptionsList = [
         {label: "Divisible", value: "divisible"},
@@ -74,7 +75,7 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
                             assetsObj={assetsObj}
                             setAssetsObj={setAssetsObj}
                             closeModal={closeModal}
-                            ownershipList={ownershipList}
+                            ownershipsList={ownershipsList}
                             assetData={assetData}
                             setAssetData={setAssetData}
                         />
@@ -85,7 +86,7 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
                             assetsObj={assetsObj}
                             setAssetsObj={setAssetsObj}
                             closeModal={closeModal}
-                            ownershipList={ownershipList}
+                            ownershipsList={ownershipsList}
                             assetData={assetData}
                             setAssetData={setAssetData}
                         />
@@ -117,7 +118,7 @@ export default NewAssetModal;
 //         divisibleInChunksAssetsList: [], // Lista objetos divisibleInChunksAsset
 //         divisibleInPartsAssetsList: [] // Lista objetos divisibleInPartsAsset
 //     },
-//     ownershipList: [
+//     ownershipsList: [
 //         // Lista objetos ownership
 //     ]
 // }
