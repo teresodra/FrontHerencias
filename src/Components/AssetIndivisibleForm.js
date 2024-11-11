@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal, assetData, setAssetData}) => {
 
     const [asset, setAsset] = useState(assetData ? assetData : {});
-    const [ownership, setOwnership] = useState(null);
+    const [ownershipId, setOwnershipId] = useState(null);
     const ownerShipOptions = ownershipList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
 
     const nameRef = React.createRef();
@@ -23,7 +23,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
     const loadData = () => {
         nameRef.current.value = assetData.name;
         marketValueRef.current.value = assetData.marketValue;
-        setOwnership(ownerShipOptions.find(owShip => owShip.value === assetData.ownership));
+        setOwnershipId(ownerShipOptions.find(owShip => owShip.value === assetData.ownershipId));
     }
 
     const handleSubmit = (e) => {
@@ -86,9 +86,9 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
     const changeOwnership = (event) => {
         setAsset({
             ...asset,
-            ownership: event.value
+            ownershipId: event.value
         })
-        setOwnership(event)
+        setOwnershipId(event)
     }
 
 
@@ -124,9 +124,9 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
                         options={ownerShipOptions}
                         onChange={changeOwnership}
                         placeholder="Seleccionar..."
-                        value={ownership}
+                        value={ownershipId}
                     />
-                    {validator.message('ownership', asset.ownership, 'required')}
+                    {validator.message('ownership', asset.ownershipId, 'required')}
                 </div>
 
 

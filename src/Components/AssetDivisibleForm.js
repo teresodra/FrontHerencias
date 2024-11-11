@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal, assetData, setAssetData}) => {
 
     const [asset, setAsset] = useState(assetData ? assetData : {});
-    const [ownership, setOwnership] = useState(null);
+    const [ownershipId, setOwnershipId] = useState(null);
     const [category, setCategory] = useState(null);
 
     const nameRef = React.createRef();
@@ -32,7 +32,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
         nameRef.current.value = assetData.name;
         quantityRef.current.value = assetData.quantity;
         marketValueRef.current.value = assetData.marketValue;
-        setOwnership(ownerShipOptions.find(owShip => owShip.value === assetData.ownership))
+        setOwnershipId(ownerShipOptions.find(owShip => owShip.value === assetData.ownershipId))
         setCategory(categoryOptionsList.find(cat => cat.value === assetData.category))
     }
 
@@ -104,9 +104,9 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
     const changeOwnership = (event) => {
         setAsset({
             ...asset,
-            ownership: event.value
+            ownershipId: event.value
         })
-        setOwnership(event);
+        setOwnershipId(event);
     }
 
     return (
@@ -154,6 +154,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
                         placeholder="Seleccionar..."
                         value={category}
                     />
+                    {validator.message('category', asset.category, 'required')}
                 </div>
 
                 <div className="form-group">
@@ -161,9 +162,10 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
                     <Select
                         options={ownerShipOptions}
                         onChange={changeOwnership}
-                        value={ownership}
+                        value={ownershipId}
                         placeholder="Seleccionar..."
                     />
+                    {validator.message('ownership', asset.ownershipId, 'required')}
                 </div>
 
                 <div className='formGroup'>

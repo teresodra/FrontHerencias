@@ -4,7 +4,7 @@ import NewAssetModal from "./NewAssetModal";
 const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, removeAsset, editAsset}) => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownership );
+    const ownership = ownershipList.find(ownership => ownership.id === asset.ownershipId );
     
     return (
         <div className='card-data-container'>
@@ -36,17 +36,6 @@ const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, remove
                     <div>{ownership.name}</div>
                 </div>
             </div>
-{/* 
-            <NewAssetModal
-                modalIsOpen={modalIsOpen}
-                setModalIsOpen={setModalIsOpen}
-                assetsObj={assetsObj}
-                setAssetsObj={setAssetsObj}
-                ownershipList={ownershipList}
-                assetData={asset}
-                assetDataType={'indivisible'}
-            /> */}
-
 
         </div>
     )

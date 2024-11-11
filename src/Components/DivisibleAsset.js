@@ -4,7 +4,7 @@ import NewAssetModal from "./NewAssetModal";
 const DivisibleAsset = ({asset, ownershipList, removeAsset, editAsset}) => {
 
     console.log(asset)
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownership )
+    const ownership = ownershipList.find(ownership => ownership.id === asset.ownershipId )
     
 
     return (
@@ -47,15 +47,6 @@ const DivisibleAsset = ({asset, ownershipList, removeAsset, editAsset}) => {
                 </div>
             </div>
 
-            {/* <NewAssetModal
-                modalIsOpen={modalIsOpen}
-                setModalIsOpen={setModalIsOpen}
-                assetsObj={assetsObj}
-                setAssetsObj={setAssetsObj}
-                ownershipList={ownershipList}
-                assetData={asset}
-                assetDataType={'divisible'}
-            /> */}
         </div>
     )
 };
