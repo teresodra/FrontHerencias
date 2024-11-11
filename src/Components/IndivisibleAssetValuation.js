@@ -45,8 +45,8 @@ const IndivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValua
                 {!isWrapped && (
                     <div className="unwrapped-content">
                         <div className='card-data-item'>
-                            <label>Valor mercado:</label>
-                            <div>{asset.marketValue}</div>
+                            <label>Valor de referencia:</label>
+                            <div>{asset.refValue}</div>
                         </div>
 
                         <div className='card-data-item'>

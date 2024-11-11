@@ -5,12 +5,12 @@ const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuati
 
 
     const [isWrapped, setIsWrapped] = useState(true);
-    const ownership = ownershipList.find(ownership => ownership.id === asset.ownership )
+    const ownership = ownershipList.find(ownership => ownership.id === asset.ownershipId )
 
     useEffect(() => {
-        // If it is cash value = market value
+        // If it is cash value = ref value
         if(asset.category === "cash") {
-            addValuation(asset.marketValue)
+            addValuation(asset.refValue)
         }
     }, []);
 
@@ -59,8 +59,8 @@ const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuati
                         </div>
 
                         <div className='card-data-item'>
-                            <label>Valor de mercado por unidad</label>
-                            <div>{asset.marketValue} {"€"}</div>
+                            <label>Valor de referncia por unidad</label>
+                            <div>{asset.refValue} {"€"}</div>
                         </div>
 
                         {asset.category === "cash" && (
@@ -82,7 +82,7 @@ const DivisibleAssetValuation = ({asset, ownershipList, valuationObj, setValuati
                                 {(asset.category === "cash") ? (
                                     <input type="number"
                                         disabled={true}
-                                        value={asset.marketValue}
+                                        value={asset.refValue}
                                     /> 
                                 ) : (
                                     <input
