@@ -11,7 +11,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
     const ownerShipOptions = ownershipList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
 
     const nameRef = React.createRef();
-    const marketValueRef = React.createRef();
+    const refValueRef = React.createRef();
     const [validator] = useState(new SimpleReactValidator());
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
 
     const loadData = () => {
         nameRef.current.value = assetData.name;
-        marketValueRef.current.value = assetData.marketValue;
+        refValueRef.current.value = assetData.refValue;
         setOwnershipId(ownerShipOptions.find(owShip => owShip.value === assetData.ownershipId));
     }
 
@@ -78,7 +78,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
         setAsset({
             ...asset,
             name: nameRef.current.value,
-            marketValue: marketValueRef.current.value,
+            refValue: refValueRef.current.value,
             category: null
         })
     }
@@ -108,14 +108,14 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModa
 
 
                 <div className="form-group">
-                    <label htmlFor="marketValue">Valor de mercado</label>
+                    <label htmlFor="refValue">Valor de mercado</label>
                     <input
                         type="text"
-                        name="marketValue"
-                        ref={marketValueRef}
+                        name="refValue"
+                        ref={refValueRef}
                         onChange={changeState}
                     />
-                    {validator.message('marketValue', asset.marketValue, 'required|numeric')}
+                    {validator.message('refValue', asset.refValue, 'required|numeric')}
                 </div>
 
                 <div className="form-group">

@@ -32,8 +32,8 @@ const DivisibleAsset = ({asset, ownershipList, removeAsset, editAsset}) => {
                 </div>
 
                 <div className='card-data-item'>
-                    <label>Valor de mercado por unidad</label>
-                    <div>{asset.marketValue} {"€"}</div>
+                    <label>Valor de referencia por unidad</label>
+                    <div>{asset.refValue} {"€"}</div>
                 </div>
 
                 <div className='card-data-item'>

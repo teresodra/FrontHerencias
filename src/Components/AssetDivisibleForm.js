@@ -12,7 +12,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
 
     const nameRef = React.createRef();
     const quantityRef = React.createRef();
-    const marketValueRef = React.createRef();
+    const refValueRef = React.createRef();
     const ownerShipOptions = ownershipList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
 
     const categoryOptionsList = [
@@ -31,7 +31,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
     const loadData = () => {
         nameRef.current.value = assetData.name;
         quantityRef.current.value = assetData.quantity;
-        marketValueRef.current.value = assetData.marketValue;
+        refValueRef.current.value = assetData.refValue;
         setOwnershipId(ownerShipOptions.find(owShip => owShip.value === assetData.ownershipId))
         setCategory(categoryOptionsList.find(cat => cat.value === assetData.category))
     }
@@ -60,7 +60,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
             ...asset,
             name: nameRef.current.value,
             quantity: quantityRef.current.value,
-            marketValue: marketValueRef.current.value,
+            refValue: refValueRef.current.value,
         })
     }
 
@@ -136,14 +136,14 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipList, closeModal,
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="marketValue">Valor de mercado por unidad</label>
+                    <label htmlFor="refValue">Valor de mercado por unidad</label>
                     <input
                         type="text"
-                        name="marketValue"
-                        ref={marketValueRef}
+                        name="refValue"
+                        ref={refValueRef}
                         onChange={changeState}
                     />
-                    {validator.message('marketValue', asset.marketValue, 'required|numeric')}
+                    {validator.message('refValue', asset.refValue, 'required|numeric')}
                 </div>
 
                 <div className="form-group">

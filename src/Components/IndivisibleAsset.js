@@ -27,8 +27,8 @@ const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipList, remove
                 </div>
 
                 <div className='card-data-item'>
-                    <label>Valor mercado:</label>
-                    <div>{asset.marketValue}</div>
+                    <label>Valor de referencia:</label>
+                    <div>{asset.refValue}</div>
                 </div>
 
                 <div className='card-data-item'>
