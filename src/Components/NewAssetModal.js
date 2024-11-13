@@ -97,6 +97,9 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
                             assetsObj={assetsObj}
                             setAssetsObj={setAssetsObj}
                             closeModal={closeModal}
+                            ownershipsList={ownershipsList}
+                            assetData={assetData}
+                            setAssetData={setAssetData}
                             
                         />
                     )}

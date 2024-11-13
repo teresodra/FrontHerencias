@@ -6,6 +6,7 @@ import IndivisibleAssetValuation from "../Components/IndivisibleAssetValuation";
 import { apiGetInheritance, apiEditInheritance } from "../services/api";
 import Swal from 'sweetalert2';
 import messagesObj from "../schemas/messages";
+import DivisibleInChunksAssetValuation from "../Components/DivisibleInChunksAssetValuation";
 
 const ValuationPage = () => {
 
@@ -43,6 +44,7 @@ const ValuationPage = () => {
             } else {
                 data = await apiGetInheritance(inheritanceId);
             }
+
             console.log(data)
             calculateSteps(data);
             setInheritance(data);
@@ -187,7 +189,17 @@ const ValuationPage = () => {
                     <>
                         <h2>Bienes divisibles por trozos</h2>
                         {inheritance.assetsObj.divisibleInChunksAssetsList ? (
-                            <div></div>
+                            <div className='card-container'>
+                                {inheritance.assetsObj.divisibleInChunksAssetsList.map((asset) => (
+                                    <DivisibleInChunksAssetValuation
+                                        key={asset.id}
+                                        asset={asset}
+                                        ownershipsList={inheritance.ownershipsList}
+                                        valuationObj={valuationObj}
+                                        setValuationObj={setValuationObj}
+                                    />
+                                ))}
+                            </div>
                         ) : (
                             <div>No hay bienes de este tipo</div>
                         )}

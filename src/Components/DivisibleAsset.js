@@ -4,7 +4,7 @@ import NewAssetModal from "./NewAssetModal";
 const DivisibleAsset = ({asset, ownershipsList, removeAsset, editAsset}) => {
 
     console.log(asset)
-    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId )
+    
     
 
     return (

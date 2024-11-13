@@ -14,7 +14,6 @@ const IndivisibleAsset = ({asset, assetsObj, setAssetsObj, ownershipsList, remov
                     <span className="material-symbols-outlined">close</span>
                 </div>
 
-                {/* <div onClick={() => {setModalIsOpen(true)}}> */}
                 <div onClick={() => {editAsset(asset.id, 'indivisible')}}>
                     <span className="material-symbols-outlined">edit</span>
                 </div>

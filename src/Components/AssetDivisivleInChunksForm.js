@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
 import { useSearchParams } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
-const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, closeModal}) => {
+const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, ownershipsList, closeModal, assetData, setAssetData}) => {
 
     const [asset, setAsset] = useState({});
+    const [ownershipId, setOwnershipId] = useState(null);
+    const ownerShipOptions = ownershipsList.map(ownership => ownership = {value: ownership.id, label: ownership.name})
+
 
     const unitSizeOptions = [
         {label: "m2", value: "m2"},
@@ -16,24 +20,72 @@ const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, closeModal}) => {
 
     const nameRef = React.createRef();
     const totalSizeRef = React.createRef();
-    const marketValueRef = React.createRef();
+    const refValueRef = React.createRef();
     const minimumSizeRef = React.createRef();
 
     
+    const [validator] = useState(new SimpleReactValidator());
 
-    const validator = new SimpleReactValidator();
+    useEffect(() => {
+        if (assetData) {
+            loadData();
+        }
+    }, [])
+
+    const loadData = () => {
+        nameRef.current.value = assetData.name;
+        totalSizeRef.current.value = assetData.totalSize;
+        refValueRef.current.value = assetData.refValue;
+        minimumSizeRef.current.value = assetData.minimumSize;
+        setOwnershipId(ownerShipOptions.find(owShip => owShip.value === assetData.ownershipId));
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         changeState();
-        console.log('submit')
+
+
         if (validator.allValid()){
-            console.log('entro')
-            updateAssetObj();
+            if (assetData) {
+                editAsset();
+                // To avoid loading data to edit when creating the next new item
+                setAssetData();
+            }
+            else {
+                addNewAsset();
+            }
             closeModal();
         } else {
             validator.showMessages();
         }
+    }
+
+    const editAsset = () => {
+        // Find asset index from assetList
+        console.log(assetsObj)
+        const index = assetsObj.divisibleInChunksAssetsList.findIndex(
+            (assetObj) => assetObj.id === asset.id
+        );
+        let auxAssetList = [...assetsObj.divisibleInChunksAssetsList];
+        auxAssetList[index] = asset;
+        setAssetsObj(
+            {
+                ...assetsObj,
+                divisibleInChunksAssetsList: auxAssetList
+            }
+        )
+    }
+
+    const addNewAsset = () => {
+        setAssetsObj(
+            {
+                ...assetsObj,
+                divisibleInChunksAssetsList: [
+                    ...(assetsObj?.divisibleInChunksAssetsList || []), // Initially is undefined
+                    {...asset, id:  uuidv4()} // Create id so it has a reference to be edited
+                ]
+            }
+        )
     }
 
     const changeState = () => {
@@ -42,24 +94,12 @@ const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, closeModal}) => {
             name: nameRef.current.value,
             totalSize: totalSizeRef.current.value,
             minimumSize: minimumSizeRef.current.value,
-            marketValue: marketValueRef.current.value,
+            refValue: refValueRef.current.value,
             unitSize: unitSize.value,
             category: null
         })
     }
 
-    const updateAssetObj = () => {
-        console.log(assetsObj)
-        setAssetsObj(
-            {
-                ...assetsObj,
-                divisibleInChunksAssetsList: [
-                    ...(assetsObj?.divisibleInChunksAssetsList || []), // Initially is undefined
-                    asset
-                ]
-            }
-        )
-    }
 
     const changeUnitSize = (event) => {
         setUnitSize(event);
@@ -67,6 +107,14 @@ const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, closeModal}) => {
             ...asset,
             unitSize: event.value
         })
+    }
+
+    const changeOwnership = (event) => {
+        setAsset({
+            ...asset,
+            ownershipId: event.value
+        })
+        setOwnershipId(event)
     }
 
 
@@ -107,14 +155,14 @@ const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, closeModal}) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="marketValue">Valor de mercado por {unitSize.label}</label>
+                    <label htmlFor="refValue">Valor de referencia por {unitSize.label}</label>
                     <input
                         type="text"
-                        name="marketValue"
-                        ref={marketValueRef}
+                        name="refValue"
+                        ref={refValueRef}
                         onChange={changeState}
                     />
-                    {validator.message('marketValue', asset.marketValue, 'required|numeric')}
+                    {validator.message('refValue', asset.refValue, 'required|numeric')}
                 </div>
 
                 <div className="form-group">
@@ -126,6 +174,17 @@ const AssetDivisivleInChunksForm = ({assetsObj, setAssetsObj, closeModal}) => {
                         onChange={changeState}
                     />
                     {validator.message('minimumSize', asset.minimumSize, 'required|numeric')}
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="categry">Ownership</label>
+                    <Select
+                        options={ownerShipOptions}
+                        onChange={changeOwnership}
+                        placeholder="Seleccionar..."
+                        value={ownershipId}
+                    />
+                    {validator.message('ownership', asset.ownershipId, 'required')}
                 </div>
 
 

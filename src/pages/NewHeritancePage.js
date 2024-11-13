@@ -266,7 +266,7 @@ const NewHeritancePage = () => {
                                         assetsObj={assetsObj}
                                         setAssetsObj={setAssetsObj}
                                         removeAsset={removeAsset}
-                                        editAsset={editAsset}
+                                        
                                     />
                                 ))}
                             </div>
@@ -275,10 +275,16 @@ const NewHeritancePage = () => {
 
                         {(assetsObj.divisibleInChunksAssetsList && assetsObj.divisibleInChunksAssetsList.length > 0) && (
                             <>
-                            <h3>Bienes indivisibles: {assetsObj.divisibleInChunksAssetsList.length}</h3>
+                            <h3>Bienes divisibles en trozos: {assetsObj.divisibleInChunksAssetsList.length}</h3>
                             <div className='assets-container'>
                                 {assetsObj.divisibleInChunksAssetsList.map((asset, index) => (
-                                    <DivisibleInChunksAsset key={asset.id} asset={asset} removeAsset={removeAsset}/>
+                                    <DivisibleInChunksAsset
+                                        key={asset.id}
+                                        asset={asset}
+                                        ownershipsList={ownershipsList} 
+                                        removeAsset={removeAsset}
+                                        editAsset={editAsset}
+                                    />
                                 ))}
                             </div>
                             </>
