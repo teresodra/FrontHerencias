@@ -86,6 +86,7 @@ export const apiEditInheritance = async (inheritance) => {
 export const apiCalculate = async (inheritanceId) => {
     try {
         const response = await api.post(`/inheritance/${inheritanceId}/calculate`, )
+        console.log(response.data)
         return response.data
     } catch (error) {
         throw error;

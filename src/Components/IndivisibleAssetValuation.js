@@ -5,7 +5,7 @@ const IndivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValu
 
 
     const [isWrapped, setIsWrapped] = useState(true);
-    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownership );
+    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
 
     console.log(valuationObj)
         

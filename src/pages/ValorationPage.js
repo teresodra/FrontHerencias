@@ -99,8 +99,9 @@ const ValuationPage = () => {
     } 
 
     const updateMoney = (event) => {
-        setValuationObj({...valuationObj, money: event.target.value})
-        setMoney(event.target.value)
+        let money = parseFloat(event.target.value)
+        setValuationObj({...valuationObj, money: money})
+        setMoney(money)
     }
 
     if (isLoading) {
