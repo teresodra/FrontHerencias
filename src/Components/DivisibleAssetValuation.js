@@ -26,7 +26,7 @@ const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuat
     const addValuation = (value) => {
         let auxValList = [...valuationObj.assetsValuationObj.divisibleAssetsList];
         const index = auxValList.findIndex(assetVal => assetVal.assetId === asset.id);
-        auxValList[index] = {...auxValList[index], value: value}
+        auxValList[index] = {...auxValList[index], unitValue: value}
         setValuationObj({
             ...valuationObj,
             assetsValuationObj: {

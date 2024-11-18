@@ -92,7 +92,7 @@ const ValuationPage = () => {
             let auxList = [];
             for (let asset of inheritanceData.assetsObj[assetType]){
                 // if it is cash, value = its market valur
-                auxList.push({assetId: asset.id, value: asset?.category === 'cash' ? asset.marketValue : null})
+                auxList.push({assetId: asset.id, value: asset?.category === 'cash' ? asset.refValue : null})
             }
             auxObj.assetsValuationObj[assetType] = auxList;
         }

@@ -14,11 +14,11 @@ const IndivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValu
         let auxValList = [...valuationObj.assetsValuationObj.indivisibleAssetsList];
         let value = parseFloat(event.target.value) // Convert to float
         const index = auxValList.findIndex(assetVal => assetVal.assetId === asset.id);
-        auxValList[index] = {...auxValList[index], value: value}
+        auxValList[index] = {...auxValList[index], wholeAssetValue: value}
         setValuationObj({
             ...valuationObj,
             assetsValuationObj: {
-                ...valuationObj.assetsValuation,
+                ...valuationObj.assetsValuationObj,
                 indivisibleAssetsList: auxValList
             }
         })
