@@ -5,16 +5,25 @@ const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuat
 
 
     const [isWrapped, setIsWrapped] = useState(true);
-    console.log(ownershipsList)
+    const [assetValue, setAssetValue] = useState(null);
     console.log(asset)
     const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId )
 
 
     useEffect(() => {
+        
+        // Initialize value in case already valuated
+        setAssetValue(
+            valuationObj.assetsValuationObj.divisibleAssetsList.find(
+                indAs => indAs.assetId === asset.id
+            )?.unitValue
+        )
+        
         // If it is cash value = ref value
         if(asset.category === "cash") {
             addValuation(asset.refValue)
         }
+
     }, []);
 
     const handleInputChange = (event) => {
@@ -34,6 +43,7 @@ const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuat
                 divisibleAssetsList: auxValList
             }  
         })
+        setAssetValue(value);
     }
 
     return (
@@ -90,6 +100,7 @@ const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuat
                                     <input
                                         type="text"
                                         onChange={handleInputChange}
+                                        value={assetValue}
                                         onClick={(event) => event.stopPropagation()}
                                     /> 
                                 )}

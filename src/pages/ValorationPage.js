@@ -48,7 +48,15 @@ const ValuationPage = () => {
             console.log(data)
             calculateSteps(data);
             setInheritance(data);
-            initializeValuationObj(data);
+
+        
+            if (!data?.heirValuationsObj?.[heirId]){
+                initializeValuationObj(data);
+            } else {
+                setValuationObj(data.heirValuationsObj?.[heirId])
+                setMoney(data?.heirValuationsObj?.[heirId].money)
+            }
+            
         } catch (err) {
             console.log(err)
         }
@@ -67,10 +75,10 @@ const ValuationPage = () => {
         console.log(JSON.stringify(valuationObj))
         let auxInheritance = {
             ...inheritance,
-            heirValuationsList: [
-                ...(inheritance?.heirValuationsList || []), // Initially is undefined
-                valuationObj
-            ]
+            heirValuationsObj: {
+                ...(inheritance?.heirValuationsObj || {}), // Initially is undefined
+                [heirId]: valuationObj
+            }
         }
         setInheritance(auxInheritance);
         console.log(auxInheritance)
@@ -87,12 +95,14 @@ const ValuationPage = () => {
     }
 
     const initializeValuationObj = (inheritanceData) => {
-        let auxObj = {heirId: heirId, money: 0, assetsValuationObj: {}};
+
+
+        let auxObj = {money: 0, assetsValuationObj: {}};
         for (let assetType in inheritanceData.assetsObj){
             let auxList = [];
             for (let asset of inheritanceData.assetsObj[assetType]){
                 // if it is cash, value = its market valur
-                auxList.push({assetId: asset.id, value: asset?.category === 'cash' ? asset.refValue : null})
+                auxList.push({assetId: asset.id})
             }
             auxObj.assetsValuationObj[assetType] = auxList;
         }
@@ -158,7 +168,7 @@ const ValuationPage = () => {
                     <h2>Bienes indivisibles</h2>
                     {inheritance.assetsObj.indivisibleAssetsList ? (
                         <div className='card-container'>
-                            {inheritance.assetsObj.indivisibleAssetsList.map((asset, index) => (
+                            {inheritance.assetsObj.indivisibleAssetsList.map((asset) => (
                                 <IndivisibleAssetValuation
                                     key={asset.id}
                                     asset={asset}

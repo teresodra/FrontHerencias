@@ -1,13 +1,25 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import NewAssetModal from "./NewAssetModal";
 
 const IndivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuationObj}) => {
 
 
     const [isWrapped, setIsWrapped] = useState(true);
+    console.log(asset)
+    console.log(valuationObj)
+    const [assetValue, setAssetValue] = useState(null);
     const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
 
     console.log(valuationObj)
+
+    useEffect(() => {
+        // Initialize value in case already valuated
+        setAssetValue(
+            valuationObj.assetsValuationObj.indivisibleAssetsList.find(
+                indAs => indAs.assetId === asset.id
+            )?.wholeAssetValue
+        )
+    }, []);
         
     const addValuation = (event) => {
         event.stopPropagation(); // Prevent unwrapping when typing the value
@@ -22,6 +34,7 @@ const IndivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValu
                 indivisibleAssetsList: auxValList
             }
         })
+        setAssetValue(value);
     }
     
     return (
@@ -60,6 +73,7 @@ const IndivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValu
                                 <input 
                                     type="text"
                                     onChange={addValuation}
+                                    value={assetValue}
                                     onClick={(event) => event.stopPropagation()}
                                 />
                             </div>
