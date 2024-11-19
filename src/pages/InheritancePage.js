@@ -44,13 +44,15 @@ const InheritancePage = () => {
 
     const isAllValuated = () => {
         console.log(inheritance)
-        if (!inheritance.heirValuationsList) {
+        if (!inheritance.heirValuationsObj) {
             console.log('treu')
             return true
         }
 
-        console.log(inheritance.heirsList.length !== inheritance.heirValuationsList.length)
-        return inheritance.heirsList.length !== inheritance.heirValuationsList.length;
+        console.log(Object.keys(inheritance.heirValuationsObj).length)
+        console.log(inheritance.heirsList.length !== Object.keys(inheritance.heirValuationsObj).length)
+        return inheritance.heirsList.length !== Object.keys(inheritance.heirValuationsObj).length;
+        // return inheritance.heirsList.length !== inheritance.heirValuationsList.length;
     }
 
     const calculateInheritance = async () =>{
