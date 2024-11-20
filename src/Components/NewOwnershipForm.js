@@ -15,12 +15,25 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                     const { heirPercObj } = val;
                     for (let heirId in heirPercObj) {
                         const heir = heirPercObj[heirId];
-                        if (heir.pp === null || heir.np === null || heir.uv === null) {
+                        if (heir.fullOwnership === null || heir.bareOwnership === null || heir.lifeUsufruct === null) {
                             return false;
                         }
                     }
                     return true;
                 }, 
+                required: true
+            },
+            fullOwnershipSumOne: {
+                message: 'All the full ownership values must add 1',
+                rule: (val) => {
+                    const { heirPercObj } = val;
+                    let total = 0;
+                    for (let heirId in heirPercObj) {
+                        total += parseFloat(heirPercObj[heirId].fullOwnership)
+                    }
+                    console.log(total)
+                    return 1 - total < 1e-6
+                },
                 required: true
             }
         }
@@ -80,7 +93,7 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
     const initializeHeirPercObj = () =>{
         let auxObj = {};
         for (let heir of heirsList){
-            auxObj[heir.id] = {pp: 0, np: 0, uv: 0}
+            auxObj[heir.id] = {fullOwnership: 0, bareOwnership: 0, lifeUsufruct: 0}
         }
         setOwnership({...ownership, heirPercObj: auxObj});
     }
@@ -103,16 +116,16 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
     };
 
     // Validator to check that all the percentages are filled
-    const validateHeirPercObj = () => {
-        const { heirPercObj } = ownership;
-        for (let heirId in heirPercObj) {
-            const heir = heirPercObj[heirId];
-            if (heir.pp === null || heir.np === null || heir.uv === null) {
-                return false;
-            }
-        }
-        return true;
-    };
+    // const validateHeirPercObj = () => {
+    //     const { heirPercObj } = ownership;
+    //     for (let heirId in heirPercObj) {
+    //         const heir = heirPercObj[heirId];
+    //         if (heir.pp === null || heir.np === null || heir.uv === null) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // };
 
     return (
         <div>
@@ -135,19 +148,21 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
 
                         <div className='ownership-values-container'>
                             <label>Plena propiedad:</label>
-                            <input type='text' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'pp', e.target.value)}/>
+                            <input type='text' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'fullOwnership', e.target.value)}/>
+                            
                             {/* <input type='number' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'pp', e.target.value)}/> */}
                         </div>
+                        {validator.message('heirPercObj', ownership, 'fullOwnershipSumOne')}
 
                         <div className='ownership-values-container'>
                             <label>Nuda propiedad:</label>
-                            <input type='text' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'np', e.target.value)}/>
+                            <input type='text' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'bareOwnership', e.target.value)}/>
                             {/* <input type='number' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'np', e.target.value)}/> */}
                         </div>
 
                         <div className='ownership-values-container'>
                             <label>Usfructo vitalicio:</label>
-                            <input type='text' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'uv', e.target.value)}/>
+                            <input type='text' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'lifeUsufruct', e.target.value)}/>
                             {/* <input type='number' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'uv', e.target.value)}/> */}
                         </div>
 

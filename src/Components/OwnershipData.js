@@ -27,9 +27,9 @@ const OwnershipData = ({ownership, heirsList, removeOwnership, editOwnership}) =
                 {Object.entries(ownership.heirPercObj).map(([heirId, values]) => (
                     <div key={heirId} className='card-data-item'>
                         <div>{heirsList.find(heir => heir.id === heirId).name}</div>
-                        <div>{values.pp}</div>
-                        <div>{values.np}</div>
-                        <div>{values.uv}</div>
+                        <div>{values.fullOwnership}</div>
+                        <div>{values.bareOwnership}</div>
+                        <div>{values.lifeUsufruct}</div>
                     </div>
                 ))}
 
