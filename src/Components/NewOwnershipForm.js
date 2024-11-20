@@ -23,19 +23,36 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                 }, 
                 required: true
             },
-            fullOwnershipSumOne: {
-                message: 'All the full ownership values must add 1',
+            sumOne: {
+                message: 'The sum of all full ownership and bare ownership must add 1',
                 rule: (val) => {
                     const { heirPercObj } = val;
                     let total = 0;
                     for (let heirId in heirPercObj) {
                         total += parseFloat(heirPercObj[heirId].fullOwnership)
+                        total += parseFloat(heirPercObj[heirId].bareOwnership)
                     }
                     console.log(total)
                     return 1 - total < 1e-6
                 },
                 required: true
+            },
+            sumEqual: {
+                message: 'The sum of all life usufruct and bare ownership must be the same',
+                rule: (val) => {
+                    const { heirPercObj } = val;
+                    let totaLife = 0;
+                    let totalBare = 0;
+                    for (let heirId in heirPercObj) {
+                        totaLife += parseFloat(heirPercObj[heirId].lifeUsufruct)
+                        totalBare += parseFloat(heirPercObj[heirId].bareOwnership)
+                    }
+                    console.log(totaLife - totalBare)
+                    return Math.abs(totaLife - totalBare) < 1e-6
+                },
+                required: true
             }
+
         }
     }));
 
@@ -152,7 +169,7 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                             
                             {/* <input type='number' defaultValue={0} min="0" max="100" onChange={(e) => handleInputChange(heir.id, 'pp', e.target.value)}/> */}
                         </div>
-                        {validator.message('heirPercObj', ownership, 'fullOwnershipSumOne')}
+                        
 
                         <div className='ownership-values-container'>
                             <label>Nuda propiedad:</label>
@@ -169,6 +186,8 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                     </div>
                 ))}
                 {validator.message('heirPercObj', ownership, 'allFilled')}
+                {validator.message('heirPercObj', ownership, 'sumOne')}
+                {validator.message('heirPercObj', ownership, 'sumEqual')}
 
 
                 <button type="submit" className='custom-button'>
