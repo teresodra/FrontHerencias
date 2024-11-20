@@ -97,7 +97,7 @@ const ValuationPage = () => {
     const initializeValuationObj = (inheritanceData) => {
 
 
-        let auxObj = {money: 0, assetsValuationObj: {}};
+        let auxObj = {heirId: heirId, money: 0, assetsValuationObj: {}};
         for (let assetType in inheritanceData.assetsObj){
             let auxList = [];
             for (let asset of inheritanceData.assetsObj[assetType]){
