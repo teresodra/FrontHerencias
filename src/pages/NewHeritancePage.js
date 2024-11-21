@@ -179,7 +179,7 @@ const NewHeritancePage = () => {
                 {/*STEP 3: OWNERSHIP*/}
                 {(heirDataStep === 3) && (
                     <>
-                        <h2>Ownership</h2>
+                        <h2>Propiedades</h2>
 
                         {(ownershipsList.length > 0) && (
                             <div className='card-container'>
@@ -197,7 +197,7 @@ const NewHeritancePage = () => {
 
                         <div className='button-container'>
                             <button className='custom-button' onClick={() => {setOwnershipModalIsOpen(true)}}>
-                                Añadir ownership
+                                Añadir propiedad
                             </button>
                         </div>
 

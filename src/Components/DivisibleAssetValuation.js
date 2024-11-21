@@ -83,7 +83,7 @@ const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuat
                         )}
 
                         <div className='card-data-item'>
-                            <label>Ownership</label>
+                            <label>Propiedad</label>
                             <div>{ownership.name}</div>
                         </div>
 

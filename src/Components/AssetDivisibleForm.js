@@ -159,7 +159,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeModal
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="categry">Ownership</label>
+                    <label htmlFor="categry">Propiedad</label>
                     <Select
                         options={ownerShipOptions}
                         onChange={changeOwnership}
