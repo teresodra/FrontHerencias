@@ -93,3 +93,13 @@ export const apiCalculate = async (inheritanceId) => {
     }
 }
 
+export const apiGetSolution = async (inheritanceId) => {
+    try {
+        const response = await api.get(`/inheritance/${inheritanceId}/solution`, )
+        console.log(response.data)
+        return response
+    } catch (error) {
+        throw error;
+    }
+}
+

@@ -7,6 +7,7 @@ import Footer from "./Components/Footer";
 import InheritancesListPage from "./pages/InheritancesListPage";
 import InheritancePage from "./pages/InheritancePage";
 import HeirsListPage from "./pages/HeirsListPage";
+import SolutionPage from "./pages/SolutionPage";
 
 const Router = () => {
 
@@ -25,6 +26,7 @@ const Router = () => {
                         <Route exact path="/inheritances-list" element={<InheritancesListPage/>} />
                         <Route exact path="/inheritance/:inheritanceId" element={<InheritancePage/>} />
                         <Route exact path="/inheritance/:inheritanceId/heir" element={<HeirsListPage/>} />
+                        <Route exact path="/inheritance/:inheritanceId/solution" element={<SolutionPage/>} />
                         <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<ValorationPage/>} />
                         
                     </Route>

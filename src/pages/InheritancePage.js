@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { apiCalculate, apiGetInheritance } from '../services/api';
+import { apiCalculate, apiGetInheritance, apiGetSolution } from '../services/api';
 import HeirWrap from '../Components/HeirWrap';
+import Swal from 'sweetalert2';
+import messagesObj from "../schemas/messages";
 
 const InheritancePage = () => {
 
@@ -10,6 +12,10 @@ const InheritancePage = () => {
     const {inheritanceId} = useParams();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const timerInterval = 1 * 1000; // 10 secs (in ms)
+    const [timerId, setTimerId] = useState(null);
+    
 
     useEffect(() => {
         loadInheritance();
@@ -28,7 +34,6 @@ const InheritancePage = () => {
             }
             setInheritance(data);
             setIsLoading(false);
-            console.log(isAllValuated())
         } catch (err) {
             console.log(err)
         }
@@ -38,9 +43,6 @@ const InheritancePage = () => {
 
     }
 
-    const goToHeirsList = () => {
-        navigate(`/inheritance/${inheritanceId}/heir`)
-    }
 
     const isAllValuated = () => {
         console.log(inheritance)
@@ -49,18 +51,41 @@ const InheritancePage = () => {
             return true
         }
 
-        console.log(Object.keys(inheritance.heirValuationsObj).length)
-        console.log(inheritance.heirsList.length !== Object.keys(inheritance.heirValuationsObj).length)
         return inheritance.heirsList.length !== Object.keys(inheritance.heirValuationsObj).length;
-        // return inheritance.heirsList.length !== inheritance.heirValuationsList.length;
     }
 
     const calculateInheritance = async () =>{
         try {
             await apiCalculate(inheritanceId);
+            // Start checking if solution available
+            let timId = setInterval(checkForSolution, timerInterval);
+            setTimerId(timId);
+            Swal.fire(messagesObj.calculateSuccess);
         } catch (err) {
-            console.log(err)
+            console.log(err);
+            Swal.fire(messagesObj.calculateError);
         }
+    }
+
+    const checkForSolution = async () => {
+        try {
+            console.log('trying')
+            let response = await apiGetSolution(inheritanceId);
+            if (response.status === 200) {
+                clearInterval(timerId); // Stop interval
+                setInheritance(response.data);
+            }
+
+            console.log(response)
+        } catch (err) {
+          console.log(err)
+          Swal.fire(messagesObj.calculateError);
+          clearInterval(timerId);
+        }
+    }
+
+    const goToSolutionPage = () => {
+        navigate(`/inheritance/${inheritance.id}/solution`, { state: { inheritance: inheritance } })
     }
 
     if (isLoading) {
@@ -98,6 +123,12 @@ const InheritancePage = () => {
                 <div className='button-container'>
                     <button className='custom-button' disabled={isAllValuated()} onClick={calculateInheritance}>
                         Calcular
+                    </button>
+                </div>
+
+                <div className='button-container'>
+                    <button className='custom-button' disabled={!inheritance.solution} onClick={goToSolutionPage}>
+                        Ver solucion
                     </button>
                 </div>
 
