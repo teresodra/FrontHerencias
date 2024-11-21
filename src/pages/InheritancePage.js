@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { apiCalculate, apiGetInheritance, apiGetSolution } from '../services/api';
 import HeirWrap from '../Components/HeirWrap';
@@ -14,7 +14,7 @@ const InheritancePage = () => {
     const location = useLocation();
 
     const timerInterval = 1 * 1000; // 10 secs (in ms)
-    const [timerId, setTimerId] = useState(null);
+    const timerIdRef = useRef(null); // Using a ref to store the timer ID
     
 
     useEffect(() => {
@@ -58,8 +58,7 @@ const InheritancePage = () => {
         try {
             await apiCalculate(inheritanceId);
             // Start checking if solution available
-            let timId = setInterval(checkForSolution, timerInterval);
-            setTimerId(timId);
+            timerIdRef.current = setInterval(checkForSolution, timerInterval);
             Swal.fire(messagesObj.calculateSuccess);
         } catch (err) {
             console.log(err);
@@ -71,16 +70,21 @@ const InheritancePage = () => {
         try {
             console.log('trying')
             let response = await apiGetSolution(inheritanceId);
+            console.log(response.status === 200)
             if (response.status === 200) {
-                clearInterval(timerId); // Stop interval
+                console.log('entro')
+                clearInterval(timerIdRef.current); // Access the timer ID from the ref
+                timerIdRef.current = null; // Reset the ref
+                // console.log(timerId)
                 setInheritance(response.data);
             }
 
             console.log(response)
         } catch (err) {
-          console.log(err)
-          Swal.fire(messagesObj.calculateError);
-          clearInterval(timerId);
+            console.log(err)
+            Swal.fire(messagesObj.calculateError);
+            clearInterval(timerIdRef.current); // Access the timer ID from the ref
+            timerIdRef.current = null; // Reset the ref
         }
     }
 
