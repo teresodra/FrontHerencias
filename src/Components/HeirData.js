@@ -3,6 +3,19 @@ import NewHeirModal from './NewHeirModal';
 
 const HeirData = ({heir, removeHeir, editHeir}) => {
     
+    const [heirType, setHeirType] = useState(null);
+    const typeOptions = [
+        {label: "Tipo I", value: 1},
+        {label: "Tipo II", value: 2},
+        {label: "Tipo III", value: 3},
+        {label: "Tipo IV", value: 4},
+    ]
+
+    useEffect(() => {
+        let usType = typeOptions.find(op => op.value === heir.type).label;
+        setHeirType(usType.split(' ')[1]);
+    }, [])
+
     return (
         <div className='card-data-container'>
             
@@ -26,6 +39,15 @@ const HeirData = ({heir, removeHeir, editHeir}) => {
                     <label>Edad:</label>
                     <div>{heir.age}</div>
                 </div>
+
+                <div className='card-data-item'>
+                    <label>Tipo:</label>
+                    <div>{heirType}</div>
+                </div>
+
+
+
+
             </div>
 
         </div>

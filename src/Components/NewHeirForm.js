@@ -1,22 +1,32 @@
 import { toHaveDescription } from '@testing-library/jest-dom/matchers';
 import React, { useEffect, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
+import Select from 'react-select';
 import { v4 as uuidv4 } from 'uuid';
 
 
 const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal}) => {
 
     const [heir, setHeir] = useState(heirData ? heirData : {})
+    const [heirType, setHeirType] = useState(null);
     
     const nameRef = React.createRef();
     const ageRef = React.createRef();
 
     const [validator] = useState(new SimpleReactValidator());
+
+    const typeOptions = [
+        {label: "Tipo I", value: 1},
+        {label: "Tipo II", value: 2},
+        {label: "Tipo III", value: 3},
+        {label: "Tipo IV", value: 4},
+    ]
     
     useEffect(() => {
         if (heirData) {
             nameRef.current.value = heirData.name;
             ageRef.current.value = heirData.age;
+            setHeirType(typeOptions.find(opt => opt.value === heirData.type))
         }
     }, [])
     
@@ -55,6 +65,7 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
             ...heirsList,
             {...heir, id:  uuidv4()} // Create id so it has a reference to be edited
         ])
+        setHeir({});
     }
 
     // Edit the heir data
@@ -64,6 +75,14 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
         let auxHeirsList = [...heirsList];
         auxHeirsList[index] = heir;
         setHeirsList(auxHeirsList);
+    }
+
+    const changeHeirType = (value) => {
+        setHeirType(value);
+        setHeir({
+            ...heir,
+            type: value.value
+        })
     }
 
     return (
@@ -89,7 +108,17 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
                         onChange={changeState}
                     />
                     {validator.message('age', heir.age, 'required|numeric|min:0,num|max:130,num')}
-                    
+                </div>
+
+                <div className='form-group'>
+                    <label htmlFor="type">Tipo</label>
+                    <Select
+                        options={typeOptions}
+                        onChange={changeHeirType}
+                        placeholder="Seleccionar..."
+                        value={heirType}
+                    />
+                    {validator.message('type', heir.type, 'required')}
                 </div>
 
                 <button type="submit" className='custom-button'>

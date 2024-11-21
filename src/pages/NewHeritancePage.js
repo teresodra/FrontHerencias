@@ -19,10 +19,10 @@ const NewHeritancePage = () => {
     // To avoid doing it when testing ownership
     // const [heirsList, setHeirsList] = useState([]);
     const [heirsList, setHeirsList] = useState([
-        {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26},
-        {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26},
-        {name: "Raul Perez Rodriguez", id: "dsadad", age: 31},
-        {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66},
+        {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26, type: 1},
+        {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26, type: 2},
+        {name: "Raul Perez Rodriguez", id: "dsadad", age: 31, type: 3},
+        {name: "Miguel Jimenez Garcia", id: "dfzzgzg", age: 66, type: 4},
     ]);
     const [ownershipsList, setOwnershipsList] = useState([]);
     const [assetsObj, setAssetsObj] = useState({});

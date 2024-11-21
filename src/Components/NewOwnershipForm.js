@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownershipData, setOwnershipData, closeModal}) => {
 
     const [ownership, setOwnership] = useState(ownershipData ? ownershipData : {})
-    const [heirPercObj, setHeirPercObj] = useState({});
+    // const [heirPercObj, setHeirPercObj] = useState({});
 
     const [validator] = useState(new SimpleReactValidator({
         validators: {
@@ -27,13 +27,15 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                 message: 'The sum of all full ownership and bare ownership must add 1',
                 rule: (val) => {
                     const { heirPercObj } = val;
+                    console.log(val)
                     let total = 0;
                     for (let heirId in heirPercObj) {
-                        total += parseFloat(heirPercObj[heirId].fullOwnership)
-                        total += parseFloat(heirPercObj[heirId].bareOwnership)
+                        total += parseFloat(heirPercObj[heirId].fullOwnership || 0)
+                        total += parseFloat(heirPercObj[heirId].bareOwnership || 0)
                     }
                     console.log(total)
-                    return 1 - total < 1e-6
+                    console.log(1 - total < 1e-6)
+                    return Math.abs(1 - total) < 1e-6
                 },
                 required: true
             },
@@ -44,15 +46,14 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                     let totaLife = 0;
                     let totalBare = 0;
                     for (let heirId in heirPercObj) {
-                        totaLife += parseFloat(heirPercObj[heirId].lifeUsufruct)
-                        totalBare += parseFloat(heirPercObj[heirId].bareOwnership)
+                        totaLife += parseFloat(heirPercObj[heirId].lifeUsufruct || 0)
+                        totalBare += parseFloat(heirPercObj[heirId].bareOwnership || 0)
                     }
                     console.log(totaLife - totalBare)
                     return Math.abs(totaLife - totalBare) < 1e-6
                 },
                 required: true
             }
-
         }
     }));
 
@@ -70,6 +71,9 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
         e.preventDefault();
         changeState();
 
+        console.log('Ownership:', ownership);
+        console.log('HeirPercObj:', ownership.heirPercObj);
+
         if (validator.allValid()){
             
             if (ownershipData) {
@@ -81,7 +85,7 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
             }
             closeModal();
         } else {
-            validator.showMessages();
+            validator.showMessages(true);
         }
     }
 
@@ -185,9 +189,9 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
 
                     </div>
                 ))}
-                {validator.message('heirPercObj', ownership, 'allFilled')}
-                {validator.message('heirPercObj', ownership, 'sumOne')}
-                {validator.message('heirPercObj', ownership, 'sumEqual')}
+                {validator.message('allFilledValidation', ownership, 'allFilled')}
+                {validator.message('sumOneValidation', ownership, 'sumOne')}
+                {validator.message('sumEqualValidation', ownership, 'sumEqual')}
 
 
                 <button type="submit" className='custom-button'>
