@@ -29,5 +29,10 @@ const messagesObj = {
         text: "Error iniciando el cálculo, prueba mas tarde",
         icon: "error"
     },
+    solutionNotFoundError: {
+        title: 'Error',
+        text: "La solución no ha sido calculada todavía",
+        icon: "error"
+    },
 }
 export default messagesObj;

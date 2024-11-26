@@ -29,6 +29,7 @@ const InheritancePage = () => {
                 data = location.state?.inheritance // Get inheritance from state when clicking in inheritance wrap
             } else {
                 data = await apiGetInheritance(inheritanceId);
+
                 console.log('cojo data')
                 console.log(data)
             }
@@ -37,10 +38,6 @@ const InheritancePage = () => {
         } catch (err) {
             console.log(err)
         }
-    }
-
-    const loadValoration = async () => {
-
     }
 
 

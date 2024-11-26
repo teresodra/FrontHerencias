@@ -27,14 +27,12 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                 message: 'The sum of all full ownership and bare ownership must add 1',
                 rule: (val) => {
                     const { heirPercObj } = val;
-                    console.log(val)
                     let total = 0;
                     for (let heirId in heirPercObj) {
                         total += parseFloat(heirPercObj[heirId].fullOwnership || 0)
                         total += parseFloat(heirPercObj[heirId].bareOwnership || 0)
                     }
-                    console.log(total)
-                    console.log(1 - total < 1e-6)
+
                     return Math.abs(1 - total) < 1e-6
                 },
                 required: true
@@ -49,7 +47,6 @@ const NewOwnershipForm = ({ownershipsList, setOwnershipsList, heirsList, ownersh
                         totaLife += parseFloat(heirPercObj[heirId].lifeUsufruct || 0)
                         totalBare += parseFloat(heirPercObj[heirId].bareOwnership || 0)
                     }
-                    console.log(totaLife - totalBare)
                     return Math.abs(totaLife - totalBare) < 1e-6
                 },
                 required: true
