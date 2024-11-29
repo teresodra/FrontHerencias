@@ -13,8 +13,8 @@ const CustomTable = ({inheritance, valuesObj, heirPOV}) => {
     
 
     return (
-        <table border="1" style={{ borderCollapse: 'collapse', width: '100%' }}>
-          <thead>
+        <table className="custom-table">
+          <thead className="custom-thead">
             <tr>
             {/* {inheritance.heirsList.map((heir) => ( */}
               {Object.keys(valuesObj).map((heirId) => (
@@ -23,7 +23,7 @@ const CustomTable = ({inheritance, valuesObj, heirPOV}) => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="custom-tbody">
               <tr>
                 {/* {Object.values(valuesObj).map((value, i) => ( */}
                 {Object.entries(valuesObj).map(([heirId, value]) => (

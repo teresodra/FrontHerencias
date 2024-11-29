@@ -3,6 +3,9 @@
     --color-card-background: rgb(161, 201, 201);
     --color-card-border: rgb(100, 131, 131);
     --color-button-background: #1c3c4b;
+
+    --color-table: #13444b;
+    --color-td-bold-background: #51a5b4;
 }
 
 /* Apply box-sizing to all elements for better layout control */
@@ -73,6 +76,18 @@ body {
     min-height: 85vh;
     display: flex;
     flex-direction: column;
+}
+
+.aux-flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem
+}
+
+.bold-text {
+    font-weight: bold;
 }
 
 .button-container {
@@ -448,6 +463,15 @@ input[type="text"]{
     width: 2rem;
 }
 
+.sol-values-container {
+    /* width: 80%; */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: flex-start;
+    padding-left: 2rem;
+}
+
 /* #################################################################*/
 /* ####################### INHERITANCES LIST #######################*/
 /* #################################################################*/
@@ -486,6 +510,70 @@ input[type="text"]{
 /* ########################## TABLE ################################*/
 /* #################################################################*/
 
+.custom-table{
+    border-collapse: 'collapse';
+    border-spacing: 0; /* Removes any space between cells and borders */
+    width: '100%';
+    border: 1px solid #6e6e6e;
+    margin-bottom: 2rem;
+}
+
+
+.custom-thead {
+    background-color: var(--color-table);
+    color: white;
+}
+
+.custom-thead th{
+    /* border: 1px solid #2f484d; */
+}
+
+.custom-tbody {
+    background-color: #c5e8ee;
+    color: rgb(0, 0, 0);
+}
+
+.custom-td{
+    border: 0.5px solid var(--color-table);
+}
+
 .custom-td-bold {
+    border: 0.5px solid var(--color-table);
+    font-weight: bold;
+    background-color: var(--color-td-bold-background);
+}
+
+
+/* #################################################################*/
+/* ########################## TABs ################################*/
+/* #################################################################*/
+
+.tab-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    border-bottom: 1px solid #cfc9c9;
+    padding-bottom: 0.5rem;
+
+    /* color: var(--color-theme); */
+    /* color: #0d3035;; */
+    
+}
+
+
+.tab {
+    cursor: pointer;
+}
+
+
+.active{
+    text-decoration: underline;
     font-weight: bold;
 }
