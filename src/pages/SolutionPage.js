@@ -129,7 +129,7 @@ const SolutionPage = () => {
                                 
                                     <div className='aux-flex-row'>
                                         <div className='bold-text'>
-                                            {heirAllocation.moneyReceived >= 0  ? 'Aporta a la herencia:' : 'Recibe de la herencia:'}
+                                            {heirAllocation.moneyReceived <= 0  ? 'Aporta a la herencia:' : 'Recibe de la herencia:'}
                                         </div>
                                         <div>{Math.abs(heirAllocation.moneyReceived).toFixed(2)} €</div>
                                     </div>
