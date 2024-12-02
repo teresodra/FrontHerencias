@@ -112,14 +112,14 @@ const SolutionPage = () => {
                         <h3>Valores esperados</h3>
                         <CustomTable
                             inheritance={inheritance}
-                            valuesObj={inheritance.solution.perceivedValueMatrix?.[heirPOV?.value]?.valuesExpected}
+                            valuesObj={inheritance.solution.perceivedValueMatrix?.[heirPOV?.value]?.expectedValues}
                             heirPOV={heirPOV?.value}/>
 
 
                         <h3>Valores recibidos</h3>
                         <CustomTable
                             inheritance={inheritance}
-                            valuesObj={inheritance.solution.perceivedValueMatrix?.[heirPOV?.value]?.valuesReceived}
+                            valuesObj={inheritance.solution.perceivedValueMatrix?.[heirPOV?.value]?.receivedValues}
                             heirPOV={heirPOV?.value}
                         />
 

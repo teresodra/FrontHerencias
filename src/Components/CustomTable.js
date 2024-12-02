@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const CustomTable = ({inheritance, valuesObj, heirPOV}) => {
 
 
-    // const valuesObj = inheritance.solution.perceivedValueMatrix.refValue.valuesExpected;
-    // const valuesExpectedObj = inheritance.solution.perceivedValueMatrix.refValue;
+    // const valuesObj = inheritance.solution.perceivedValueMatrix.refValue.expectedValues;
+    // const expectedValuesObj = inheritance.solution.perceivedValueMatrix.refValue;
 
     if (!valuesObj)
         return <div></div>
