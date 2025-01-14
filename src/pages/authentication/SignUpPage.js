@@ -4,6 +4,7 @@ import {signUp} from '../../services/createAccount';
 import SimpleReactValidator from 'simple-react-validator';
 // import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
+import TermsModal from '../../Components/TermsModal';
 
 function SignUpPage() {
 
@@ -19,6 +20,16 @@ function SignUpPage() {
     const [error, setError] = useState(null);
     const [visible, setVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    const terms = `
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+    `
 
     // const { t, i18n } = useTranslation('login'); // Load translations from the 'login' namespace
 
@@ -167,12 +178,17 @@ function SignUpPage() {
                     <div className='form-group terms-container mt-1'>
                         <input type="checkbox" onChange={() => {setIsAccepted(!isAccepted);}}/>
                         <div>{"He leído y acepto los"}&nbsp;</div>
-                        <div className='login-link'>{"términos y condiciones"}</div>
-                        
+                        <div className='login-link' onClick={() => setIsModalOpen(true)}>{"términos y condiciones"}</div>
+                        <TermsModal
+                            modalIsOpen={isModalOpen}
+                            setModalIsOpen={setIsModalOpen}
+                            title={"Términos y condiciones"}
+                            content={terms}
+                        />
                     </div>
                 
                     <div className="button-container">
-                        <button className="custom-button" type="submit" disabled={isLoading}>
+                        <button className="custom-button" type="submit" disabled={isLoading || !isAccepted}>
                             {"Crear Cuenta"}
                         </button>
                     </div>
@@ -181,7 +197,6 @@ function SignUpPage() {
                 <div className="loader-clip-container">
                     <ClipLoader className="custom-spinner-clip" loading={isLoading} />
                 </div>        
-                
             </section>
         </div>
   );
