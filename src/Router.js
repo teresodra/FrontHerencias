@@ -11,6 +11,7 @@ import HeirsListPage from "./pages/HeirsListPage";
 import SolutionPage from "./pages/SolutionPage";
 import LoginPage from "./pages/authentication/LoginPage";
 import SignUpPage from "./pages/authentication/SignUpPage";
+import ChangePasswordPage from "./pages/authentication/ConfirmPasswordPage";
 
 const Router = () => {
 
@@ -24,6 +25,8 @@ const Router = () => {
                         <Route>
                             <Route exact path="/login" element={<LoginPage/>} />
                             <Route exact path="/sign-up" element={<SignUpPage/>} />
+                            <Route exact path="/change-password" element={<ChangePasswordPage/>} />
+
                             <Route exact path="/" element={<HomePage/>} />
                             <Route exact path="/home" element={<HomePage/>} />
 
