@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from './services/AuthContext'; // Import the AuthProvider
 import HomePage from "./pages/HomePage";
 import NewHeritancePage from "./pages/NewHeritancePage";
 import Header from "./Components/Header";
@@ -8,33 +9,38 @@ import InheritancesListPage from "./pages/InheritancesListPage";
 import InheritancePage from "./pages/InheritancePage";
 import HeirsListPage from "./pages/HeirsListPage";
 import SolutionPage from "./pages/SolutionPage";
+import LoginPage from "./pages/LoginPage";
 
 const Router = () => {
 
     return (
-        <BrowserRouter>
-            <div className="page-container">
-                <Header/>
-                <div className='body-content'>
-                <Routes>
-                    <Route>
-                        <Route exact path="/" element={<HomePage/>} />
-                        <Route exact path="/home" element={<HomePage/>} />
+        <AuthProvider>
+            <BrowserRouter>
+                <div className="page-container">
+                    <Header/>
+                    <div className='body-content'>
+                    <Routes>
+                        <Route>
+                            <Route exact path="/login" element={<LoginPage/>} />
+                            <Route exact path="/" element={<HomePage/>} />
+                            <Route exact path="/home" element={<HomePage/>} />
 
-                        {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
-                        <Route exact path="/new-heritance" element={<NewHeritancePage/>} />
-                        <Route exact path="/inheritances-list" element={<InheritancesListPage/>} />
-                        <Route exact path="/inheritance/:inheritanceId" element={<InheritancePage/>} />
-                        <Route exact path="/inheritance/:inheritanceId/heir" element={<HeirsListPage/>} />
-                        <Route exact path="/inheritance/:inheritanceId/solution" element={<SolutionPage/>} />
-                        <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<ValorationPage/>} />
-                        
-                    </Route>
-                </Routes>
+                            {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
+                            
+                            <Route exact path="/new-heritance" element={<NewHeritancePage/>} />
+                            <Route exact path="/inheritances-list" element={<InheritancesListPage/>} />
+                            <Route exact path="/inheritance/:inheritanceId" element={<InheritancePage/>} />
+                            <Route exact path="/inheritance/:inheritanceId/heir" element={<HeirsListPage/>} />
+                            <Route exact path="/inheritance/:inheritanceId/solution" element={<SolutionPage/>} />
+                            <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<ValorationPage/>} />
+                            
+                        </Route>
+                    </Routes>
+                    </div>
+                    <Footer/>
                 </div>
-                <Footer/>
-            </div>
-        </BrowserRouter>
+            </BrowserRouter>
+        </AuthProvider>
     )
 };
 export default Router;
