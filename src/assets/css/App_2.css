@@ -6,6 +6,10 @@
     row-gap: 9px;
 }
 
+.mt-1 {
+    margin-top: 1rem;
+}
+
 /* ############################################### */
 /* LOGIN */
 /* ############################################### */
@@ -40,4 +44,10 @@
     cursor: pointer;
     padding: 0;
     margin: 0;
+}
+
+.terms-container{
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: row;
 }

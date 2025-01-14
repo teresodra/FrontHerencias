@@ -9,7 +9,8 @@ import InheritancesListPage from "./pages/InheritancesListPage";
 import InheritancePage from "./pages/InheritancePage";
 import HeirsListPage from "./pages/HeirsListPage";
 import SolutionPage from "./pages/SolutionPage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/authentication/LoginPage";
+import SignUpPage from "./pages/authentication/SignUpPage";
 
 const Router = () => {
 
@@ -22,6 +23,7 @@ const Router = () => {
                     <Routes>
                         <Route>
                             <Route exact path="/login" element={<LoginPage/>} />
+                            <Route exact path="/sign-up" element={<SignUpPage/>} />
                             <Route exact path="/" element={<HomePage/>} />
                             <Route exact path="/home" element={<HomePage/>} />
 

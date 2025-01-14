@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {signIn} from '../services/authenticate';
-import AuthContext from '../services/AuthContext';
+import {signIn} from '../../services/authenticate';
+import AuthContext from '../../services/AuthContext';
 import SimpleReactValidator from 'simple-react-validator';
-import { apiGetStorageRoomsList } from '../services/api';
+import { apiGetStorageRoomsList } from '../../services/api';
 import { ClipLoader } from 'react-spinners';
 
 function LoginPage() {
