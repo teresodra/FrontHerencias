@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {signIn} from '../../services/authenticate';
 import AuthContext from '../../services/AuthContext';
 import SimpleReactValidator from 'simple-react-validator';
-import { apiGetStorageRoomsList } from '../../services/api';
+import { apiGetStorageRoomsList, apiPostAuthenticate } from '../../services/api';
 import { ClipLoader } from 'react-spinners';
 
 function LoginPage() {
@@ -43,6 +43,8 @@ function LoginPage() {
     const loginWithCognito = async () => {
         try {
             const result = await signIn(email, password);
+            console.log(result)
+            // const result = await apiPostAuthenticate(email, password);
 
             if (result.newPasswordRequired) {
                 setUser(result.cognitoUser)

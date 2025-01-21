@@ -1,3 +1,14 @@
+:root {
+    --color-theme: #13444b;
+    --color-card-background: rgb(161, 201, 201);
+    --color-card-border: rgb(100, 131, 131);
+    --color-button-background: #1c3c4b;
+    --color-theme-font: white;
+
+    --color-table: #13444b;
+    --color-td-bold-background: #51a5b4;
+}
+
 .form-group {
     width: 100%;
     display: flex;
@@ -6,8 +17,47 @@
     row-gap: 9px;
 }
 
+
+.text-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.invisible{
+    color: rgba(0, 0, 0, 0) !important;
+    cursor: default;
+}
+
+.mt-3 {
+    margin-top: 3rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
 .mt-1 {
     margin-top: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.width-100 {
+    width:100%
 }
 
 /* ############################################### */
@@ -50,4 +100,218 @@
     font-size: 0.9rem;
     display: flex;
     flex-direction: row;
+}
+
+/* ############################################### */
+/* BUTTONS */
+/* ############################################### */
+
+
+.text-icon-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.custom-button{
+    background-color: var(--color-theme);
+    color: var(--color-theme-font);
+    border: 0;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    min-width: 8rem;
+    transition: transform 0.1s ease; /* Smooth transition */
+}
+
+.custom-button.es{
+    min-width: 10rem;
+}
+
+.custom-button.delete{
+    background-color: var(--color-delete);
+}
+
+
+.custom-button:disabled{
+    opacity: 50%;
+    cursor: auto;    
+}
+
+.custom-button:not(:disabled):active {
+    transform: scale(0.95); /* Shrink button slightly on click */
+}
+
+.custom-button-small{
+    background-color: var(--color-theme);
+    color: var(--color-theme-font);
+    border: 0;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem 0.2rem 0.4rem;
+    transition: transform 0.1s ease; /* Smooth transition */
+    font-size: 1rem;
+}
+
+.custom-button-small.es{
+    min-width: 7rem;
+}
+
+.custom-button-small:disabled{
+    opacity: 50%;
+    cursor: auto;   
+}
+
+.custom-button-small.delete{
+    background-color: var(--color-delete);
+}
+
+.custom-button-small:not(:disabled):active {
+    transform: scale(0.95); /* Shrink button slightly on click */
+}
+
+.custom-button-small .material-symbols-outlined{
+    font-size: 1rem;
+}
+
+.custom-button-icon {
+    background-color: var(--color-theme);
+    color: var(--color-theme-font);
+    border: 0;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+    transition: transform 0.1s ease; /* Smooth transition */
+}
+
+.custom-button-icon .material-symbols-outlined{
+    font-size: 1.2rem;
+}
+
+.custom-button-icon:disabled{
+    opacity: 50%;
+    cursor: auto;   
+}
+
+.custom-button-icon:not(:disabled):active {
+    transform: scale(0.95); /* Shrink button slightly on click */
+}
+
+.custom-button-icon.delete{
+    background-color: var(--color-delete);
+}
+
+/* ############################################### */
+/* SPINNER */
+/* ############################################### */
+
+.loader-clip-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0.4rem;
+    /* width: 50%; */
+    /* border: 1px solid red; */
+    margin-top: 5rem;
+    /* margin-bottom: 2.5rem; */
+}
+
+
+.loader-clip-container-small{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0.4rem;
+    margin-top: 1.3rem;
+}
+
+.custom-spinner-clip{
+    color: var(--color-theme);
+    margin: 0;
+    /* height: 1rem !important; */
+    /* width: 100% !important; */
+    border-width: 0.2rem !important;
+}
+
+/* ############################################### */
+/* HEADER */
+/* ############################################### */
+.header {
+    background: var(--color-theme);
+    height: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-icon-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    color: white;
+}
+
+.header-title-container {
+    flex-grow: 1;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.hover-text {
+    visibility: hidden;   /* Initially hidden */
+    width: fit-content;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+    position: absolute;
+    z-index: 1;
+    bottom: -125%;  /* Position above the container */
+    left: 50%;
+    transform: translateX(-80%);
+    opacity: 0;
+    transition: opacity 0.3s;  /* Smooth transition */
+    border: 1px solid white;
+    white-space: nowrap; /* to force to be in one line */
+}
+
+.hover-container {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-container:hover .hover-text {
+    visibility: visible;  /* Show text on hover */
+    opacity: 1;           /* Make the text visible */
 }

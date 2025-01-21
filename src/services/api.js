@@ -2,7 +2,7 @@
 import axios from 'axios';
 // import {isTokenExpired} from './tokenService';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+const API_BASE_URL = 'https://e086aettoe.execute-api.eu-west-2.amazonaws.com';
 
 export default API_BASE_URL;
 
@@ -13,6 +13,7 @@ const api = axios.create({
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true, // Include cookies with each request
 });
 
 
@@ -39,6 +40,46 @@ const api = axios.create({
 //     }
 // );
 
+const apiRefreshToken = async () => {
+    
+    try {
+        const result = await axios.post(`${API_BASE_URL}/auth/token/refresh`, null,
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return result.data.accessToken;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// POST send token
+export const apiSendRefreshToken = async (refresToken) => {
+    try {
+        const result = await api.post(
+            '/auth/token',
+            refresToken
+        );
+        // console.log(result)
+    } catch (error) {
+        // throw error;
+        console.log(error)
+    }
+}
+
+// DELETE token
+export const apiDeleteRefreshToken = async () =>{
+    try {
+        const result = await api.delete('/auth/token');
+        console.log(result)
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
 
 // GET inheritance by Id
 export const apiGetInheritance = async (inheritanceId) => {

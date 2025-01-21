@@ -34,5 +34,14 @@ const messagesObj = {
         text: "La solución no ha sido calculada todavía",
         icon: "error"
     },
+    emailVerifiedSuccess: {
+        title: 'Email verificado',
+        text: 'Ahora puedes acceder',
+        icon: "success"
+    },
+    UserNotFoundException: {
+        title: 'Email no encontrado',
+        icon: "error"
+    }
 }
 export default messagesObj;

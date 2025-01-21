@@ -12,6 +12,8 @@ import SolutionPage from "./pages/SolutionPage";
 import LoginPage from "./pages/authentication/LoginPage";
 import SignUpPage from "./pages/authentication/SignUpPage";
 import ChangePasswordPage from "./pages/authentication/ConfirmPasswordPage";
+import PrivateRoute from "./Components/auth/PrivateRoute";
+import ConfirmEmailPage from "./pages/authentication/ConfirmEmailPage";
 
 const Router = () => {
 
@@ -26,18 +28,19 @@ const Router = () => {
                             <Route exact path="/login" element={<LoginPage/>} />
                             <Route exact path="/sign-up" element={<SignUpPage/>} />
                             <Route exact path="/change-password" element={<ChangePasswordPage/>} />
+                            <Route path="/confirm-email" element={<ConfirmEmailPage/>}/>
 
-                            <Route exact path="/" element={<HomePage/>} />
-                            <Route exact path="/home" element={<HomePage/>} />
+                            <Route exact path="/" element={<PrivateRoute element={HomePage} />} />
+                            <Route exact path="/home" element={<PrivateRoute element={HomePage} />} />
 
                             {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
                             
-                            <Route exact path="/new-heritance" element={<NewHeritancePage/>} />
-                            <Route exact path="/inheritances-list" element={<InheritancesListPage/>} />
-                            <Route exact path="/inheritance/:inheritanceId" element={<InheritancePage/>} />
-                            <Route exact path="/inheritance/:inheritanceId/heir" element={<HeirsListPage/>} />
-                            <Route exact path="/inheritance/:inheritanceId/solution" element={<SolutionPage/>} />
-                            <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<ValorationPage/>} />
+                            <Route exact path="/new-heritance" element={<PrivateRoute element={NewHeritancePage} />}/>
+                            <Route exact path="/inheritances-list" element={<PrivateRoute element={InheritancesListPage} />} />
+                            <Route exact path="/inheritance/:inheritanceId" element={<PrivateRoute element={InheritancePage} />} />
+                            <Route exact path="/inheritance/:inheritanceId/heir" element={<PrivateRoute element={HeirsListPage} />} />
+                            <Route exact path="/inheritance/:inheritanceId/solution" element={<PrivateRoute element={SolutionPage} />} />
+                            <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<PrivateRoute element={ValorationPage} />} />
                             
                         </Route>
                     </Routes>

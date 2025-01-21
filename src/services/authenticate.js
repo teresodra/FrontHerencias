@@ -1,10 +1,10 @@
-// import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
-// import userPool from './cognitoConfig';
-// import { apiSendRefreshToken } from "./api";
+import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
+import userPool from './cognitoConfig';
+import { apiSendRefreshToken } from "./api";
 
 
 const signIn = async (email, password) => {
-/*  
+ 
     const user = new CognitoUser({
         Username: email,
         Name: email,
@@ -42,7 +42,7 @@ const signIn = async (email, password) => {
                 reject(err); // Return the error on failure
             },
         });
-    });*/
+    });
 };
 
 export {signIn};
