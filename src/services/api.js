@@ -1,8 +1,8 @@
 // src/services/api.js
 import axios from 'axios';
-// import {isTokenExpired} from './tokenService';
+import {isTokenExpired} from './tokenService';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+const API_BASE_URL = 'https://e086aettoe.execute-api.eu-west-2.amazonaws.com';
 
 export default API_BASE_URL;
 
@@ -13,32 +13,73 @@ const api = axios.create({
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true, // Include cookies with each request
 });
 
 
 // Set up Axios interceptor to add the Authorization header
-// api.interceptors.request.use(
-//     async (config) => {
-//         // console.log(config)
-//         let accessToken = sessionStorage.getItem('accessToken');  // Get the access token from storage
+api.interceptors.request.use(
+    async (config) => {
+        // console.log(config)
+        let accessToken = sessionStorage.getItem('accessToken');  // Get the access token from storage
 
-//         if (isTokenExpired(accessToken)) {
-//             console.log('token expired')
-//             const newToken = await apiRefreshToken(); // If expired, refresh token (optional)
-//             sessionStorage.setItem('accessToken', newToken); // Store the new token
-//             accessToken = newToken
-//         } 
+        if (isTokenExpired(accessToken)) {
+            console.log('token expired')
+            const newToken = await apiRefreshToken(); // If expired, refresh token (optional)
+            sessionStorage.setItem('accessToken', newToken); // Store the new token
+            accessToken = newToken
+        } 
         
-//         if (accessToken) {
-//             config.headers['Authorization'] = `Bearer ${accessToken}`; // Attach token to headers
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         return Promise.reject(error); // Handle request errors
-//     }
-// );
+        if (accessToken) {
+            config.headers['Authorization'] = `Bearer ${accessToken}`; // Attach token to headers
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error); // Handle request errors
+    }
+);
 
+const apiRefreshToken = async () => {
+    
+    try {
+        const result = await axios.post(`${API_BASE_URL}/auth/token/refresh`, null,
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return result.data.accessToken;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// POST send token
+export const apiSendRefreshToken = async (refresToken) => {
+    try {
+        const result = await api.post(
+            '/auth/token',
+            refresToken
+        );
+        // console.log(result)
+    } catch (error) {
+        // throw error;
+        console.log(error)
+    }
+}
+
+// DELETE token
+export const apiDeleteRefreshToken = async () =>{
+    try {
+        const result = await api.delete('/auth/token');
+        console.log(result)
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
 
 // GET inheritance by Id
 export const apiGetInheritance = async (inheritanceId) => {

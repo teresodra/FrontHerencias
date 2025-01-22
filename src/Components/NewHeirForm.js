@@ -1,4 +1,3 @@
-import { toHaveDescription } from '@testing-library/jest-dom/matchers';
 import React, { useEffect, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
@@ -86,7 +85,7 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
     }
 
     return (
-        <div>
+        <div >
             <form className='modal-form' onSubmit={handleSubmit}>
                 <div className='form-group' >
                     <label htmlFor="name">Nombre</label>
