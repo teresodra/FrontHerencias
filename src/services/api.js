@@ -1,6 +1,6 @@
 // src/services/api.js
 import axios from 'axios';
-// import {isTokenExpired} from './tokenService';
+import {isTokenExpired} from './tokenService';
 
 const API_BASE_URL = 'https://e086aettoe.execute-api.eu-west-2.amazonaws.com';
 
@@ -18,27 +18,27 @@ const api = axios.create({
 
 
 // Set up Axios interceptor to add the Authorization header
-// api.interceptors.request.use(
-//     async (config) => {
-//         // console.log(config)
-//         let accessToken = sessionStorage.getItem('accessToken');  // Get the access token from storage
+api.interceptors.request.use(
+    async (config) => {
+        // console.log(config)
+        let accessToken = sessionStorage.getItem('accessToken');  // Get the access token from storage
 
-//         if (isTokenExpired(accessToken)) {
-//             console.log('token expired')
-//             const newToken = await apiRefreshToken(); // If expired, refresh token (optional)
-//             sessionStorage.setItem('accessToken', newToken); // Store the new token
-//             accessToken = newToken
-//         } 
+        if (isTokenExpired(accessToken)) {
+            console.log('token expired')
+            const newToken = await apiRefreshToken(); // If expired, refresh token (optional)
+            sessionStorage.setItem('accessToken', newToken); // Store the new token
+            accessToken = newToken
+        } 
         
-//         if (accessToken) {
-//             config.headers['Authorization'] = `Bearer ${accessToken}`; // Attach token to headers
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         return Promise.reject(error); // Handle request errors
-//     }
-// );
+        if (accessToken) {
+            config.headers['Authorization'] = `Bearer ${accessToken}`; // Attach token to headers
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error); // Handle request errors
+    }
+);
 
 const apiRefreshToken = async () => {
     
