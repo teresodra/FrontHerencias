@@ -35,7 +35,7 @@ const Router = () => {
 
                             {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
                             
-                            <Route exact path="/new-heritance" element={<PrivateRoute element={NewHeritancePage} />}/>
+                            <Route exact path="/inheritance/new" element={<PrivateRoute element={NewHeritancePage} />}/>
                             <Route exact path="/inheritances-list" element={<PrivateRoute element={InheritancesListPage} />} />
                             <Route exact path="/inheritance/:inheritanceId" element={<PrivateRoute element={InheritancePage} />} />
                             <Route exact path="/inheritance/:inheritanceId/heir" element={<PrivateRoute element={HeirsListPage} />} />

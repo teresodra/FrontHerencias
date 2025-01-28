@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetInheritances } from '../services/api';
+import { apiGetInheritancesList } from '../services/api';
 import InheritanceWrap from '../Components/InheritanceWrap';
 
 const InheritancesListPage = () => {
@@ -14,7 +14,7 @@ const InheritancesListPage = () => {
 
     const retrieveInheritances = async () => {
         try {
-            let data = await apiGetInheritances();
+            let data = await apiGetInheritancesList();
             console.log(data)
             setInheritancesList(data);
             setIsLoading(false);
