@@ -85,7 +85,7 @@ const ValuationPage = () => {
         console.log(JSON.stringify(auxInheritance))
 
         try {
-            await apiEditInheritance(auxInheritance)
+            await apiEditInheritance(auxInheritance);
             Swal.fire(messagesObj.valorationAddedSuccess)
             navigate(`/inheritance/${inheritance.id}`)
         } catch (err) {
