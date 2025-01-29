@@ -10,11 +10,12 @@ import { apiGetInheritancesList } from '../services/api';
 const HomePage = () => {
 
     const {inheritancesList, setInheritancesList, setInheritancesAccessList} = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!inheritancesList) {
+            setIsLoading(true);
             getInheritancesList();
         }
         setIsLoading(false);
@@ -29,7 +30,7 @@ const HomePage = () => {
         } catch (err) {
             await handleError(err, navigate)
         }
-        setIsLoading(false);
+        // setIsLoading(false);
     }
 
     const goToInheritance = (inheritanceId) => {
