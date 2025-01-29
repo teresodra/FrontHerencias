@@ -272,7 +272,7 @@
 /* ############################################### */
 .header {
     background: var(--color-theme);
-    height: 3rem;
+    height: 3.5rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
