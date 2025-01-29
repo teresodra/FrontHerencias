@@ -42,6 +42,26 @@ const messagesObj = {
     UserNotFoundException: {
         title: 'Email no encontrado',
         icon: "error"
-    }
+    },
+    networkError: {
+        title: "Error de conexión",
+        icon: "error"
+    },
+    sessionError: {
+        title: "La sesión ha expirado",
+        icon: "error"
+    },
+    accessDeniedError: {
+        title: "Accesso denegado",
+        icon: "error"
+    },
+    itemNotFoundError: {
+        title: "Elemento no encontrado",
+        icon: "error"
+    },
+    unexpectedError: {
+        title: "Error insesperado, inténtalo más tarde",
+        icon: "error"
+    },
 }
 export default messagesObj;

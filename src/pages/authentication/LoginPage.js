@@ -44,7 +44,6 @@ function LoginPage() {
         try {
             const result = await signIn(email, password);
             console.log(result)
-            // const result = await apiPostAuthenticate(email, password);
 
             if (result.newPasswordRequired) {
                 setUser(result.cognitoUser)
@@ -54,7 +53,7 @@ function LoginPage() {
                 // Otherwise, redirect to the home page
                 setUser(result.cognitoUser)
                 setUserAttributes(result.userAttributes)
-                
+        
                 navigate('/home');
             }
         } catch (err) {

@@ -2,7 +2,9 @@
 import axios from 'axios';
 import {isTokenExpired} from './tokenService';
 
-const API_BASE_URL = 'https://e086aettoe.execute-api.eu-west-2.amazonaws.com';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+console.log(API_BASE_URL)
+console.log(process.env.REACT_APP_USER_POOL_ID)
 
 export default API_BASE_URL;
 
@@ -40,6 +42,7 @@ api.interceptors.request.use(
     }
 );
 
+//POST refresh access token
 const apiRefreshToken = async () => {
     
     try {
@@ -63,7 +66,7 @@ export const apiSendRefreshToken = async (refresToken) => {
             '/auth/token',
             refresToken
         );
-        // console.log(result)
+        console.log(result)
     } catch (error) {
         // throw error;
         console.log(error)
@@ -92,9 +95,9 @@ export const apiGetInheritance = async (inheritanceId) => {
 };
 
 // GET all inheritances 
-export const apiGetInheritances = async () => {
+export const apiGetInheritancesList = async () => {
     try {
-        const response = await api.get(`/inheritances`);
+        const response = await api.get(`/inheritance/list`);
         return response.data;
     } catch (error) {
         throw error;
