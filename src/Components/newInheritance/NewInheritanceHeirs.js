@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import HeirData from "../HeirData";
-import NewHeirModal from "../NewHeirModal";
+import HeirData from "../heirCards/HeirData";
+import NewHeirModal from "../heirCards/NewHeirModal";
 const NewInheritanceHeirs = ({heirsList, setHeirsList}) => {
 
     const [heirModalIsOpen, setHeirModalIsOpen] = useState(false);

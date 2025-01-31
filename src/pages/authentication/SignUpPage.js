@@ -4,7 +4,7 @@ import {signUp} from '../../services/createAccount';
 import SimpleReactValidator from 'simple-react-validator';
 // import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
-import TermsModal from '../../Components/TermsModal';
+import TermsModal from '../../Components/utils/TermsModal';
 
 function SignUpPage() {
 

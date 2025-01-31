@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import NewAssetModal from "../NewAssetModal";
-import DivisibleAsset from "../DivisibleAsset";
-import IndivisibleAsset from "../IndivisibleAsset";
-import DivisibleInChunksAsset from "../DivisibleInChunksAsset";
+import NewAssetModal from "../assetCard/NewAssetModal";
+import DivisibleAsset from "../assetCard/DivisibleAsset";
+import IndivisibleAsset from "../assetCard/IndivisibleAsset";
+import DivisibleInChunksAsset from "../assetCard/DivisibleInChunksAsset";
 
 const NewInheritanceAssets = ({assetsObj, setAssetsObj, ownershipsList}) => {
 

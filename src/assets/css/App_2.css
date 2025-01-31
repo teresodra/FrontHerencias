@@ -267,6 +267,18 @@
     border-width: 0.2rem !important;
 }
 
+.custom-button-spinner-container .clip-loader{
+    /* height: 0.5rem; */
+    color: white !important;
+    border-color: white !important;
+}
+.custom-button-spinner{
+    color: white !important;
+    border-width: 0.1rem !important;
+    height: 0.9rem !important;
+    width: 0.9rem !important;
+}
+
 /* ############################################### */
 /* HEADER */
 /* ############################################### */

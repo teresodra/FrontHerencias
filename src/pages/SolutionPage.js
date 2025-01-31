@@ -5,8 +5,8 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 import messagesObj from "../schemas/messages";
 import CustomTable from '../Components/CustomTable';
-import SolutionDivisibleAsset from '../Components/SolutionDivisibleAsset';
-import SolutionIndivisibleAsset from '../Components/SolutionIndivisibleAsset';
+import SolutionDivisibleAsset from '../Components/assetCard/SolutionDivisibleAsset';
+import SolutionIndivisibleAsset from '../Components/assetCard/SolutionIndivisibleAsset';
 
 const SolutionPage = () => {
 

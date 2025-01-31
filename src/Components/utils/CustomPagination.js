@@ -1,5 +1,5 @@
 import React from "react";
-
+import { ClipLoader } from 'react-spinners';
 
 const CustomPagination = ({
     numSteps,
@@ -7,7 +7,8 @@ const CustomPagination = ({
     setCurrentStep,
     isNextButtonDisabled,
     isSaveButtonDisabled,
-    handleSave
+    handleSave,
+    isSaving
 }) => {
 
     return (
@@ -39,8 +40,18 @@ const CustomPagination = ({
                 </div>
             ): (
                 <div className='button-container'>
-                    <button className='custom-button' disabled={isSaveButtonDisabled()} onClick={handleSave}>
-                        Guardar
+                    <button className='custom-button' disabled={isSaveButtonDisabled() || isSaving} onClick={handleSave}>
+                        {!isSaving ? (
+                            "Guardar"
+                        ) : (
+                            <div className="custom-button-spinner-container">
+                                <ClipLoader
+                                    className="custom-button-spinner"
+                                    loading={true}
+                                    color="white"
+                                />
+                            </div>
+                        )}
                     </button>
                 </div>
             )}

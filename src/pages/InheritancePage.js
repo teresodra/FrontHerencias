@@ -33,8 +33,7 @@ const InheritancePage = () => {
         } else {
             const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
             setInheritance(inheritanceAux);
-            setIsLoading(false);
-            
+            setIsLoading(false); 
         }
         
     }, [])

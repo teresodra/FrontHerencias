@@ -10,6 +10,7 @@ import NewInheritanceOwnerships from '../Components/newInheritance/NewInheritanc
 import NewInheritanceAssets from '../Components/newInheritance/NewInheritanceAssets';
 import NewInheritanceRegion from '../Components/newInheritance/NewInheritanceRegion';
 import CustomPagination from '../Components/utils/CustomPagination';
+import handleError from '../services/handleError';
 
 const NewHeritancePage = () => {
 
@@ -49,7 +50,8 @@ const NewHeritancePage = () => {
             
         } catch (err) {
             console.log(err);
-            Swal.fire(messagesObj.newInheritanceError);
+            handleError(err, navigate);
+            // Swal.fire(messagesObj.newInheritanceError);
         }
 
     }

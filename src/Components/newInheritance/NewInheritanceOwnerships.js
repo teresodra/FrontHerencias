@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import NewOwnershipModal from "../NewOwnershipModal";
-import OwnershipData from "../OwnershipData";
+import NewOwnershipModal from "../ownershipCard/NewOwnershipModal";
+import OwnershipData from "../ownershipCard/OwnershipData";
 
 const NewInheritanceOwnerships = ({ownershipsList, setOwnershipsList, heirsList}) => {
     

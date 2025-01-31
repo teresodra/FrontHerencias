@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
 import DivisibleAssetValuation from "../Components/DivisibleAssetValuation";
-import IndivisibleAssetValuation from "../Components/IndivisibleAssetValuation";
-import { apiGetInheritance, apiAddValuation } from "../services/api";
+import IndivisibleAssetValuation from "../Components/assetCard/IndivisibleAssetValuation";
+import { apiGetInheritance, apiGetInheritancesList, apiAddValuation } from "../services/api";
 import Swal from 'sweetalert2';
 import messagesObj from "../schemas/messages";
-import DivisibleInChunksAssetValuation from "../Components/DivisibleInChunksAssetValuation";
+import DivisibleInChunksAssetValuation from "../Components/assetCard/DivisibleInChunksAssetValuation";
 import CustomPagination from "../Components/utils/CustomPagination";
+import AuthContext from '../services/AuthContext';
+import handleError from '../services/handleError';
+import { ClipLoader } from 'react-spinners';
 
 const ValuationPage = () => {
 
+    const {
+        inheritancesList, setInheritancesList,
+        inheritancesAccessList, setInheritancesAccessList
+    } = useContext(AuthContext);
     
     const {inheritanceId, heirId} = useParams();
-
     const [inheritance, setInheritance] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [isSaving ,setIsSaving] = useState(false);
     const [valuationObj, setValuationObj] = useState({})
     const [money, setMoney] = useState(0)
     const [currentStep, setCurrentStep] = useState(1);
@@ -27,36 +34,46 @@ const ValuationPage = () => {
     const [validator] = useState(new SimpleReactValidator());
 
     const navigate = useNavigate();
-    const location = useLocation();
     
     useEffect(() => {
-        loadInheritance();
-        setIsLoading(false);
-    }, []);
-
-    const loadInheritance = async () => {
-        try {
-            let data;
-            if (location.state?.inheritance) {
-                data = location.state?.inheritance // Get inheritance from state when clicking in inheritance wrap
-            } else {
-                data = await apiGetInheritance(inheritanceId);
-            }
-
-            console.log(data)
-            calculateSteps(data);
-            setInheritance(data);
-
+        if (!inheritancesList || !inheritancesAccessList){
+            getInheritanceData();        
+        } else {
+            const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            setInheritance(inheritanceAux);
+            initializeValuation(inheritanceAux)
+            setIsLoading(false); 
+        }
         
-            if (!data?.heirValuationsObj?.[heirId]){
-                initializeValuationObj(data);
-            } else {
-                setValuationObj(data.heirValuationsObj?.[heirId])
-                setMoney(data?.heirValuationsObj?.[heirId].money)
+        
+    }, [])
+
+    const getInheritanceData = async () => {
+        try {
+            const response = await apiGetInheritancesList();
+            setInheritancesList(response?.inheritancesList);
+            setInheritancesAccessList(response?.inheritancesAccessList);
+            const inheritanceAux = response.inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            const accessPermission = response.inheritancesAccessList.find(acc => acc.inheritanceId === inheritanceId);
+            // Check if they have access
+            if (!inheritance || !accessPermission){
+                await handleError({response: {status: 403}}, navigate);
             }
-            
+            setIsLoading(false);   
+            setInheritance(inheritanceAux);
+            initializeValuation(inheritanceAux);
         } catch (err) {
-            console.log(err)
+            await handleError(err, navigate);
+        }
+    }
+
+    const initializeValuation = (auxInheritance) => {
+        calculateSteps(auxInheritance);
+        if (!auxInheritance?.heirValuationsObj?.[heirId]){
+            initializeValuationObj(auxInheritance);
+        } else {
+            setValuationObj(auxInheritance.heirValuationsObj?.[heirId])
+            setMoney(auxInheritance?.heirValuationsObj?.[heirId].money)
         }
     }
 
@@ -68,6 +85,7 @@ const ValuationPage = () => {
     }
 
     const saveValuation = async () => {
+        setIsSaving(true);
         console.log('save')
         console.log(valuationObj)
         console.log(JSON.stringify(valuationObj))
@@ -77,13 +95,25 @@ const ValuationPage = () => {
                 heirId: heirId,
                 valuationObj: valuationObj
             })
-            // await apiEditInheritance(auxInheritance);
+            //if success update inheritance locally
+            const auxInheritance = {
+                ...inheritance,
+                heirValuationsObj: {
+                    ...(inheritance?.heirValuationsObj || {}), // Initially is undefined
+                    [heirId]: valuationObj
+                }
+            }
+            let auxInheritancesList = [...inheritancesList];
+            const index = auxInheritancesList.findIndex(inh => inh.inheritanceId === inheritanceId);
+            auxInheritancesList[index] = auxInheritance;
+            setInheritancesList(auxInheritancesList);
+            
             Swal.fire(messagesObj.valorationAddedSuccess)
             navigate(`/inheritance/${inheritance.inheritanceId}`)
         } catch (err) {
             Swal.fire(messagesObj.valorationAddedError)
         }
-
+        setIsSaving(false);
     }
 
     const initializeValuationObj = (inheritanceData) => {
@@ -102,16 +132,15 @@ const ValuationPage = () => {
     } 
 
     const updateMoney = (event) => {
-    
-        setValuationObj({...valuationObj, money: parseFloat(event.target.value)})
-        setMoney(event.target.value)
-        console.log(parseFloat(event.target.value))
-        console.log(parseFloat(event.target.value) < 0)
-        console.log(money)
+        const auxMoney = !isNaN(parseFloat(event.target.value)) ? parseFloat(event.target.value) : "";
+        if (auxMoney !== "") {
+            setValuationObj({...valuationObj, money: auxMoney})
+        }
+        setMoney(auxMoney)
     }
 
     const isNextButtonDisabled = () => {
-        return (currentStep === 1 && !money)
+        return (currentStep === 1 && (typeof money !== "number" || isNaN(money)))
     }
 
     const isSaveButtonDisabled = () => {
@@ -119,12 +148,14 @@ const ValuationPage = () => {
     }
 
 
-    if (isLoading) {
+    if (isLoading || !inheritance) {
         return (
-            <div></div>
+            <div className="loader-clip-container">
+                <ClipLoader className="custom-spinner-clip" loading={true} />
+            </div>
         )
     }
-
+    
     return(
         <div className='center'>
             <div className='content'>
@@ -226,7 +257,7 @@ const ValuationPage = () => {
                     isNextButtonDisabled={isNextButtonDisabled}
                     isSaveButtonDisabled={isSaveButtonDisabled}
                     handleSave={saveValuation}
-
+                    isSaving={isSaving}
                 />
             </div>
         </div>

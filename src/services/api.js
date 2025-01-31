@@ -119,8 +119,17 @@ export const apiSaveInheritance = async (inheritance) => {
 // PATCH send valuation
 export const apiAddValuation = async (inheritanceId, valuation) => {
     try {
-        const response = await api.patch(`/inheritance/${inheritanceId}`, valuation)
+        const response = await api.patch(`/inheritance/${inheritanceId}/valuation`, valuation)
         return response.data
+    } catch (error) {
+        throw error;
+    }
+}
+
+// DELETE inheriance
+export const apiDeleteInheritance = async (inheritanceId) => {
+    try {
+        await api.delete(`/inheritance/${inheritanceId}`)
     } catch (error) {
         throw error;
     }
