@@ -26,7 +26,7 @@ const HeirWrap = ({inheritance, heirId}) => {
     
     const goToValoration = () => {
         navigate(
-            `/inheritance/${inheritance.id}/heir/${heirId}/valoration`,
+            `/inheritance/${inheritance.inheritanceId}/heir/${heirId}/valoration`,
             { state: { inheritance: inheritance }
         })
     }

@@ -116,17 +116,28 @@ export const apiSaveInheritance = async (inheritance) => {
     }
 };
 
-// PUT edit existing inheritance
-export const apiEditInheritance = async (inheritance) => {
-    
+// PATCH send valuation
+export const apiAddValuation = async (inheritanceId, valuation) => {
     try {
-        const response = await api.put(`/inheritance/${inheritance.id}`, inheritance)
+        const response = await api.patch(`/inheritance/${inheritanceId}`, valuation)
         return response.data
     } catch (error) {
         throw error;
     }
-};
+}
 
+// PUT edit existing inheritance
+// export const apiEditInheritance = async (inheritance) => {
+    
+//     try {
+//         const response = await api.put(`/inheritance/${inheritance.id}`, inheritance)
+//         return response.data
+//     } catch (error) {
+//         throw error;
+//     }
+// };
+
+// POST send message to SQS indicating the inheritance to calculate
 export const apiCalculate = async (inheritanceId) => {
     try {
         const response = await api.post(`/inheritance/${inheritanceId}/calculate`, )
