@@ -116,12 +116,26 @@ body {
     row-gap: 9px;
 }
 
-input[type="text"], input[type="password"]{
+input[type="text"], input[type="number"], input[type="password"]{
     width: 100%;
     height: 30px;
     border: 1px solid hsl(0, 0%, 80%);
     padding: 3px;
     transition: 300ms all;
+}
+
+input[type="number"] {
+    appearance: textfield; /* Standard property */
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: textfield; /* Chrome, Safari, Edge */
+
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    margin: 0;
+    appearance: none;
 }
 
 .card-container {

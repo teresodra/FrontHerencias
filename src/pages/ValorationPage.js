@@ -71,16 +71,6 @@ const ValuationPage = () => {
         console.log('save')
         console.log(valuationObj)
         console.log(JSON.stringify(valuationObj))
-        // let auxInheritance = {
-        //     ...inheritance,
-        //     heirValuationsObj: {
-        //         ...(inheritance?.heirValuationsObj || {}), // Initially is undefined
-        //         [heirId]: valuationObj
-        //     }
-        // }
-        // setInheritance(auxInheritance);
-        // console.log(auxInheritance)
-        // console.log(JSON.stringify(auxInheritance))
 
         try {
             await apiAddValuation(inheritanceId, {
@@ -112,13 +102,16 @@ const ValuationPage = () => {
     } 
 
     const updateMoney = (event) => {
-        let money = parseFloat(event.target.value)
-        setValuationObj({...valuationObj, money: money})
-        setMoney(money)
+    
+        setValuationObj({...valuationObj, money: parseFloat(event.target.value)})
+        setMoney(event.target.value)
+        console.log(parseFloat(event.target.value))
+        console.log(parseFloat(event.target.value) < 0)
+        console.log(money)
     }
 
     const isNextButtonDisabled = () => {
-        return false
+        return (currentStep === 1 && !money)
     }
 
     const isSaveButtonDisabled = () => {
@@ -142,7 +135,7 @@ const ValuationPage = () => {
                         <div className="form-group">
                             <label>Dinero dispuesto a invertir (€)</label>
                             <input
-                                type="text"
+                                type="number"
                                 name="money"
                                 value={money}
                                 onChange={updateMoney}
