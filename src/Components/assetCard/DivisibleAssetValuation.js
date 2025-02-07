@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import NewAssetModal from "./assetCard/NewAssetModal";
+import NewAssetModal from "./NewAssetModal";
 
 const DivisibleAssetValuation = ({asset, ownershipsList, valuationObj, setValuationObj}) => {
 

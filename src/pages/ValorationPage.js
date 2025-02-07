@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
-import DivisibleAssetValuation from "../Components/DivisibleAssetValuation";
+import DivisibleAssetValuation from "../Components/assetCard/DivisibleAssetValuation";
 import IndivisibleAssetValuation from "../Components/assetCard/IndivisibleAssetValuation";
 import { apiGetInheritance, apiGetInheritancesList, apiAddValuation } from "../services/api";
 import Swal from 'sweetalert2';

@@ -63,5 +63,19 @@ const messagesObj = {
         title: "Error insesperado, inténtalo más tarde",
         icon: "error"
     },
+    deleteInheritanceConfirmation: {
+        title: "¿Estás seguro?",
+        text: "Una vez eliminada no podrá ser recuperada!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e32e36',
+        cancelButtonColor: '#1b263b',
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar"
+    },
+    deleteInheritanceSuccess: {
+        title: "Herencia eliminada",
+        icon: "success"
+    }
 }
 export default messagesObj;

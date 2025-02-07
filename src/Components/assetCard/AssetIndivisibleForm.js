@@ -79,7 +79,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeMod
             ...asset,
             name: nameRef.current.value,
             refValue: refValueRef.current.value,
-            category: null
+            // category: null
         })
     }
 

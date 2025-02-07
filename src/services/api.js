@@ -3,8 +3,6 @@ import axios from 'axios';
 import {isTokenExpired} from './tokenService';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-console.log(API_BASE_URL)
-console.log(process.env.REACT_APP_USER_POOL_ID)
 
 export default API_BASE_URL;
 
@@ -110,6 +108,7 @@ export const apiSaveInheritance = async (inheritance) => {
     
     try {
         const response = await api.post(`/inheritance`, inheritance)
+        console.log(response)
         return response.data
     } catch (error) {
         throw error;

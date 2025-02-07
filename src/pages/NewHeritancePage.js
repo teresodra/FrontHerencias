@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiSaveInheritance } from '../services/api';
 import Swal from 'sweetalert2';
@@ -11,9 +11,16 @@ import NewInheritanceAssets from '../Components/newInheritance/NewInheritanceAss
 import NewInheritanceRegion from '../Components/newInheritance/NewInheritanceRegion';
 import CustomPagination from '../Components/utils/CustomPagination';
 import handleError from '../services/handleError';
+import AuthContext from '../services/AuthContext';
 
 const NewHeritancePage = () => {
 
+    const {
+        setInheritancesList,
+        setInheritancesAccessList
+    } = useContext(AuthContext);
+
+    const [isSaving, setIsSaving] = useState(false);
     // const [heirsList, setHeirsList] = useState([]);
     // To avoid doing it when testing ownership
     const [heirsList, setHeirsList] = useState([
@@ -32,8 +39,10 @@ const NewHeritancePage = () => {
     const navigate = useNavigate();
 
     const handleSave = async () => {
+        setIsSaving(true);
+        const inheritanceId = uuidv4()
         const auxInheritance = {
-            inheritanceId: uuidv4(),
+            inheritanceId: inheritanceId,
             name: name,
             region: region,
             heirsList: heirsList,
@@ -45,14 +54,18 @@ const NewHeritancePage = () => {
         console.log(JSON.stringify(auxInheritance))
         try {
             const result = await apiSaveInheritance(auxInheritance);
+            console.log(result)
+            setInheritancesList(null);
+            setInheritancesAccessList(null);
             Swal.fire(messagesObj.newInheritanceSuccess);
-            navigate(`/inheritance/${result.inheritanceId}`)
+            navigate(`/inheritance/${inheritanceId}`)
             
         } catch (err) {
             console.log(err);
             handleError(err, navigate);
             // Swal.fire(messagesObj.newInheritanceError);
         }
+        setIsSaving(false);
 
     }
 
@@ -132,6 +145,7 @@ const NewHeritancePage = () => {
                     isNextButtonDisabled={isNextButtonDisabled}
                     isSaveButtonDisabled={isSaveButtonDisabled}
                     handleSave={handleSave}
+                    isSaving={isSaving}
                 />
 
             </div>
