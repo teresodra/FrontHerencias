@@ -7,7 +7,10 @@ import { apiDeleteRefreshToken } from '../../services/api';
 const SignOut = () => {
 
     const navigate = useNavigate();
-    
+    const {
+        setInheritancesList,
+        setInheritancesAccessList
+    } = useContext(AuthContext);
 
     const handleLogout = async () => {
         const cognitoUser = userPool.getCurrentUser();
@@ -34,6 +37,10 @@ const SignOut = () => {
 
             // Clear session storage
             sessionStorage.clear();
+
+            //Clear auth context
+            setInheritancesList(null);
+            setInheritancesAccessList(null);
 
         } catch (err) {
             console.log(err.response.status);

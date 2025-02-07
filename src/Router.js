@@ -13,6 +13,7 @@ import SignUpPage from "./pages/authentication/SignUpPage";
 import ChangePasswordPage from "./pages/authentication/ConfirmPasswordPage";
 import PrivateRoute from "./Components/auth/PrivateRoute";
 import ConfirmEmailPage from "./pages/authentication/ConfirmEmailPage";
+import RecoverPasswordPage from "./pages/authentication/RecoverPassword";
 
 const Router = () => {
 
@@ -28,6 +29,7 @@ const Router = () => {
                             <Route exact path="/sign-up" element={<SignUpPage/>} />
                             <Route exact path="/change-password" element={<ChangePasswordPage/>} />
                             <Route path="/confirm-email" element={<ConfirmEmailPage/>}/>
+                            <Route path="/recover-password" element={<RecoverPasswordPage/>}/>
 
                             <Route exact path="/" element={<PrivateRoute element={HomePage} />} />
                             <Route exact path="/home" element={<PrivateRoute element={HomePage} />} />

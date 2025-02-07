@@ -24,7 +24,7 @@ const SolutionPage = () => {
     const [heirPOV, setHeirPOV] = useState(null);
     const [heirAllocation, setHeirAllocation] = useState(null);
 
-    const [showTables, setShowTables] = useState(true);
+    const [showTables, setShowTables] = useState(false);
 
     const {inheritanceId} = useParams();
     const navigate = useNavigate();
@@ -134,17 +134,18 @@ const SolutionPage = () => {
                     {heirPOV?.value !== 'refValue' && (
                         <div className='tab-container'>
                             <div
-                                className={showTables ? 'tab active' : 'tab'}
-                                onClick={() => setShowTables(true)}
-                            >
-                                Valores
-                            </div>
-                            <div
                                 className={!showTables ? 'tab active' : 'tab'}
                                 onClick={() => setShowTables(false)}
                             >
                                 Bienes
                             </div>
+                            <div
+                                className={showTables ? 'tab active' : 'tab'}
+                                onClick={() => setShowTables(true)}
+                            >
+                                Valores
+                            </div>
+                            
                         </div>
                     )}
 

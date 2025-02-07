@@ -76,6 +76,14 @@ const messagesObj = {
     deleteInheritanceSuccess: {
         title: "Herencia eliminada",
         icon: "success"
-    }
+    },
+    passwordUpdated: {
+        title: "Constraseña actualizada",
+        icon: "success"
+    },
+    passwordUpdatedError: {
+        title: "Error actualizando constraseña",
+        icon: "error"
+    },
 }
 export default messagesObj;

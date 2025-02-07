@@ -61,6 +61,11 @@
     width:100%
 }
 
+/* validator messages */
+.srv-validation-message{
+    color: red;
+}
+
 /* ############################################### */
 /* LOGIN */
 /* ############################################### */
@@ -101,6 +106,11 @@
     font-size: 0.9rem;
     display: flex;
     flex-direction: row;
+}
+
+.text-container{
+    display: flex;
+    flex-direction: column;
 }
 
 /* ############################################### */

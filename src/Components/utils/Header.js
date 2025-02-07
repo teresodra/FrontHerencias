@@ -14,26 +14,27 @@ const Header = () => {
 
     return(
         <div className="header">
-            {cognitoUser && ( 
-                <>
-                <div className='header-icon-container'>
-                    <span
-                        className="material-symbols-outlined"
-                        translate="no" aria-hidden="true" // prevent problems with translators
-                        onClick={goHome}
-                    >
-                        home
-                    </span>
-                </div>
+            
+                
+            <div className='header-icon-container'>
+                <span
+                    className="material-symbols-outlined"
+                    translate="no" aria-hidden="true" // prevent problems with translators
+                    onClick={goHome}
+                >
+                    home
+                </span>
+            </div>
+            
 
-                <div className='header-title-container'>
-                    <h2 translate="no">{"herenciaideal"}</h2>
-                </div>
+            <div className='header-title-container'>
+                <h2 translate="no">{"herenciaideal"}</h2>
+            </div>
+
+            {cognitoUser && ( 
                 <div className='header-icon-container'>
                     <SignOut/>
                 </div>
-                
-                </>
             )}
         </div>
     )

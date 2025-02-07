@@ -7,6 +7,11 @@ import { apiGetStorageRoomsList, apiPostAuthenticate } from '../../services/api'
 import { ClipLoader } from 'react-spinners';
 
 function LoginPage() {
+
+    const {
+        setInheritancesList, setInheritancesAccessList
+    } = useContext(AuthContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   
@@ -42,6 +47,9 @@ function LoginPage() {
 
     const loginWithCognito = async () => {
         try {
+            // to make sure there are not inhereitances loaded
+            setInheritancesList(null);
+            setInheritancesAccessList(null);
             const result = await signIn(email, password);
             console.log(result)
 
