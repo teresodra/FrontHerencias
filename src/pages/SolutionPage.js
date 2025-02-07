@@ -9,6 +9,7 @@ import handleError from '../services/handleError';
 import CustomTable from '../Components/CustomTable';
 import SolutionDivisibleAsset from '../Components/assetCard/SolutionDivisibleAsset';
 import SolutionIndivisibleAsset from '../Components/assetCard/SolutionIndivisibleAsset';
+import { ClipLoader } from 'react-spinners';
 
 const SolutionPage = () => {
 
@@ -100,16 +101,29 @@ const SolutionPage = () => {
     }
     
     const changeHeirPOV = (value) => {
+       
+        setShowTables(value.value === "refValue"); // true when showinf ref Value
+  
         setHeirPOV(value);
         setHeirAllocation(inheritance.solution.heirsAllocation.find(alloc => alloc.heirId === value?.value))
     }
     
     
-    if (isLoading) {
-        return (
-            <div></div>
-        )
-    }
+    if (isLoading || !inheritance) {
+            return (
+                <div className='center'>
+                    <div className='content'>
+                        <h1>
+                            Solucion
+                        </h1>
+                        <div className="loader-clip-container">
+                            <ClipLoader className="custom-spinner-clip" loading={true} />
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    
 
     return (
         <div className='center'>

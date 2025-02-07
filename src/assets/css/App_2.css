@@ -18,7 +18,10 @@
     row-gap: 9px;
 }
 
-
+/* ############################################### */
+/* AUX */
+/* ############################################### */
+/* #region aux */
 .text-container{
     display: flex;
     flex-direction: column;
@@ -68,6 +71,7 @@
 .width-100 {
     width:100%
 }
+/* #endregion */
 
 /* validator messages */
 .srv-validation-message{
@@ -77,7 +81,7 @@
 /* ############################################### */
 /* LOGIN */
 /* ############################################### */
-
+/* #region login */
 .login-form, .change-password-form{
     width: 50%;
     margin: 0px auto;
@@ -120,11 +124,12 @@
     display: flex;
     flex-direction: column;
 }
+/* #endregion*/
 
 /* ############################################### */
 /* BUTTONS */
 /* ############################################### */
-
+/* #region buttons */
 
 .text-icon-container{
     display: flex;
@@ -167,7 +172,6 @@
 .custom-button.delete{
     background-color: var(--color-delete);
 }
-
 
 .custom-button:disabled{
     opacity: 50%;
@@ -254,11 +258,12 @@
     gap: 15px;
     margin-top: 50px;
 }
+ /* #endregion*/
 
-/* ############################################### */
+ /* ############################################### */
 /* SPINNER */
 /* ############################################### */
-
+/* #region spinner*/
 .loader-clip-container{
     display: flex;
     align-items: center;
@@ -298,10 +303,13 @@
     height: 0.9rem !important;
     width: 0.9rem !important;
 }
+/* #endregion*/
 
 /* ############################################### */
 /* HEADER */
 /* ############################################### */
+/* #region header*/
+
 .header {
     background: var(--color-theme);
     height: 3.5rem;
@@ -356,9 +364,12 @@
     opacity: 1;           /* Make the text visible */
 }
 
+/* #endregion */
+
 /* ############################################### */
 /* HOME */
 /* ############################################### */
+/* #region home */
 .inheritances-list{
     width: 100%;
     display: flex;
@@ -393,11 +404,12 @@
     cursor: pointer;
     padding: 1rem 1rem 1rem 1rem;
 }
+/* #endregion */
 
 /* #################################################################*/
 /* ######################## HEIRS LIST #############################*/
 /* #################################################################*/
-
+/* #region heirslist */
 .list-heirs-container{
     width: 100%;
     display: flex;
@@ -442,11 +454,12 @@
     padding: 0.2rem 0.5rem;
     border-radius: 5px;
 }
+/* #endregion */
 
 /* ############################################## */
 /* SELECT */
 /* ############################################## */
-
+/* #region select */
 /*tag selector*/
 .css-b62m3t-container{
     width: 100%;
@@ -467,4 +480,210 @@
     background-color: var(--color-theme) !important; /* Change background color for selected option */
     color: white !important;                /* Change text color for selected option */
 }
+/* #endregion */
 
+/* ############################################## */
+/* MODAL */
+/* ############################################## */
+/* #region modal */
+/* Modal overlay (the background) */
+.custom-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.custom-item-modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding-bottom: 20px;
+    border-radius: 4px;
+    /* width: auto; */
+    width: 30rem;
+    height: 80vh;
+    text-align: center;
+    /* border: 1px solid #ccc; */
+}
+
+.modal-header {
+    background-color: var(--color-theme);
+    color: white;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    /* align-items: space-between; */
+    justify-content: flex-end; /* Align the close button to the right */
+    /* justify-content: center; */
+    border-radius: 4px 4px 0 0;
+    position: relative; /* Needed to position the title absolutely */
+}
+
+.modal-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    /* font-size: 1.5rem; */
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.modal-close-button-container {
+    cursor: pointer;
+    margin-right: 0.5rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 70vh;
+    overflow-y: auto;
+    
+}
+
+.modal-content {
+    margin-top: 2rem;
+    color: black;
+    width: 60%;
+    height: 100%;
+    /* overflow-y: scroll; */
+    overflow-y: auto;
+     /* Adds space for the scrollbar even when not present */
+    /* scrollbar-gutter: stable; */
+    /* padding-right: 2rem; */
+}
+
+.modal-text{
+    width: 80%;
+    margin-top: 2rem;
+    font-size: small;
+    text-align: left;
+}
+
+.modal-history-entry{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: 2rem;   
+}
+
+/* #endregion */
+
+/* ############################################## */
+/* PAGINATION */
+/* ############################################## */
+/* #region pagination */
+.pagination-bars-container {
+    margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.pagination-bar {
+    width: 80%;
+    height: 5px;
+    background-color: lightgray;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination-bar.active {
+    background-color: var(--color-button-background);
+}
+/* #endregion */
+
+/* #################################################################*/
+/* ########################## TABs ################################*/
+/* #################################################################*/
+/* #region tabs */
+.tab-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    border-bottom: 1px solid #cfc9c9;
+    padding-bottom: 0.5rem;
+
+    /* color: var(--color-theme); */
+    /* color: #0d3035;; */
+    
+}
+
+
+.tab {
+    cursor: pointer;
+}
+
+
+.active{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* #endregion */
+
+/* #################################################################*/
+/* ########################## TABLE ################################*/
+/* #################################################################*/
+/* #region table */
+.custom-table{
+    border-collapse: 'collapse';
+    border-spacing: 0; /* Removes any space between cells and borders */
+    width: '100%';
+    border: 1px solid #6e6e6e;
+    margin-bottom: 2rem;
+}
+
+
+.custom-thead {
+    background-color: var(--color-table);
+    color: white;
+}
+
+/* .custom-thead th{
+    border: 1px solid #2f484d;
+} */
+
+.custom-tbody {
+    background-color: #c5e8ee;
+    color: rgb(0, 0, 0);
+}
+
+.custom-td{
+    border: 0.5px solid var(--color-table);
+}
+
+.custom-td-bold {
+    border: 0.5px solid var(--color-table);
+    font-weight: bold;
+    background-color: var(--color-td-bold-background);
+}
+/* #endregion */
