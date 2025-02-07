@@ -27,22 +27,19 @@ const SolutionDivisibleAsset = ({assetAllocation, inheritance, ownershipsList, r
                 </div>
 
                 <div className='card-data-item'>
-                    
-                    <label>Valoracion por unidad</label>
+                    <label>Valoracion total</label>
                     <div>{assetAllocation.valuePOV} €</div>
-                        
-                    
                 </div>
 
                 {!isWrapped && (
                     <div className="unwrapped-content">
                         <div className='card-data-item'>
                             <label>Cantidad</label>
-                            <div>{asset.quantity}</div>
+                            <div>{assetAllocation.quantity}</div>
                         </div>
 
                         <div className='card-data-item'>
-                            <label>Valor de referncia por unidad</label>
+                            <label>Valor de referencia por unidad</label>
                             <div>{asset.refValue} {"€"}</div>
                         </div>
 

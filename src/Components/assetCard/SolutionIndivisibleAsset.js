@@ -37,20 +37,14 @@ const SolutionIndivisibleAsset = ({assetAllocation, inheritance, ownershipsList,
                     <div className="unwrapped-content">
 
                         <div className='card-data-item'>
-                            <label>Valor de referncia</label>
+                            <label>Valor de referencia</label>
                             <div>{asset.refValue} {"€"}</div>
                         </div>
-
-
 {/* 
                         <div className='card-data-item'>
                             <label>Propiedad</label>
                             <div>{ownership.name}</div>
                         </div> */}
-
-                        
-                        
-                        
 
                     </div>
                 )}

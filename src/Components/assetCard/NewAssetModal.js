@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import NewHeirForm from './NewHeirForm';
+import NewHeirForm from '../heirCards/NewHeirForm';
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
 import AssetDivisibleForm from './AssetDivisibleForm';
@@ -67,6 +67,7 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
                             value={assetType}
                             onChange={setAssetType}
                             isDisabled={assetData && assetType} // If asset data exists means it is being edited. Hence, changing type is not allowed
+                            classNamePrefix="react-select" // Apply custom prefix
                         />
                     </div>
 

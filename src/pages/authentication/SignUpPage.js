@@ -4,7 +4,7 @@ import {signUp} from '../../services/createAccount';
 import SimpleReactValidator from 'simple-react-validator';
 // import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
-import TermsModal from '../../Components/TermsModal';
+import TermsModal from '../../Components/utils/TermsModal';
 
 function SignUpPage() {
 
@@ -48,11 +48,19 @@ function SignUpPage() {
                     message: 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial.',
                     rule: (val) => {
                         // Ensure at least: one lowercase letter, one uppercase leater, one number and one special character
-                        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.[\]{}()?"!@#%&/\\,><':;|_~`+=-])/;
+                        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
                         return regex.test(val);
                     },
                     required: true,
                 },
+                alpha_space_accents: {
+                    message: 'Solo puede contener letras.',
+                    rule: (val) => {
+                        const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+                        return regex.test(val);
+                    },
+                    required: true
+                }
             },
             messages: {
                 required: "Este campo es obligatorio.",
@@ -111,7 +119,7 @@ function SignUpPage() {
                             onChange={(e) => setName(e.target.value)}
                             onBlur={() => validator.showMessageFor('name')}
                         />
-                        {validator.message('name', name, 'required|alpha_space')}
+                        {validator.message('name', name, 'required|alpha_space_accents')}
                     </div>
 
                     <div className='form-group'>
@@ -125,7 +133,7 @@ function SignUpPage() {
                             onChange={(e) => setlastName(e.target.value)}
                             onBlur={() => validator.showMessageFor('name')}
                         />
-                        {validator.message('lastName', lastName, 'required|alpha_space')}
+                        {validator.message('lastName', lastName, 'required|alpha_space_accents')}
                     </div>
                     
                     <div className='form-group'>

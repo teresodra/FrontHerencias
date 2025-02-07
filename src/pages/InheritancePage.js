@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { apiCalculate, apiGetInheritance, apiGetInheritancesList, apiGetSolution } from '../services/api';
+import { apiCalculate, apiDeleteInheritance, apiGetInheritance, apiGetInheritancesList, apiGetSolution } from '../services/api';
 import HeirWrap from '../Components/HeirWrap';
 import Swal from 'sweetalert2';
 import messagesObj from "../schemas/messages";
@@ -16,6 +16,8 @@ const InheritancePage = () => {
     } = useContext(AuthContext);
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isCalculating, setIsCalculating] = useState(false);
     
     const [inheritance, setInheritance] = useState(null);
     const {inheritanceId} = useParams();
@@ -33,8 +35,7 @@ const InheritancePage = () => {
         } else {
             const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
             setInheritance(inheritanceAux);
-            setIsLoading(false);
-            
+            setIsLoading(false); 
         }
         
     }, [])
@@ -47,11 +48,12 @@ const InheritancePage = () => {
             const inheritanceAux = response.inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
             const accessPermission = response.inheritancesAccessList.find(acc => acc.inheritanceId === inheritanceId);
             // Check if they have access
-            if (!inheritance || !accessPermission){
+            if (!inheritanceAux || !accessPermission){
                 await handleError({response: {status: 403}}, navigate);
             }
             setIsLoading(false);   
             setInheritance(inheritanceAux);
+            console.log(inheritanceAux)
         } catch (err) {
             await handleError(err, navigate);
         }
@@ -59,9 +61,7 @@ const InheritancePage = () => {
 
 
     const isAllValuated = () => {
-        console.log(inheritance)
         if (!inheritance?.heirValuationsObj) {
-            console.log('treu')
             return true
         }
 
@@ -70,6 +70,7 @@ const InheritancePage = () => {
 
     const calculateInheritance = async () =>{
         try {
+            setIsCalculating(true);
             await apiCalculate(inheritanceId);
             // Start checking if solution available
             timerIdRef.current = setInterval(checkForSolution, timerInterval);
@@ -77,6 +78,7 @@ const InheritancePage = () => {
         } catch (err) {
             console.log(err);
             Swal.fire(messagesObj.calculateError);
+            setIsCalculating(false);
         }
     }
 
@@ -91,8 +93,8 @@ const InheritancePage = () => {
                 timerIdRef.current = null; // Reset the ref
                 // console.log(timerId)
                 setInheritance(response.data);
+                setIsCalculating(false);
             }
-
             console.log(response)
         } catch (err) {
             console.log(err)
@@ -103,7 +105,34 @@ const InheritancePage = () => {
     }
 
     const goToSolutionPage = () => {
-        navigate(`/inheritance/${inheritance.id}/solution`, { state: { inheritance: inheritance } })
+        navigate(`/inheritance/${inheritance.inheritanceId}/solution`, { state: { inheritance: inheritance } })
+    }
+
+    const handleDelete = () => {
+        Swal.fire(messagesObj.deleteInheritanceConfirmation
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    setIsDeleting(true);
+                    deleteInheritance();
+                }
+            }
+        )
+    }
+
+    const deleteInheritance = async () => {
+        try {
+            await apiDeleteInheritance(inheritanceId);
+            // Remove it from list (avoid quering from back)
+            const inheritancesListFiltered = inheritancesList.filter(inh => inh.inheritanceId !== inheritanceId);
+            console.log(inheritancesListFiltered)
+            setInheritancesList(inheritancesListFiltered);
+            Swal.fire(messagesObj.deleteInheritanceSuccess);
+            navigate('/home');
+        } catch (err) {
+            console.log(err);
+            handleError(err, navigate);
+        }
+        setIsDeleting(false);
     }
 
     if (isLoading || !inheritance) {
@@ -129,26 +158,45 @@ const InheritancePage = () => {
                     </button>
                 </div> */}
 
-                <div className='list-items-container'>
+                <div className='list-heirs-container'>
                     <h3 className="num-items-title">Valoraciones herederos ({inheritance?.heirsList.length})</h3>                                       
-                    <div className="list-items-container-content">
-                        <div className="list-items-container-content">
-                            {inheritance?.heirsList.map(heir => (
-                                <HeirWrap key={heir.id} heirId={heir.id} inheritance={inheritance}/>
-                            ))}
-                        </div>
+                    <div className="list-heirs-container-content"> 
+                        {inheritance?.heirsList.map(heir => (
+                            <HeirWrap key={heir.id} heirId={heir.id} inheritance={inheritance}/>
+                        ))}
                     </div>
                 </div>
 
                 <div className='button-container'>
-                    <button className='custom-button' disabled={isAllValuated()} onClick={calculateInheritance}>
-                        Calcular
+                    <button className='custom-button' disabled={isAllValuated() || isCalculating} onClick={calculateInheritance}>
+                        {!isCalculating ? (
+                            "Calcular"
+                        ) : (
+                            <div className="custom-button-spinner-container">
+                                <ClipLoader
+                                    className="custom-button-spinner"
+                                    loading={true}
+                                    color="white"
+                                />
+                            </div>
+                        )}
                     </button>
-                </div>
-
-                <div className='button-container'>
-                    <button className='custom-button' disabled={!inheritance?.solution} onClick={goToSolutionPage}>
+                    <button className='custom-button' disabled={!inheritance?.solution || isCalculating} onClick={goToSolutionPage}>
                         Ver solucion
+                    </button>
+
+                    <button className='custom-button delete' onClick={handleDelete} disabled={isDeleting}>
+                        {!isDeleting ? (
+                            "Eliminar"
+                        ) : (
+                            <div className="custom-button-spinner-container">
+                                <ClipLoader
+                                    className="custom-button-spinner"
+                                    loading={true}
+                                    color="white"
+                                />
+                            </div>
+                        )}
                     </button>
                 </div>
 

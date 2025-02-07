@@ -2,10 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from './services/AuthContext'; // Import the AuthProvider
 import HomePage from "./pages/HomePage";
 import NewHeritancePage from "./pages/NewHeritancePage";
-import Header from "./Components/Header";
+import Header from "./Components/utils/Header";
 import ValorationPage from "./pages/ValorationPage";
-import Footer from "./Components/Footer";
-import InheritancesListPage from "./pages/InheritancesListPage";
+import Footer from "./Components/utils/Footer";
 import InheritancePage from "./pages/InheritancePage";
 import HeirsListPage from "./pages/HeirsListPage";
 import SolutionPage from "./pages/SolutionPage";
@@ -14,6 +13,7 @@ import SignUpPage from "./pages/authentication/SignUpPage";
 import ChangePasswordPage from "./pages/authentication/ConfirmPasswordPage";
 import PrivateRoute from "./Components/auth/PrivateRoute";
 import ConfirmEmailPage from "./pages/authentication/ConfirmEmailPage";
+import RecoverPasswordPage from "./pages/authentication/RecoverPassword";
 
 const Router = () => {
 
@@ -29,6 +29,7 @@ const Router = () => {
                             <Route exact path="/sign-up" element={<SignUpPage/>} />
                             <Route exact path="/change-password" element={<ChangePasswordPage/>} />
                             <Route path="/confirm-email" element={<ConfirmEmailPage/>}/>
+                            <Route path="/recover-password" element={<RecoverPasswordPage/>}/>
 
                             <Route exact path="/" element={<PrivateRoute element={HomePage} />} />
                             <Route exact path="/home" element={<PrivateRoute element={HomePage} />} />
@@ -36,7 +37,6 @@ const Router = () => {
                             {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
                             
                             <Route exact path="/inheritance/new" element={<PrivateRoute element={NewHeritancePage} />}/>
-                            <Route exact path="/inheritances-list" element={<PrivateRoute element={InheritancesListPage} />} />
                             <Route exact path="/inheritance/:inheritanceId" element={<PrivateRoute element={InheritancePage} />} />
                             <Route exact path="/inheritance/:inheritanceId/heir" element={<PrivateRoute element={HeirsListPage} />} />
                             <Route exact path="/inheritance/:inheritanceId/solution" element={<PrivateRoute element={SolutionPage} />} />

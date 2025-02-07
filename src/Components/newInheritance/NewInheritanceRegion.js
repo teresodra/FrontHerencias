@@ -15,7 +15,8 @@ const NewInheritanceRegion = ({region, setRegion}) => {
     return (
         <>
             <h2>Comunidad autónoma</h2>
-            <form className="form-group" onSubmit={(e) => {e.preventDefault()}}>
+            <form className='custom-form' onSubmit={(e) => {e.preventDefault()}}>
+                <div className="form-group">
                 <Select
                     options={regionsList}
                     onChange={updateRegion}
@@ -23,6 +24,7 @@ const NewInheritanceRegion = ({region, setRegion}) => {
                     placeholder={"Seleciona comunidad..."}
                     classNamePrefix="react-select" // Apply custom prefix
                 />
+                </div>
             </form>
         </>
     )

@@ -116,6 +116,7 @@ const NewHeirForm = ({heirsList, setHeirsList, heirData, setHeirData, closeModal
                         onChange={changeHeirType}
                         placeholder="Seleccionar..."
                         value={heirType}
+                        classNamePrefix="react-select" // Apply custom prefix
                     />
                     {validator.message('type', heir.type, 'required')}
                 </div>

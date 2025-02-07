@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
-import DivisibleAssetValuation from "../Components/DivisibleAssetValuation";
-import IndivisibleAssetValuation from "../Components/IndivisibleAssetValuation";
-import { apiGetInheritance, apiEditInheritance } from "../services/api";
+import DivisibleAssetValuation from "../Components/assetCard/DivisibleAssetValuation";
+import IndivisibleAssetValuation from "../Components/assetCard/IndivisibleAssetValuation";
+import { apiGetInheritance, apiGetInheritancesList, apiAddValuation } from "../services/api";
 import Swal from 'sweetalert2';
 import messagesObj from "../schemas/messages";
-import DivisibleInChunksAssetValuation from "../Components/DivisibleInChunksAssetValuation";
+import DivisibleInChunksAssetValuation from "../Components/assetCard/DivisibleInChunksAssetValuation";
+import CustomPagination from "../Components/utils/CustomPagination";
+import AuthContext from '../services/AuthContext';
+import handleError from '../services/handleError';
+import { ClipLoader } from 'react-spinners';
 
 const ValuationPage = () => {
 
+    const {
+        inheritancesList, setInheritancesList,
+        inheritancesAccessList, setInheritancesAccessList
+    } = useContext(AuthContext);
     
-    // const [inheritance, setInheritance] = useState(JSON.parse('{"heirsList":[{"name":"Mario Martinez Lafuente","id":"sdgfsdfds","age":26},{"name":"Tereso del Rio Almajano","id":"adsfsaf","age":26},{"name":"Raul Perez Rodriguez","id":"dsadad","age":31},{"name":"Miguel Jimenez Garcia","id":"","age":66}],"ownershipsList":[{"heirPercObj":{"sdgfsdfds":{"pp":"1","np":"2","uv":"13"},"adsfsaf":{"pp":"4","np":"5","uv":"6"},"dsadad":{"pp":"7","np":"8","uv":"9"},"":{"pp":"10","np":"11","uv":"12"}},"name":"1","id":"570ea8fe-2754-4915-863b-b25f2605e39c"}],"assetsObj":{"divisibleAssetsList":[{"name":"tierra","quantity":"2","marketValue":"10000","category":"other","ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"fd32fbf3-33e7-4399-858a-d38c98ce524a"},{"name":"sdfdsf","quantity":"1","marketValue":"12","category":"cash","ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"1ce200be-bb67-4294-a6bb-4f3f61ee1ce8"}],"indivisibleAssetsList":[{"name":"coche","marketValue":"500","category":null,"ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"bfcf78e5-6228-4ef7-87b3-5c926093b942"},{"name":"casa","marketValue":"3","category":null,"ownership":"570ea8fe-2754-4915-863b-b25f2605e39c","id":"726d1aea-6251-42bc-a571-fef237a1ddc9"}]}}'));
-    const [inheritance, setInheritance] = useState({});
-    // const heirId = "sdgfsdfds"; // poner como parametro
-    const [isLoading, setIsLoading] = useState(true);
-
     const {inheritanceId, heirId} = useParams();
-
+    const [inheritance, setInheritance] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving ,setIsSaving] = useState(false);
     const [valuationObj, setValuationObj] = useState({})
     const [money, setMoney] = useState(0)
     const [currentStep, setCurrentStep] = useState(1);
@@ -29,36 +34,46 @@ const ValuationPage = () => {
     const [validator] = useState(new SimpleReactValidator());
 
     const navigate = useNavigate();
-    const location = useLocation();
     
     useEffect(() => {
-        loadInheritance();
-        setIsLoading(false);
-    }, []);
-
-    const loadInheritance = async () => {
-        try {
-            let data;
-            if (location.state?.inheritance) {
-                data = location.state?.inheritance // Get inheritance from state when clicking in inheritance wrap
-            } else {
-                data = await apiGetInheritance(inheritanceId);
-            }
-
-            console.log(data)
-            calculateSteps(data);
-            setInheritance(data);
-
+        if (!inheritancesList || !inheritancesAccessList){
+            getInheritanceData();        
+        } else {
+            const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            setInheritance(inheritanceAux);
+            initializeValuation(inheritanceAux)
+            setIsLoading(false); 
+        }
         
-            if (!data?.heirValuationsObj?.[heirId]){
-                initializeValuationObj(data);
-            } else {
-                setValuationObj(data.heirValuationsObj?.[heirId])
-                setMoney(data?.heirValuationsObj?.[heirId].money)
+        
+    }, [])
+
+    const getInheritanceData = async () => {
+        try {
+            const response = await apiGetInheritancesList();
+            setInheritancesList(response?.inheritancesList);
+            setInheritancesAccessList(response?.inheritancesAccessList);
+            const inheritanceAux = response.inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            const accessPermission = response.inheritancesAccessList.find(acc => acc.inheritanceId === inheritanceId);
+            // Check if they have access
+            if (!inheritance || !accessPermission){
+                await handleError({response: {status: 403}}, navigate);
             }
-            
+            setIsLoading(false);   
+            setInheritance(inheritanceAux);
+            initializeValuation(inheritanceAux);
         } catch (err) {
-            console.log(err)
+            await handleError(err, navigate);
+        }
+    }
+
+    const initializeValuation = (auxInheritance) => {
+        calculateSteps(auxInheritance);
+        if (!auxInheritance?.heirValuationsObj?.[heirId]){
+            initializeValuationObj(auxInheritance);
+        } else {
+            setValuationObj(auxInheritance.heirValuationsObj?.[heirId])
+            setMoney(auxInheritance?.heirValuationsObj?.[heirId].money)
         }
     }
 
@@ -70,32 +85,38 @@ const ValuationPage = () => {
     }
 
     const saveValuation = async () => {
+        setIsSaving(true);
         console.log('save')
         console.log(valuationObj)
         console.log(JSON.stringify(valuationObj))
-        let auxInheritance = {
-            ...inheritance,
-            heirValuationsObj: {
-                ...(inheritance?.heirValuationsObj || {}), // Initially is undefined
-                [heirId]: valuationObj
-            }
-        }
-        setInheritance(auxInheritance);
-        console.log(auxInheritance)
-        console.log(JSON.stringify(auxInheritance))
 
         try {
-            await apiEditInheritance(auxInheritance)
+            await apiAddValuation(inheritanceId, {
+                heirId: heirId,
+                valuationObj: valuationObj
+            })
+            //if success update inheritance locally
+            const auxInheritance = {
+                ...inheritance,
+                heirValuationsObj: {
+                    ...(inheritance?.heirValuationsObj || {}), // Initially is undefined
+                    [heirId]: valuationObj
+                }
+            }
+            let auxInheritancesList = [...inheritancesList];
+            const index = auxInheritancesList.findIndex(inh => inh.inheritanceId === inheritanceId);
+            auxInheritancesList[index] = auxInheritance;
+            setInheritancesList(auxInheritancesList);
+            
             Swal.fire(messagesObj.valorationAddedSuccess)
-            navigate(`/inheritance/${inheritance.id}`)
+            navigate(`/inheritance/${inheritance.inheritanceId}`)
         } catch (err) {
             Swal.fire(messagesObj.valorationAddedError)
         }
-
+        setIsSaving(false);
     }
 
     const initializeValuationObj = (inheritanceData) => {
-
 
         let auxObj = {heirId: heirId, money: 0, assetsValuationObj: {}};
         for (let assetType in inheritanceData.assetsObj){
@@ -111,17 +132,30 @@ const ValuationPage = () => {
     } 
 
     const updateMoney = (event) => {
-        let money = parseFloat(event.target.value)
-        setValuationObj({...valuationObj, money: money})
-        setMoney(money)
+        const auxMoney = !isNaN(parseFloat(event.target.value)) ? parseFloat(event.target.value) : "";
+        if (auxMoney !== "") {
+            setValuationObj({...valuationObj, money: auxMoney})
+        }
+        setMoney(auxMoney)
     }
 
-    if (isLoading) {
+    const isNextButtonDisabled = () => {
+        return (currentStep === 1 && (typeof money !== "number" || isNaN(money)))
+    }
+
+    const isSaveButtonDisabled = () => {
+        return false
+    }
+
+
+    if (isLoading || !inheritance) {
         return (
-            <div></div>
+            <div className="loader-clip-container">
+                <ClipLoader className="custom-spinner-clip" loading={true} />
+            </div>
         )
     }
-
+    
     return(
         <div className='center'>
             <div className='content'>
@@ -132,7 +166,7 @@ const ValuationPage = () => {
                         <div className="form-group">
                             <label>Dinero dispuesto a invertir (€)</label>
                             <input
-                                type="text"
+                                type="number"
                                 name="money"
                                 value={money}
                                 onChange={updateMoney}
@@ -216,45 +250,15 @@ const ValuationPage = () => {
                         </>
                 )}
 
-
-                <div className='step-buttons-container'>
-                    <div className='button-container'>
-                        <button className='custom-button' disabled={currentStep === 1} onClick={() => {setCurrentStep(currentStep - 1)}}>
-                            Atras
-                        </button>
-                    </div>
-
-                    <div className="pagination-bars-container">
-                        {/* Number of bars depending of number of steps*/}
-                        {Array.from({ length: numSteps }, (_, index) => index + 1).map((step) => (
-                        <div
-                            key={step}
-                            className={`pagination-bar ${currentStep >= step ? 'active' : ''}`}
-                        ></div>
-                        ))}
-                    </div>
-
-                    {(currentStep < numSteps) ? (
-                        <div className='button-container'>
-                            <button
-                                className='custom-button'
-                                onClick={() => {setCurrentStep(currentStep + 1)}}
-                                // disabled={isNextButtonDisabled()}
-                            >
-                                Siguiente
-                            </button>
-                        </div>
-                    ): (
-                        <div className='button-container'>
-                            <button className='custom-button' onClick={saveValuation}>
-                                Guardar
-                            </button>
-                        </div>
-                    )}
-                    
-                </div>
-
-
+                <CustomPagination
+                    numSteps={numSteps}
+                    currentStep={currentStep}
+                    setCurrentStep={setCurrentStep}
+                    isNextButtonDisabled={isNextButtonDisabled}
+                    isSaveButtonDisabled={isSaveButtonDisabled}
+                    handleSave={saveValuation}
+                    isSaving={isSaving}
+                />
             </div>
         </div>
     )

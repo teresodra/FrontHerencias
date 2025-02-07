@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import NewHeirForm from './NewHeirForm';
+import NewHeirForm from '../heirCards/NewHeirForm';
 import SimpleReactValidator from 'simple-react-validator';
 import NewOwnershipForm from './NewOwnershipForm';
 

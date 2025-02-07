@@ -16,6 +16,7 @@ export const logout = async () => {
         // Clear session storage
         sessionStorage.clear();
 
+
     } catch (err) {
         console.log(err.response.status);
     }

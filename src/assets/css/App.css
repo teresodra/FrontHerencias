@@ -116,12 +116,26 @@ body {
     row-gap: 9px;
 }
 
-input[type="text"], input[type="password"]{
+input[type="text"], input[type="number"], input[type="password"]{
     width: 100%;
     height: 30px;
     border: 1px solid hsl(0, 0%, 80%);
     padding: 3px;
     transition: 300ms all;
+}
+
+input[type="number"] {
+    appearance: textfield; /* Standard property */
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: textfield; /* Chrome, Safari, Edge */
+
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    margin: 0;
+    appearance: none;
 }
 
 .card-container {
@@ -211,30 +225,7 @@ input[type="text"], input[type="password"]{
     flex-direction: row;
 }
 
-/* ############################################## */
-/* SELECT */
-/* ############################################## */
 
-/*tag selector*/
-.css-b62m3t-container{
-    width: 100%;
-}
-
-.css-13cymwt-control:hover, .css-13cymwt-control:active{
-    border-color: var(--color-multiselect-border);
-    box-shadow: 0 0 0 1px var(--color-multiselect-shadow) !important;
-}
-
-.css-t3ipsp-control, .css-t3ipsp-control{
-    border-color: var(--color-multiselect-border) !important;
-    box-shadow: 0 0 0 1px var(--color-multiselect-shadow) !important;
-}
-
-/* Customize the selected option */
-.react-select__option--is-selected {
-    background-color: var(--color-theme) !important; /* Change background color for selected option */
-    color: white !important;                /* Change text color for selected option */
-}
 
 /* #################################################### */
 /* MODAL*/
@@ -318,9 +309,13 @@ input[type="text"], input[type="password"]{
 .modal-content {
     margin-top: 2rem;
     color: black;
-    width: 40%;
+    width: 60%;
     height: 100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    overflow-y: auto;
+     /* Adds space for the scrollbar even when not present */
+    /* scrollbar-gutter: stable; */
+    /* padding-right: 2rem; */
 }
 
 .modal-text{

@@ -4,6 +4,7 @@
     --color-card-border: rgb(100, 131, 131);
     --color-button-background: #1c3c4b;
     --color-theme-font: white;
+    --color-delete: rgb(163, 31, 31);
 
     --color-table: #13444b;
     --color-td-bold-background: #51a5b4;
@@ -60,6 +61,11 @@
     width:100%
 }
 
+/* validator messages */
+.srv-validation-message{
+    color: red;
+}
+
 /* ############################################### */
 /* LOGIN */
 /* ############################################### */
@@ -102,6 +108,11 @@
     flex-direction: row;
 }
 
+.text-container{
+    display: flex;
+    flex-direction: column;
+}
+
 /* ############################################### */
 /* BUTTONS */
 /* ############################################### */
@@ -118,10 +129,11 @@
 .button-container {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 2rem;
+    gap: 1rem;
 }
 
 .custom-button{
@@ -267,6 +279,18 @@
     border-width: 0.2rem !important;
 }
 
+.custom-button-spinner-container .clip-loader{
+    /* height: 0.5rem; */
+    color: white !important;
+    border-color: white !important;
+}
+.custom-button-spinner{
+    color: white !important;
+    border-width: 0.1rem !important;
+    height: 0.9rem !important;
+    width: 0.9rem !important;
+}
+
 /* ############################################### */
 /* HEADER */
 /* ############################################### */
@@ -361,3 +385,78 @@
     cursor: pointer;
     padding: 1rem 1rem 1rem 1rem;
 }
+
+/* #################################################################*/
+/* ######################## HEIRS LIST #############################*/
+/* #################################################################*/
+
+.list-heirs-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-heirs-container-content{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    
+    margin-bottom: 2rem;
+}
+
+.list-heir {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 2rem 1rem 2rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+
+    background-color:#f2f5f8;
+    border: 2px 0 2px 0 solid rgb(87, 81, 81);
+    font-size: 0.9rem;
+    cursor: pointer;
+
+}
+
+.heir-is-valuated{
+    background-color: var(--color-theme);
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+}
+
+/* ############################################## */
+/* SELECT */
+/* ############################################## */
+
+/*tag selector*/
+.css-b62m3t-container{
+    width: 100%;
+}
+
+.css-13cymwt-control:hover, .css-13cymwt-control:active{
+    border-color: var(--color-multiselect-border);
+    box-shadow: 0 0 0 1px var(--color-multiselect-shadow) !important;
+}
+
+.css-t3ipsp-control, .css-t3ipsp-control{
+    border-color: var(--color-multiselect-border) !important;
+    box-shadow: 0 0 0 1px var(--color-multiselect-shadow) !important;
+}
+
+/* Customize the selected option */
+.react-select__option--is-selected {
+    background-color: var(--color-theme) !important; /* Change background color for selected option */
+    color: white !important;                /* Change text color for selected option */
+}
+

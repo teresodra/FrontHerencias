@@ -9,14 +9,12 @@ const HeirWrap = ({inheritance, heirId}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('entro')
         getHeirInfo();
         setIsValuated(checkIfValuated())
     }, [])
 
     const getHeirInfo = () => {
         setHeir(inheritance.heirsList.find(heir => heir.id === heirId))
-        console.log(inheritance.heirsList.find(heir => heir.id === heirId))
     }
 
     // Check if heir has already valuated the assets
@@ -26,17 +24,17 @@ const HeirWrap = ({inheritance, heirId}) => {
     
     const goToValoration = () => {
         navigate(
-            `/inheritance/${inheritance.id}/heir/${heirId}/valoration`,
+            `/inheritance/${inheritance.inheritanceId}/heir/${heirId}/valoration`,
             { state: { inheritance: inheritance }
         })
     }
 
 
     return (
-        <div className="list-item" onClick={goToValoration}>
+        <div className="list-heir" onClick={goToValoration}>
             <div>{heir?.name}</div>
             {isValuated && (
-                <div>Valorado</div>
+                <div className="heir-is-valuated">Valorado</div>
             )}
         </div>
     )

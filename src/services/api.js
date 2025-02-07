@@ -3,8 +3,6 @@ import axios from 'axios';
 import {isTokenExpired} from './tokenService';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-console.log(API_BASE_URL)
-console.log(process.env.REACT_APP_USER_POOL_ID)
 
 export default API_BASE_URL;
 
@@ -110,23 +108,44 @@ export const apiSaveInheritance = async (inheritance) => {
     
     try {
         const response = await api.post(`/inheritance`, inheritance)
+        console.log(response)
         return response.data
     } catch (error) {
         throw error;
     }
 };
+
+// PATCH send valuation
+export const apiAddValuation = async (inheritanceId, valuation) => {
+    try {
+        const response = await api.patch(`/inheritance/${inheritanceId}/valuation`, valuation)
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}
+
+// DELETE inheriance
+export const apiDeleteInheritance = async (inheritanceId) => {
+    try {
+        await api.delete(`/inheritance/${inheritanceId}`)
+    } catch (error) {
+        throw error;
+    }
+}
 
 // PUT edit existing inheritance
-export const apiEditInheritance = async (inheritance) => {
+// export const apiEditInheritance = async (inheritance) => {
     
-    try {
-        const response = await api.put(`/inheritance/${inheritance.id}`, inheritance)
-        return response.data
-    } catch (error) {
-        throw error;
-    }
-};
+//     try {
+//         const response = await api.put(`/inheritance/${inheritance.id}`, inheritance)
+//         return response.data
+//     } catch (error) {
+//         throw error;
+//     }
+// };
 
+// POST send message to SQS indicating the inheritance to calculate
 export const apiCalculate = async (inheritanceId) => {
     try {
         const response = await api.post(`/inheritance/${inheritanceId}/calculate`, )

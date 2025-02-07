@@ -41,14 +41,14 @@ const HomePage = () => {
         navigate(`/inheritance/new`)
     }
 
-    if (isLoading) {
+    if (isLoading || !inheritancesList) {
         return(
             <div className='center'>
                 <section className='content'>
                     <div className='inheritances-list'>
                         <h2>{"Tus herencias"}</h2>
                         <div className="loader-clip-container">
-                            <ClipLoader className="custom-spinner-clip" loading={isLoading} />
+                            <ClipLoader className="custom-spinner-clip" loading={true} />
                         </div>
                     </div>        
                 </section>

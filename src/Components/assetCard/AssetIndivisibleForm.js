@@ -79,7 +79,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeMod
             ...asset,
             name: nameRef.current.value,
             refValue: refValueRef.current.value,
-            category: null
+            // category: null
         })
     }
 
@@ -125,6 +125,7 @@ const AssetIndivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeMod
                         onChange={changeOwnership}
                         placeholder="Seleccionar..."
                         value={ownershipId}
+                        classNamePrefix="react-select" // Apply custom prefix
                     />
                     {validator.message('ownership', asset.ownershipId, 'required')}
                 </div>

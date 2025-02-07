@@ -1,14 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SimpleReactValidator from 'simple-react-validator';
-import HeirData from '../Components/HeirData';
-import NewHeirModal from '../Components/NewHeirModal';
-import NewAssetModal from '../Components/NewAssetModal';
-import DivisibleAsset from '../Components/DivisibleAsset';
-import IndivisibleAsset from '../Components/IndivisibleAsset';
-import DivisibleInChunksAsset from '../Components/DivisibleInChunksAsset';
-import NewOwnershipModal from '../Components/NewOwnershipModal';
-import OwnershipData from '../Components/OwnershipData';
 import { apiSaveInheritance } from '../services/api';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,12 +9,20 @@ import NewInheritanceName from '../Components/newInheritance/NewInheritanceName'
 import NewInheritanceOwnerships from '../Components/newInheritance/NewInheritanceOwnerships';
 import NewInheritanceAssets from '../Components/newInheritance/NewInheritanceAssets';
 import NewInheritanceRegion from '../Components/newInheritance/NewInheritanceRegion';
+import CustomPagination from '../Components/utils/CustomPagination';
+import handleError from '../services/handleError';
+import AuthContext from '../services/AuthContext';
 
 const NewHeritancePage = () => {
 
+    const {
+        setInheritancesList,
+        setInheritancesAccessList
+    } = useContext(AuthContext);
+
+    const [isSaving, setIsSaving] = useState(false);
     // const [heirsList, setHeirsList] = useState([]);
     // To avoid doing it when testing ownership
-    // const [heirsList, setHeirsList] = useState([]);
     const [heirsList, setHeirsList] = useState([
         {name: "Mario Martinez Lafuente", id: "sdgfsdfds", age: 26, type: 1},
         {name: "Tereso del Rio Almajano", id: "adsfsaf", age: 26, type: 2},
@@ -34,24 +33,16 @@ const NewHeritancePage = () => {
     const [assetsObj, setAssetsObj] = useState({});
     const [name, setName] = useState('');
     const [region, setRegion] = useState(null);
-    const [heirModalIsOpen, setHeirModalIsOpen] = useState(false);
-    const [assetModalIsOpen, setAssetModalIsOpen] = useState(false);
-    const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
-
-    const [heirToEdit, setHeirToEdit] = useState(null);
-    const [ownershipToEdit, setOwnershipToEdit] = useState(null);
-    const [assetToEdit, setAssetToEdit] = useState(null);
-    const [assetType, setAssetType] = useState(null);
 
     const [heirDataStep, setHeirDataStep] = useState(1);
-
-    const [validator] = useState(new SimpleReactValidator());
 
     const navigate = useNavigate();
 
     const handleSave = async () => {
+        setIsSaving(true);
+        const inheritanceId = uuidv4()
         const auxInheritance = {
-            inheritanceId: uuidv4(),
+            inheritanceId: inheritanceId,
             name: name,
             region: region,
             heirsList: heirsList,
@@ -63,13 +54,18 @@ const NewHeritancePage = () => {
         console.log(JSON.stringify(auxInheritance))
         try {
             const result = await apiSaveInheritance(auxInheritance);
+            console.log(result)
+            setInheritancesList(null);
+            setInheritancesAccessList(null);
             Swal.fire(messagesObj.newInheritanceSuccess);
-            navigate(`/inheritance/${result.inheritanceId}`)
+            navigate(`/inheritance/${inheritanceId}`)
             
         } catch (err) {
             console.log(err);
-            Swal.fire(messagesObj.newInheritanceError);
+            handleError(err, navigate);
+            // Swal.fire(messagesObj.newInheritanceError);
         }
+        setIsSaving(false);
 
     }
 
@@ -88,7 +84,6 @@ const NewHeritancePage = () => {
         return true
     }
 
-    
     return (
         <div className='center'>
             <div className='content'>
@@ -143,41 +138,15 @@ const NewHeritancePage = () => {
                     />
                 )}
 
-                <div className='step-buttons-container'>
-                    <div className='button-container'>
-                        <button className='custom-button' disabled={heirDataStep === 1} onClick={() => {setHeirDataStep(heirDataStep - 1)}}>
-                            Atras
-                        </button>
-                    </div>
-
-                    <div className="pagination-bars-container">
-                        {[1, 2, 3, 4, 5].map((step) => (
-                        <div
-                            key={step}
-                            className={`pagination-bar ${heirDataStep >= step ? 'active' : ''}`}
-                        ></div>
-                        ))}
-                    </div>
-
-                    {(heirDataStep < 5) ? (
-                        <div className='button-container'>
-                            <button
-                                className='custom-button'
-                                onClick={() => {setHeirDataStep(heirDataStep + 1)}}
-                                disabled={isNextButtonDisabled()}
-                            >
-                                Siguiente
-                            </button>
-                        </div>
-                    ): (
-                        <div className='button-container'>
-                            <button className='custom-button' disabled={isSaveButtonDisabled()} onClick={handleSave}>
-                                Guardar
-                            </button>
-                        </div>
-                    )}
-                    
-                </div>
+                <CustomPagination
+                    numSteps={5}
+                    currentStep={heirDataStep}
+                    setCurrentStep={setHeirDataStep}
+                    isNextButtonDisabled={isNextButtonDisabled}
+                    isSaveButtonDisabled={isSaveButtonDisabled}
+                    handleSave={handleSave}
+                    isSaving={isSaving}
+                />
 
             </div>
         </div>
