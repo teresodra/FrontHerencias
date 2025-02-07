@@ -67,6 +67,7 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
                             value={assetType}
                             onChange={setAssetType}
                             isDisabled={assetData && assetType} // If asset data exists means it is being edited. Hence, changing type is not allowed
+                            classNamePrefix="react-select" // Apply custom prefix
                         />
                     </div>
 

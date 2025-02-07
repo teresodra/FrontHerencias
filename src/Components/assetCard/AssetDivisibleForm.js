@@ -154,6 +154,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeModal
                         onChange={changeCategory}
                         placeholder="Seleccionar..."
                         value={category}
+                        classNamePrefix="react-select" // Apply custom prefix
                     />
                     {validator.message('category', asset.category, 'required')}
                 </div>
@@ -165,6 +166,7 @@ const AssetDivisibleForm = ({assetsObj, setAssetsObj, ownershipsList, closeModal
                         onChange={changeOwnership}
                         value={ownershipId}
                         placeholder="Seleccionar..."
+                        classNamePrefix="react-select" // Apply custom prefix
                     />
                     {validator.message('ownership', asset.ownershipId, 'required')}
                 </div>

@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { apiGetSolution } from '../services/api';
+import AuthContext from '../services/AuthContext';
+import { apiGetInheritancesList } from '../services/api';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
 import messagesObj from "../schemas/messages";
+import handleError from '../services/handleError';
 import CustomTable from '../Components/CustomTable';
 import SolutionDivisibleAsset from '../Components/assetCard/SolutionDivisibleAsset';
 import SolutionIndivisibleAsset from '../Components/assetCard/SolutionIndivisibleAsset';
 
 const SolutionPage = () => {
+
+    const {
+        inheritancesList, setInheritancesList,
+        inheritancesAccessList, setInheritancesAccessList
+    } = useContext(AuthContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [inheritance, setInheritance] = useState(true);
@@ -26,30 +33,64 @@ const SolutionPage = () => {
     // TODO poner que si solucion no existe de error y te lleve a pagina herencia
 
     useEffect(() => {
-        loadInheritance();
-    }, []); 
-
-    const loadInheritance = async () => {
-        try {
-            let data;
-            if (location.state?.inheritance?.solution) {
-                data = location.state?.inheritance // Get inheritance from state when clicking in inheritance wrap
-            } else {
-                let response = await apiGetSolution(inheritanceId);
-                if (response.status === 204) {
-                    Swal.fire(messagesObj.solutionNotFoundError)
-                    navigate(`/inheritance/${inheritanceId}`)
-                }
-                data = response.data;
+        if (!inheritancesList || !inheritancesAccessList){
+            getInheritanceData();        
+        } else {
+            const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            if (!inheritanceAux?.solution) {
+                handleError({response: {status: 404}}, navigate);
             }
-            setInheritance(data);
-            initializeValues(data);
-            setIsLoading(false);
+            setInheritance(inheritanceAux);
+            initializeValues(inheritanceAux);
+            setIsLoading(false); 
+        }
+        
+    }, [])
 
+    const getInheritanceData = async () => {
+        try {
+            const response = await apiGetInheritancesList();
+            setInheritancesList(response?.inheritancesList);
+            setInheritancesAccessList(response?.inheritancesAccessList);
+            const inheritanceAux = response.inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            const accessPermission = response.inheritancesAccessList.find(acc => acc.inheritanceId === inheritanceId);
+            // Check if they have access
+            if (!inheritanceAux || !accessPermission){
+                await handleError({response: {status: 403}}, navigate);
+            }
+            if (!inheritanceAux?.solution) {
+                await handleError({response: {status: 404}}, navigate);
+            }
+            setIsLoading(false);   
+            setInheritance(inheritanceAux);
+            initializeValues(inheritanceAux);
+            console.log(inheritanceAux)
         } catch (err) {
-            console.log(err)
+            await handleError(err, navigate);
         }
     }
+
+    // const loadInheritance = async () => {
+    //     try {
+    //         let data;
+    //         if (location.state?.inheritance?.solution) {
+    //             data = location.state?.inheritance // Get inheritance from state when clicking in inheritance wrap
+    //         } else {
+    //             let response = await apiGetSolution(inheritanceId);
+    //             if (response.status === 204) {
+    //                 Swal.fire(messagesObj.solutionNotFoundError)
+    //                 navigate(`/inheritance/${inheritanceId}`)
+    //             }
+    //             data = response.data;
+    //         }
+    //         setInheritance(data);
+    //         initializeValues(data);
+    //         setIsLoading(false);
+
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     const initializeValues = (data) => {
         let auxList = [];
@@ -84,6 +125,7 @@ const SolutionPage = () => {
                         onChange={changeHeirPOV}
                         value={heirPOV}
                         placeholder="Seleccionar..."
+                        classNamePrefix="react-select" // Apply custom prefix
                     />
                 </form>
 
