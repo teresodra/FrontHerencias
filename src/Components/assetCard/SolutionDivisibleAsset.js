@@ -39,7 +39,7 @@ const SolutionDivisibleAsset = ({assetAllocation, inheritance, ownershipsList, r
                         </div>
 
                         <div className='card-data-item'>
-                            <label>Valor de referncia por unidad</label>
+                            <label>Valor de referencia por unidad</label>
                             <div>{asset.refValue} {"€"}</div>
                         </div>
 
