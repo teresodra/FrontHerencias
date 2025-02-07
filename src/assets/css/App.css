@@ -225,30 +225,7 @@ input[type="number"]::-webkit-outer-spin-button {
     flex-direction: row;
 }
 
-/* ############################################## */
-/* SELECT */
-/* ############################################## */
 
-/*tag selector*/
-.css-b62m3t-container{
-    width: 100%;
-}
-
-.css-13cymwt-control:hover, .css-13cymwt-control:active{
-    border-color: var(--color-multiselect-border);
-    box-shadow: 0 0 0 1px var(--color-multiselect-shadow) !important;
-}
-
-.css-t3ipsp-control, .css-t3ipsp-control{
-    border-color: var(--color-multiselect-border) !important;
-    box-shadow: 0 0 0 1px var(--color-multiselect-shadow) !important;
-}
-
-/* Customize the selected option */
-.react-select__option--is-selected {
-    background-color: var(--color-theme) !important; /* Change background color for selected option */
-    color: white !important;                /* Change text color for selected option */
-}
 
 /* #################################################### */
 /* MODAL*/
@@ -332,9 +309,13 @@ input[type="number"]::-webkit-outer-spin-button {
 .modal-content {
     margin-top: 2rem;
     color: black;
-    width: 40%;
+    width: 60%;
     height: 100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    overflow-y: auto;
+     /* Adds space for the scrollbar even when not present */
+    /* scrollbar-gutter: stable; */
+    /* padding-right: 2rem; */
 }
 
 .modal-text{
