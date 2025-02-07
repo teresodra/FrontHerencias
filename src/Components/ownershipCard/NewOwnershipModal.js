@@ -33,7 +33,7 @@ const NewOwnershipModal = ({modalIsOpen, setModalIsOpen, ownershipsList, setOwne
             </div>
             
             <div className='modal-content-container'>
-                <div className="modal-content">
+                <div className="modal-content pr-1">
                     <NewOwnershipForm
                         ownershipsList={ownershipsList}
                         setOwnershipsList={setOwnershipsList}
