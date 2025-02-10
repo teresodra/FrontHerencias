@@ -34,10 +34,12 @@ const SolutionPage = () => {
     // TODO poner que si solucion no existe de error y te lleve a pagina herencia
 
     useEffect(() => {
+        console.log(inheritancesList)
         if (!inheritancesList || !inheritancesAccessList){
             getInheritanceData();        
         } else {
             const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            console.log(inheritanceAux)
             if (!inheritanceAux?.solution) {
                 handleError({response: {status: 404}}, navigate);
             }

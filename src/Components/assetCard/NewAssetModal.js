@@ -59,7 +59,7 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
             </div>
             
             <div className='modal-content-container'>
-                <div className="modal-content">
+                <div className="modal-content pr-1">
                     <div className='form-group'>
                         <label>Tipo bien:</label>
                         <Select

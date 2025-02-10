@@ -84,15 +84,20 @@ const InheritancePage = () => {
 
     const checkForSolution = async () => {
         try {
-            console.log('trying')
             let response = await apiGetSolution(inheritanceId);
-            console.log(response.status === 200)
             if (response.status === 200) {
-                console.log('entro')
                 clearInterval(timerIdRef.current); // Access the timer ID from the ref
                 timerIdRef.current = null; // Reset the ref
-                // console.log(timerId)
+
+
                 setInheritance(response.data);
+                // Update inheritance in the list
+                console.log(inheritancesList)
+                let auxInhList = [...inheritancesList];
+                const index = auxInhList.findIndex(inh => inh.inheritanceId === inheritanceId);
+                console.log(index);
+                auxInhList[index] = {...response.data};
+                setInheritancesList(auxInhList);
                 setIsCalculating(false);
             }
             console.log(response)
@@ -105,7 +110,7 @@ const InheritancePage = () => {
     }
 
     const goToSolutionPage = () => {
-        navigate(`/inheritance/${inheritance.inheritanceId}/solution`, { state: { inheritance: inheritance } })
+        navigate(`/inheritance/${inheritance.inheritanceId}/solution`)
     }
 
     const handleDelete = () => {

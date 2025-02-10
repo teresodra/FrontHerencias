@@ -8,9 +8,6 @@ const Header = () => {
     const cognitoUser = userPool.getCurrentUser();
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
-
-
-    console.log(cognitoUser)
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -35,9 +32,6 @@ const Header = () => {
                     
                     setName(userAttributes.name);
                     setLastName(userAttributes.family_name);
-                    console.log("User Attributes:", userAttributes);
-                    console.log("Email:", userAttributes.email);
-                    console.log("Name:", userAttributes.name);
                 });
             });
         } else {
