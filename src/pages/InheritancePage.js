@@ -166,7 +166,7 @@ const InheritancePage = () => {
                 </div>
 
                 <div className='button-container'>
-                    <button className='custom-button' disabled={isAllValuated() || isCalculating} onClick={calculateInheritance}>
+                    <button className='custom-button large' disabled={isAllValuated() || isCalculating || isDeleting} onClick={calculateInheritance}>
                         {!isCalculating ? (
                             "Calcular"
                         ) : (
@@ -179,14 +179,14 @@ const InheritancePage = () => {
                             </div>
                         )}
                     </button>
-                    <button className='custom-button' disabled={!inheritance?.solution || isCalculating} onClick={goToSolutionPage}>
-                        Ver solucion
+                    <button className='custom-button large' disabled={!inheritance?.solution || isCalculating || isDeleting} onClick={goToSolutionPage}>
+                        Ver solución
                     </button>
-                    <button className='custom-button' disabled={!inheritance?.solutionUnvalued} onClick={goToSolutionPage}>
-                        Ver solucion sin valoraciones
+                    <button className='custom-button large' disabled={!inheritance?.solutionUnvalued || isDeleting} onClick={goToSolutionPage}>
+                        Ver solución sin valoraciones
                     </button>
 
-                    <button className='custom-button delete' onClick={handleDelete} disabled={isDeleting}>
+                    <button className='custom-button large delete' onClick={handleDelete} disabled={isDeleting}>
                         {!isDeleting ? (
                             "Eliminar"
                         ) : (

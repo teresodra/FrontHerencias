@@ -165,8 +165,8 @@
     transition: transform 0.1s ease; /* Smooth transition */
 }
 
-.custom-button.es{
-    min-width: 10rem;
+.custom-button.large{
+    min-width: 13rem;
 }
 
 .custom-button.delete{
