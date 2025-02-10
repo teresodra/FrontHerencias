@@ -148,7 +148,7 @@ export const apiDeleteInheritance = async (inheritanceId) => {
 // POST send message to SQS indicating the inheritance to calculate
 export const apiCalculate = async (inheritanceId) => {
     try {
-        const response = await api.post(`/inheritance/${inheritanceId}/calculate`, )
+        const response = await api.post(`/inheritance/${inheritanceId}/calculate`)
         console.log(response.data)
         return response.data
     } catch (error) {

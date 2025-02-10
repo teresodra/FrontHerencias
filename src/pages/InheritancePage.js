@@ -23,7 +23,6 @@ const InheritancePage = () => {
     const {inheritanceId} = useParams();
 
     const navigate = useNavigate();
-    const location = useLocation();
 
     const timerInterval = 1 * 1000; // 10 secs (in ms)
     const timerIdRef = useRef(null); // Using a ref to store the timer ID
@@ -81,6 +80,7 @@ const InheritancePage = () => {
             setIsCalculating(false);
         }
     }
+
 
     const checkForSolution = async () => {
         try {
@@ -154,14 +154,7 @@ const InheritancePage = () => {
             <div className='content'>
                 <h1>
                     {`${inheritance?.name}`}
-                    {/* {`Información herencia`} */}
                 </h1>
-
-                {/* <div className='button-container'>
-                    <button className='custom-button' onClick={() => {navigate('/new-heritance')}}>
-                        Datos herencia
-                    </button>
-                </div> */}
 
                 <div className='list-heirs-container'>
                     <h3 className="num-items-title">Valoraciones herederos ({inheritance?.heirsList.length})</h3>                                       
@@ -188,6 +181,9 @@ const InheritancePage = () => {
                     </button>
                     <button className='custom-button' disabled={!inheritance?.solution || isCalculating} onClick={goToSolutionPage}>
                         Ver solucion
+                    </button>
+                    <button className='custom-button' disabled={!inheritance?.solutionUnvalued} onClick={goToSolutionPage}>
+                        Ver solucion sin valoraciones
                     </button>
 
                     <button className='custom-button delete' onClick={handleDelete} disabled={isDeleting}>
