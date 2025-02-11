@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { apiCalculate, apiDeleteInheritance, apiGetInheritance, apiGetInheritancesList, apiGetSolution } from '../services/api';
 import HeirWrap from '../Components/HeirWrap';
 import Swal from 'sweetalert2';
@@ -18,25 +18,32 @@ const InheritancePage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isCalculating, setIsCalculating] = useState(false);
+    const [isCalculatingUnvalued, setIsCalculatingUnvalued] = useState(false);
     
     const [inheritance, setInheritance] = useState(null);
     const {inheritanceId} = useParams();
 
     const navigate = useNavigate();
 
-    const timerInterval = 1 * 1000; // 10 secs (in ms)
+    const timerInterval = 1 * 5000; // 10 secs (in ms)
     const timerIdRef = useRef(null); // Using a ref to store the timer ID
+    const timerUnvaluedIdRef = useRef(null); // Using a ref to store the timer ID
     
 
     useEffect(() => {
+
         if (!inheritancesList || !inheritancesAccessList){
             getInheritanceData();        
         } else {
             const inheritanceAux = inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
             setInheritance(inheritanceAux);
-            setIsLoading(false); 
+            setIsLoading(false);
+            if (!inheritanceAux.solutionUnvalued){
+                
+                setIsCalculatingUnvalued(true);
+                timerUnvaluedIdRef.current = setInterval(checkUnvaluedSolution, timerInterval);
+            }
         }
-        
     }, [])
 
     const getInheritanceData = async () => {
@@ -52,7 +59,38 @@ const InheritancePage = () => {
             }
             setIsLoading(false);   
             setInheritance(inheritanceAux);
-            console.log(inheritanceAux)
+            if (!inheritanceAux.solutionUnvalued && !timerUnvaluedIdRef.current){
+                
+                setIsCalculatingUnvalued(true);
+                timerUnvaluedIdRef.current = setInterval(checkUnvaluedSolution, timerInterval);
+            }
+
+        } catch (err) {
+            await handleError(err, navigate);
+        }
+    }
+
+    const checkUnvaluedSolution = async () => {
+        try {
+            
+            const response = await apiGetInheritancesList();
+            
+            const inheritanceAux = response.inheritancesList.find(inh => inh.inheritanceId === inheritanceId);
+            
+            if (inheritanceAux.solutionUnvalued) {
+                
+                // Ensure the interval is cleared only if it exists
+                if (timerUnvaluedIdRef.current) {
+                    
+                    clearInterval(timerUnvaluedIdRef.current);
+                    timerUnvaluedIdRef.current = null;
+                }
+                
+                setIsCalculatingUnvalued(false)
+                setInheritancesList(response?.inheritancesList);
+                setInheritance(inheritanceAux)
+            }
+            
         } catch (err) {
             await handleError(err, navigate);
         }
@@ -63,7 +101,6 @@ const InheritancePage = () => {
         if (!inheritance?.heirValuationsObj) {
             return true
         }
-
         return inheritance?.heirsList.length !== Object.keys(inheritance?.heirValuationsObj).length;
     }
 
@@ -81,7 +118,6 @@ const InheritancePage = () => {
         }
     }
 
-
     const checkForSolution = async () => {
         try {
             let response = await apiGetSolution(inheritanceId);
@@ -89,18 +125,14 @@ const InheritancePage = () => {
                 clearInterval(timerIdRef.current); // Access the timer ID from the ref
                 timerIdRef.current = null; // Reset the ref
 
-
                 setInheritance(response.data);
                 // Update inheritance in the list
-                console.log(inheritancesList)
                 let auxInhList = [...inheritancesList];
                 const index = auxInhList.findIndex(inh => inh.inheritanceId === inheritanceId);
-                console.log(index);
                 auxInhList[index] = {...response.data};
                 setInheritancesList(auxInhList);
                 setIsCalculating(false);
             }
-            console.log(response)
         } catch (err) {
             console.log(err)
             Swal.fire(messagesObj.calculateError);
@@ -164,7 +196,7 @@ const InheritancePage = () => {
                         ))}
                     </div>
                 </div>
-
+                <div>{JSON.stringify(inheritance?.solutionUnvalued)}</div>
                 <div className='button-container'>
                     <button className='custom-button large' disabled={isAllValuated() || isCalculating || isDeleting} onClick={calculateInheritance}>
                         {!isCalculating ? (
@@ -182,8 +214,18 @@ const InheritancePage = () => {
                     <button className='custom-button large' disabled={!inheritance?.solution || isCalculating || isDeleting} onClick={goToSolutionPage}>
                         Ver solución
                     </button>
-                    <button className='custom-button large' disabled={!inheritance?.solutionUnvalued || isDeleting} onClick={goToSolutionPage}>
-                        Ver solución sin valoraciones
+                    <button className='custom-button large' disabled={!inheritance?.solutionUnvalued || isCalculatingUnvalued || isDeleting} onClick={goToSolutionPage}>
+                        {!isCalculatingUnvalued ? (
+                            "Ver solución sin valoraciones"
+                        ) : (
+                            <div className="custom-button-spinner-container">
+                                <ClipLoader
+                                    className="custom-button-spinner"
+                                    loading={true}
+                                    color="white"
+                                />
+                            </div>
+                        )}
                     </button>
 
                     <button className='custom-button large delete' onClick={handleDelete} disabled={isDeleting}>

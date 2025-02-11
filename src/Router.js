@@ -15,6 +15,7 @@ import PrivateRoute from "./Components/auth/PrivateRoute";
 import ConfirmEmailPage from "./pages/authentication/ConfirmEmailPage";
 import RecoverPasswordPage from "./pages/authentication/RecoverPassword";
 import SolutionUnvaluedPage from "./pages/SolutionUnvaluedPage";
+import WelcomePage from "./pages/WelcomePage";
 
 const Router = () => {
 
@@ -26,6 +27,7 @@ const Router = () => {
                     <div className='body-content'>
                     <Routes>
                         <Route>
+                            <Route exact path="/welcome" element={<WelcomePage />} />
                             <Route exact path="/login" element={<LoginPage/>} />
                             <Route exact path="/sign-up" element={<SignUpPage/>} />
                             <Route exact path="/change-password" element={<ChangePasswordPage/>} />
