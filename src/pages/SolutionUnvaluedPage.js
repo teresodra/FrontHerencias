@@ -133,7 +133,6 @@ const SolutionUnvaluedPage = () => {
                 <h1>
                     Solucion sin valoraciones
                 </h1>
-                <div>{JSON.stringify(inheritance.solutionUnvalued)}</div>
                 <h3>Punto de vista</h3>
                 <form className='custom-form'>
                     <Select
@@ -147,7 +146,7 @@ const SolutionUnvaluedPage = () => {
 
                 {heirPOV && (
                 <>
-                    {heirPOV?.value !== 'refValue' && (
+                    {/* {heirPOV?.value !== 'refValue' && (
                         <div className='tab-container'>
                             <div
                                 className={!showTables ? 'tab active' : 'tab'}
@@ -163,7 +162,7 @@ const SolutionUnvaluedPage = () => {
                             </div>
                             
                         </div>
-                    )}
+                    )} */}
 
                     
                     {showTables ? (
@@ -180,8 +179,13 @@ const SolutionUnvaluedPage = () => {
                             valuesObj={inheritance.solutionUnvalued.perceivedValueMatrix?.[heirPOV?.value]?.receivedValues}
                             heirPOV={heirPOV?.value}
                         />
-
+                        </>
+                    ) : (
+                        <>
                         {heirPOV?.value !== 'refValue' && (
+                            <>
+                            <h2>Bienes</h2>
+                            {heirPOV?.value !== 'refValue' && (
                             <div className='center'>
                                 <div className='sol-values-container'>
                                 
@@ -209,14 +213,6 @@ const SolutionUnvaluedPage = () => {
                                 </div>
                             </div>
                         )}
-                        </>
-
-                        
-                    ) : (
-                        <>
-                        {heirPOV?.value !== 'refValue' && (
-                            <>
-                            <h2>Bienes</h2>
                             <h3>Divisibles ({heirAllocation?.divisibleAssetsList.length})</h3>
                             <div className='card-container'>
                                 {heirAllocation?.divisibleAssetsList.map(assetAlloc => (

@@ -182,7 +182,16 @@ const SolutionPage = () => {
                             heirPOV={heirPOV?.value}
                         />
 
+                        
+                        </>
+
+                        
+                    ) : (
+                        <>
                         {heirPOV?.value !== 'refValue' && (
+                            <>
+                            <h2>Bienes</h2>
+                            {heirPOV?.value !== 'refValue' && (
                             <div className='center'>
                                 <div className='sol-values-container'>
                                 
@@ -210,14 +219,6 @@ const SolutionPage = () => {
                                 </div>
                             </div>
                         )}
-                        </>
-
-                        
-                    ) : (
-                        <>
-                        {heirPOV?.value !== 'refValue' && (
-                            <>
-                            <h2>Bienes</h2>
                             <h3>Divisibles ({heirAllocation?.divisibleAssetsList.length})</h3>
                             <div className='card-container'>
                                 {heirAllocation?.divisibleAssetsList.map(assetAlloc => (
