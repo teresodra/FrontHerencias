@@ -107,7 +107,7 @@ const SolutionUnvaluedPage = () => {
         setShowTables(value.value === "refValue"); // true when showinf ref Value
   
         setHeirPOV(value);
-        setHeirAllocation(inheritance.solution.heirsAllocation.find(alloc => alloc.heirId === value?.value))
+        setHeirAllocation(inheritance.solutionUnvalued.heirsAllocation.find(alloc => alloc.heirId === value?.value))
     }
     
     
@@ -131,9 +131,9 @@ const SolutionUnvaluedPage = () => {
         <div className='center'>
             <div className='content'>
                 <h1>
-                    Solucion
+                    Solucion sin valoraciones
                 </h1>
-
+                <div>{JSON.stringify(inheritance.solutionUnvalued)}</div>
                 <h3>Punto de vista</h3>
                 <form className='custom-form'>
                     <Select
@@ -171,14 +171,13 @@ const SolutionUnvaluedPage = () => {
                         <h3>Valores esperados</h3>
                         <CustomTable
                             inheritance={inheritance}
-                            valuesObj={inheritance.solution.perceivedValueMatrix?.[heirPOV?.value]?.expectedValues}
+                            valuesObj={inheritance.solutionUnvalued.perceivedValueMatrix?.[heirPOV?.value]?.expectedValues}
                             heirPOV={heirPOV?.value}/>
-
 
                         <h3>Valores recibidos</h3>
                         <CustomTable
                             inheritance={inheritance}
-                            valuesObj={inheritance.solution.perceivedValueMatrix?.[heirPOV?.value]?.receivedValues}
+                            valuesObj={inheritance.solutionUnvalued.perceivedValueMatrix?.[heirPOV?.value]?.receivedValues}
                             heirPOV={heirPOV?.value}
                         />
 
@@ -221,14 +220,24 @@ const SolutionUnvaluedPage = () => {
                             <h3>Divisibles ({heirAllocation?.divisibleAssetsList.length})</h3>
                             <div className='card-container'>
                                 {heirAllocation?.divisibleAssetsList.map(assetAlloc => (
-                                    <SolutionDivisibleAsset key={assetAlloc.assetId} assetAllocation={assetAlloc} inheritance={inheritance}/>
+                                    <SolutionDivisibleAsset
+                                        key={assetAlloc.assetId}
+                                        assetAllocation={assetAlloc}
+                                        inheritance={inheritance}
+                                        isUnvalued={true}
+                                    />
                                 ))}
                             </div>
 
                             <h3>Inivisibles ({heirAllocation?.indivisibleAssetsList.length})</h3>
                             <div className='card-container'>
                                 {heirAllocation?.indivisibleAssetsList.map(assetAlloc => (
-                                    <SolutionIndivisibleAsset key={assetAlloc.assetId} assetAllocation={assetAlloc} inheritance={inheritance}/>
+                                    <SolutionIndivisibleAsset
+                                        key={assetAlloc.assetId}
+                                        assetAllocation={assetAlloc} 
+                                        inheritance={inheritance}
+                                        isUnvalued={true}
+                                    />
                                 ))}
                             </div>
                             </>

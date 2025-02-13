@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import NewAssetModal from "./NewAssetModal";
 
-const SolutionDivisibleAsset = ({assetAllocation, inheritance, ownershipsList, removeAsset, editAsset}) => {
+const SolutionDivisibleAsset = ({assetAllocation, inheritance, ownershipsList, removeAsset, editAsset, isUnvalued}) => {
 
     const [isWrapped, setIsWrapped] = useState(true);
     // const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
@@ -26,10 +26,12 @@ const SolutionDivisibleAsset = ({assetAllocation, inheritance, ownershipsList, r
                     <div>{asset.name}</div>
                 </div>
 
-                <div className='card-data-item'>
-                    <label>Valoracion total</label>
-                    <div>{assetAllocation.valuePOV} €</div>
-                </div>
+                {!isUnvalued &&
+                    <div className='card-data-item'>
+                        <label>Valoracion total</label>
+                        <div>{assetAllocation.valuePOV} €</div>
+                    </div>
+                }
 
                 {!isWrapped && (
                     <div className="unwrapped-content">

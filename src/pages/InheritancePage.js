@@ -145,6 +145,10 @@ const InheritancePage = () => {
         navigate(`/inheritance/${inheritance.inheritanceId}/solution`)
     }
 
+    const goToSolutionUnvaluedPage = () => {
+        navigate(`/inheritance/${inheritance.inheritanceId}/solution-unvalued`)
+    }
+
     const handleDelete = () => {
         Swal.fire(messagesObj.deleteInheritanceConfirmation
             ).then((result) => {
@@ -196,7 +200,7 @@ const InheritancePage = () => {
                         ))}
                     </div>
                 </div>
-                <div>{JSON.stringify(inheritance?.solutionUnvalued)}</div>
+
                 <div className='button-container'>
                     <button className='custom-button large' disabled={isAllValuated() || isCalculating || isDeleting} onClick={calculateInheritance}>
                         {!isCalculating ? (
@@ -214,7 +218,7 @@ const InheritancePage = () => {
                     <button className='custom-button large' disabled={!inheritance?.solution || isCalculating || isDeleting} onClick={goToSolutionPage}>
                         Ver solución
                     </button>
-                    <button className='custom-button large' disabled={!inheritance?.solutionUnvalued || isCalculatingUnvalued || isDeleting} onClick={goToSolutionPage}>
+                    <button className='custom-button large' disabled={!inheritance?.solutionUnvalued || isCalculatingUnvalued || isDeleting} onClick={goToSolutionUnvaluedPage}>
                         {!isCalculatingUnvalued ? (
                             "Ver solución sin valoraciones"
                         ) : (
