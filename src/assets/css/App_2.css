@@ -79,6 +79,57 @@
 }
 
 /* ############################################### */
+/* WELCOME */
+/* ############################################### */
+/* #region welcome */
+/* .welcome-icon-container {
+    height: 20vh;
+    width: auto;
+} */
+
+.welcome-icon{
+    height: 50vh;
+    width: auto;
+}
+
+.welcome-title{
+    font-size: 3em;
+    font-family: "Libre Baskerville";
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -1.28px;
+    color: var(--Dark-blue, #0F263A);
+    text-align: center;
+}
+
+.welcome-slogan{
+    font-size: 1.5em;
+    font-family: "Libre Baskerville";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.72px;
+    color: var(--Dark-blue, #0F263A);
+    text-align: center;
+}
+
+.welcome-description{
+    color: var(--Dark-blue-80, #546d4a);
+    text-align: center;
+    /* Body */
+    font-family: "Open Sans";
+    /* font-size: 24px; */
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    /* width: 50%; */
+}
+
+/* #endregion*/
+
+/* ############################################### */
 /* LOGIN */
 /* ############################################### */
 /* #region login */
@@ -362,6 +413,12 @@
 .hover-container:hover .hover-text {
     visibility: visible;  /* Show text on hover */
     opacity: 1;           /* Make the text visible */
+}
+
+.header-option{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
 }
 
 /* #endregion */

@@ -39,9 +39,23 @@ const Header = () => {
         }
         
     }, [cognitoUser])
+
     const goHome = () => {
-        navigate('/home');      
+        if (cognitoUser) {
+            navigate('/home');      
+        } else {
+            navigate('/')
+        }
     }
+
+    const goToSignUp = () => {
+        navigate('/sign-up')
+    }
+
+    const goToLogIn = () => {
+        navigate('/login')
+    }
+
 
     return(
         <div className="header">
@@ -60,8 +74,16 @@ const Header = () => {
                 <h2 translate="no">{"herenciaideal"}</h2>
             </div>
 
-            {cognitoUser && ( 
-
+            {!cognitoUser ? ( 
+                <div className='header-icon-container'>
+                    <div className="header-option" onClick={goToSignUp}>
+                        {"Registrarse"}
+                    </div>
+                    <div className="header-option" onClick={goToLogIn}>
+                        {"Log in"}
+                    </div>
+                </div>
+            ):(
                 <div className='header-icon-container'>
                     <div>
                         {lastName}, {name}

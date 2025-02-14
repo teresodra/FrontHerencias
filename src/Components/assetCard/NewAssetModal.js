@@ -15,8 +15,7 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
 }) => {
 
     const [assetType, setAssetType] = useState(null);
-    console.log(ownershipsList)
-    
+        
     const assetOptionsList = [
         {label: "Divisible", value: "divisible"},
         {label: "Indivisible", value: "indivisible"},
@@ -25,7 +24,6 @@ const NewAssetModal = ({modalIsOpen, setModalIsOpen, assetsObj, setAssetsObj, ow
     ];
 
     useEffect(() => {
-        console.log(assetsObj)
         if (assetData) {
             loadData();
         }

@@ -16,6 +16,7 @@ import ConfirmEmailPage from "./pages/authentication/ConfirmEmailPage";
 import RecoverPasswordPage from "./pages/authentication/RecoverPassword";
 import SolutionUnvaluedPage from "./pages/SolutionUnvaluedPage";
 import WelcomePage from "./pages/WelcomePage";
+import { Navigate } from "react-router-dom";
 
 const Router = () => {
 
@@ -26,27 +27,26 @@ const Router = () => {
                     <Header/>
                     <div className='body-content'>
                     <Routes>
-                        <Route>
-                            <Route exact path="/welcome" element={<WelcomePage />} />
-                            <Route exact path="/login" element={<LoginPage/>} />
-                            <Route exact path="/sign-up" element={<SignUpPage/>} />
-                            <Route exact path="/change-password" element={<ChangePasswordPage/>} />
-                            <Route path="/confirm-email" element={<ConfirmEmailPage/>}/>
-                            <Route path="/recover-password" element={<RecoverPasswordPage/>}/>
+                        {/* <Route exact path="/welcome" element={<WelcomePage />} /> */}
+                        <Route path="/" element={<WelcomePage/>} />
+                        <Route path="*" element={<Navigate to="/" />} />  {/* Redirect unknown routes to Home */}
+                        <Route exact path="/login" element={<LoginPage/>} />
+                        <Route exact path="/sign-up" element={<SignUpPage/>} />
+                        <Route exact path="/change-password" element={<ChangePasswordPage/>} />
+                        <Route path="/confirm-email" element={<ConfirmEmailPage/>}/>
+                        <Route path="/recover-password" element={<RecoverPasswordPage/>}/>
 
-                            <Route exact path="/" element={<PrivateRoute element={HomePage} />} />
-                            <Route exact path="/home" element={<PrivateRoute element={HomePage} />} />
+                        <Route exact path="/home" element={<PrivateRoute element={HomePage} />} />
 
-                            {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
+                        {/* <Route exact path="/heritance/:heritanceId" element={<HeritancePage/>} /> */}
+                        
+                        <Route exact path="/inheritance/new" element={<PrivateRoute element={NewHeritancePage} />}/>
+                        <Route exact path="/inheritance/:inheritanceId" element={<PrivateRoute element={InheritancePage} />} />
+                        <Route exact path="/inheritance/:inheritanceId/heir" element={<PrivateRoute element={HeirsListPage} />} />
+                        <Route exact path="/inheritance/:inheritanceId/solution" element={<PrivateRoute element={SolutionPage} />} />
+                        <Route exact path="/inheritance/:inheritanceId/solution-unvalued" element={<PrivateRoute element={SolutionUnvaluedPage} />} />
+                        <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<PrivateRoute element={ValorationPage} />} />
                             
-                            <Route exact path="/inheritance/new" element={<PrivateRoute element={NewHeritancePage} />}/>
-                            <Route exact path="/inheritance/:inheritanceId" element={<PrivateRoute element={InheritancePage} />} />
-                            <Route exact path="/inheritance/:inheritanceId/heir" element={<PrivateRoute element={HeirsListPage} />} />
-                            <Route exact path="/inheritance/:inheritanceId/solution" element={<PrivateRoute element={SolutionPage} />} />
-                            <Route exact path="/inheritance/:inheritanceId/solution-unvalued" element={<PrivateRoute element={SolutionUnvaluedPage} />} />
-                            <Route exact path="/inheritance/:inheritanceId/heir/:heirId/valoration" element={<PrivateRoute element={ValorationPage} />} />
-                            
-                        </Route>
                     </Routes>
                     </div>
                     <Footer/>

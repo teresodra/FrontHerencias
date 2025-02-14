@@ -39,6 +39,18 @@ const NewHeritancePage = () => {
     const navigate = useNavigate();
 
     const handleSave = async () => {
+        console.log('entro')
+        Swal.fire(messagesObj.newInheritanceWarning
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    console.log('entro x2')
+                    saveInheritance();
+                }
+            }
+    )
+    }
+
+    const saveInheritance = async () => {
         setIsSaving(true);
         const inheritanceId = uuidv4()
         const auxInheritance = {
@@ -50,8 +62,6 @@ const NewHeritancePage = () => {
             assetsObj: assetsObj
         }
 
-        console.log(auxInheritance)
-        console.log(JSON.stringify(auxInheritance))
         try {
             const result = await apiSaveInheritance(auxInheritance);
             console.log(result)
@@ -68,6 +78,8 @@ const NewHeritancePage = () => {
         setIsSaving(false);
 
     }
+
+    
 
     // It is required at least 2 heirs and 1 ownership
     const isNextButtonDisabled = () => {

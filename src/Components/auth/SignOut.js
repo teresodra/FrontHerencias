@@ -22,7 +22,7 @@ const SignOut = () => {
         }
 
         // Redirect to login or home page after logout
-        navigate('/login');
+        navigate('/');
     };
 
     const logOutAndDeleteCredentials = async (cognitoUser) => {

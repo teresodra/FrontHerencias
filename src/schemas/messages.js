@@ -4,6 +4,16 @@ const messagesObj = {
             text: "La herencia se ha creado correctamente",
             icon: "success"
     },
+    newInheritanceWarning: {
+        title: "Importante",
+        text: "Esta herramienta está diseñada para ser utilizada por profesionales del derecho y la notaría. No sustituye el asesoramiento legal. Las recomendaciones son orientativas y deben ser validadas por un profesional.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#1b263b',
+        cancelButtonColor: '#e32e36',
+        confirmButtonText: "Continuar",
+        cancelButtonText: "Cancelar"
+    },
     newInheritanceError: {
         title: 'Error',
         text: "Error creando herencia",
@@ -85,5 +95,6 @@ const messagesObj = {
         title: "Error actualizando constraseña",
         icon: "error"
     },
+    
 }
 export default messagesObj;
