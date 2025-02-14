@@ -186,7 +186,9 @@ function SignUpPage() {
                     <div className='form-group terms-container mt-1'>
                         <input type="checkbox" onChange={() => {setIsAccepted(!isAccepted);}}/>
                         <div>{"He leído y acepto los"}&nbsp;</div>
-                        <div className='login-link' onClick={() => setIsModalOpen(true)}>{"términos y condiciones"}</div>
+                        <div className='login-link' onClick={() => setIsModalOpen(true)}>
+                            {"términos y condiciones, ya la política de privacidad"}
+                        </div>
                         <TermsModal
                             modalIsOpen={isModalOpen}
                             setModalIsOpen={setIsModalOpen}
