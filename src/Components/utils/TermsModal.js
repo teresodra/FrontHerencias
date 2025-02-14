@@ -1,4 +1,5 @@
 import Modal from 'react-modal';
+import TermsText from './TermsText';
 Modal.setAppElement('#root');  // Required for accessibility
 
 
@@ -6,7 +7,7 @@ const TermsModal = ({modalIsOpen, setModalIsOpen, title, content}) => {
     
     return(
         <Modal
-            className="custom-item-modal"
+            className="custom-item-modal large"
             overlayClassName="custom-modal-overlay"
             isOpen={modalIsOpen}
             onRequestClose={() => setModalIsOpen(false)}
@@ -21,9 +22,7 @@ const TermsModal = ({modalIsOpen, setModalIsOpen, title, content}) => {
             </div>
             
             <div className='modal-content-container'>
-                <text className="modal-text">
-                    {content}
-                </text>
+                <TermsText/>
             </div>
         
         </Modal>

@@ -176,6 +176,47 @@
     flex-direction: column;
 }
 /* #endregion*/
+/* ############################################### */
+/* TERMS AND CONDITIONS */
+/* ############################################### */
+/* #region login */
+.terms-container {
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 1.5rem;
+    height: 100%;
+}
+.terms-text{
+    margin-top: 1rem;
+    border: 1px solid #ccc;
+    /* border: "1px solid #ccc"; */
+    padding: 1rem 2rem 1rem 2rem ;
+    /* padding-left: 2rem; */
+    border-radius: 5px;
+    overflow-y: auto;
+    text-align: left;
+    /* height: 400px */
+}
+
+.terms-header {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.terms-subheader {
+    font-weight: bold;
+    font-size:1.2em;
+}
+
+.terms-shorter-lines{
+    font-size: 1em;
+}
+
+.terms-default-text{
+    font-size: 0.8em;
+}
+
+/* #endregion*/
 
 /* ############################################### */
 /* BUTTONS */
@@ -560,6 +601,8 @@
     align-items: center;
   }
 
+
+
 .custom-item-modal{
     position: absolute;
     top: 50%;
@@ -575,6 +618,10 @@
     height: 80vh;
     text-align: center;
     /* border: 1px solid #ccc; */
+}
+
+.custom-item-modal.large {
+    width: 50vw;
 }
 
 .modal-header {
