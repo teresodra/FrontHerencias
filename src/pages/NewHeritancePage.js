@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiSaveInheritance } from '../services/api';
 import Swal from 'sweetalert2';
@@ -38,19 +38,19 @@ const NewHeritancePage = () => {
 
     const navigate = useNavigate();
 
-    const handleSave = async () => {
-        console.log('entro')
-        Swal.fire(messagesObj.newInheritanceWarning
-            ).then((result) => {
-                if (result.isConfirmed) {
-                    console.log('entro x2')
-                    saveInheritance();
-                }
-            }
-    )
-    }
+    // useEffect(() => {
+    //     checkDisclaimer();
+    // }, []);
 
-    const saveInheritance = async () => {
+    // const checkDisclaimer = async () => {
+    //     const result = await Swal.fire(messagesObj.newInheritanceWarning);
+    //     if (!result.isConfirmed) {
+    //         navigate("/home");
+    //     }
+
+    // }
+
+    const handleSave = async () => {
         setIsSaving(true);
         const inheritanceId = uuidv4()
         const auxInheritance = {

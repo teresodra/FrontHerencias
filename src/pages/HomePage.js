@@ -4,6 +4,8 @@ import AuthContext from '../services/AuthContext';
 import { ClipLoader } from 'react-spinners';
 import handleError from '../services/handleError';
 import { apiGetInheritancesList } from '../services/api';
+import Swal from 'sweetalert2';
+import messagesObj from "../schemas/messages";
 
 
 
@@ -38,7 +40,14 @@ const HomePage = () => {
     }
 
     const goToNewInheritance = () => {
-        navigate(`/inheritance/new`)
+        // navigate(`/inheritance/new`)
+        Swal.fire(messagesObj.newInheritanceWarning
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    navigate(`/inheritance/new`)
+                }
+            }
+        )
     }
 
     if (isLoading || !inheritancesList) {
