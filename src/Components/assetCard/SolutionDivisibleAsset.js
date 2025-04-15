@@ -1,69 +1,72 @@
-import React, {useState} from "react";
-import NewAssetModal from "./NewAssetModal";
+import React, { useState } from 'react';
 
-const SolutionDivisibleAsset = ({assetAllocation, inheritance, ownershipsList, removeAsset, editAsset}) => {
+const SolutionDivisibleAsset = ({
+  assetAllocation,
+  inheritance,
+  ownershipsList,
+  removeAsset,
+  editAsset
+}) => {
+  const [isWrapped, setIsWrapped] = useState(true);
+  // const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
 
-    const [isWrapped, setIsWrapped] = useState(true);
-    // const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
+  const asset = inheritance.assetsObj.divisibleAssetsList.find(
+    (asst) => asst.id === assetAllocation.assetId
+  );
 
-    const asset = inheritance.assetsObj.divisibleAssetsList.find(asst=> asst.id === assetAllocation.assetId)
-    
+  return (
+    <div
+      className={`card-data-container ${!isWrapped ? 'unwrapped' : ''}`}
+      onClick={() => {
+        setIsWrapped(!isWrapped);
+      }}
+    >
+      <div className="card-data-button-container">
+        <div>
+          <span className="material-symbols-outlined">arrow_drop_down</span>
+        </div>
+      </div>
 
-    return (
-        <div 
-            className={`card-data-container ${!isWrapped ? 'unwrapped' : ''}`} 
-            onClick={() => {setIsWrapped(!isWrapped)}}>
+      <div className="card-data-content">
+        <div className="card-data-item">
+          <label>Nombre</label>
+          <div>{asset.name}</div>
+        </div>
 
-            <div className='card-data-button-container'>
-                <div>
-                    <span className="material-symbols-outlined">arrow_drop_down</span>
-                </div>
+        <div className="card-data-item">
+          <label>Valoracion total</label>
+          <div>{assetAllocation.valuePOV} €</div>
+        </div>
+
+        {!isWrapped && (
+          <div className="unwrapped-content">
+            <div className="card-data-item">
+              <label>Cantidad</label>
+              <div>{assetAllocation.quantity}</div>
             </div>
-            
-            <div className='card-data-content'>
-                <div className='card-data-item'>
-                    <label>Nombre</label>
-                    <div>{asset.name}</div>
-                </div>
 
-                <div className='card-data-item'>
-                    <label>Valoracion total</label>
-                    <div>{assetAllocation.valuePOV} €</div>
-                </div>
+            <div className="card-data-item">
+              <label>Valor de referencia por unidad</label>
+              <div>
+                {asset.refValue} {'€'}
+              </div>
+            </div>
 
-                {!isWrapped && (
-                    <div className="unwrapped-content">
-                        <div className='card-data-item'>
-                            <label>Cantidad</label>
-                            <div>{assetAllocation.quantity}</div>
-                        </div>
-
-                        <div className='card-data-item'>
-                            <label>Valor de referencia por unidad</label>
-                            <div>{asset.refValue} {"€"}</div>
-                        </div>
-
-                        {asset.category === "cash" && (
-                            <div className='card-data-item'>
-                                <label>Categoría</label>
-                                <div>Dinero</div>
-                            </div>
-                        )}
-{/* 
+            {asset.category === 'cash' && (
+              <div className="card-data-item">
+                <label>Categoría</label>
+                <div>Dinero</div>
+              </div>
+            )}
+            {/* 
                         <div className='card-data-item'>
                             <label>Propiedad</label>
                             <div>{ownership.name}</div>
                         </div> */}
-
-                        
-                        
-                        
-
-                    </div>
-                )}
-
-            </div>
-        </div>
-    )
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 export default SolutionDivisibleAsset;
