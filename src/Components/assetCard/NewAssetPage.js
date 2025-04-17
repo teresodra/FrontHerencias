@@ -13,16 +13,16 @@ const NewAssetPage = ({
   ownershipsList,
   assetData,
   setAssetData,
-  assetDataType //these ones only used when editing an asset
+  assetDataType, //these ones only used when editing an asset
+  setOwnershipsList,
+  heirsList
 }) => {
   const [assetType, setAssetType] = useState(null);
   console.log(ownershipsList);
 
   const assetOptionsList = [
     { label: 'Divisible', value: 'divisible' },
-    { label: 'Indivisible', value: 'indivisible' },
-    { label: 'Divisible por trozos', value: 'divisibleInChunks' },
-    { label: 'Divisible por partes', value: 'divisibleInParts' }
+    { label: 'Indivisible', value: 'indivisible' }
   ];
 
   useEffect(() => {
@@ -43,6 +43,11 @@ const NewAssetPage = ({
     setAddAssetPageOpen(false);
   };
 
+  const checkAssetType = (types, assetType) => {
+    if (!assetType) return false;
+    return types.some((type) => type === assetType.value);
+  };
+
   return (
     <>
       <div className="add-asset-content-container">
@@ -58,7 +63,7 @@ const NewAssetPage = ({
             />
           </div>
 
-          {assetType && assetType.value === 'divisible' && (
+          {checkAssetType(['divisible'], assetType) && (
             <AssetDivisibleForm
               assetsObj={assetsObj}
               setAssetsObj={setAssetsObj}
@@ -66,10 +71,12 @@ const NewAssetPage = ({
               ownershipsList={ownershipsList}
               assetData={assetData}
               setAssetData={setAssetData}
+              setOwnershipsList={setOwnershipsList}
+              heirsList={heirsList}
             />
           )}
 
-          {assetType && assetType.value === 'indivisible' && (
+          {checkAssetType(['indivisible'], assetType) && (
             <AssetIndivisibleForm
               assetsObj={assetsObj}
               setAssetsObj={setAssetsObj}
@@ -80,7 +87,7 @@ const NewAssetPage = ({
             />
           )}
 
-          {assetType && assetType.value === 'divisibleInChunks' && (
+          {/* {assetType && assetType.value === 'divisibleInChunks' && (
             <AssetDivisivleInChunksForm
               assetsObj={assetsObj}
               setAssetsObj={setAssetsObj}
@@ -89,7 +96,7 @@ const NewAssetPage = ({
               assetData={assetData}
               setAssetData={setAssetData}
             />
-          )}
+          )} */}
         </div>
       </div>
     </>

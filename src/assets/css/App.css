@@ -152,6 +152,11 @@ input[type='number']::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
+.invisible-button {
+  background-color: unset;
+  border: none;
+}
+
 .card-container {
   display: flex;
   flex-direction: row;

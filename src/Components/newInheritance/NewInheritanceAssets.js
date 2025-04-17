@@ -8,7 +8,9 @@ const NewInheritanceAssets = ({
   assetsObj,
   setAssetsObj,
   ownershipsList,
-  setVisiblePagination
+  setVisiblePagination,
+  setOwnershipsList,
+  heirsList
 }) => {
   const [assetToEdit, setAssetToEdit] = useState(null);
   const [addAssetPageOpen, setAddAssetPageOpen] = useState(false);
@@ -63,6 +65,8 @@ const NewInheritanceAssets = ({
           assetData={assetToEdit}
           setAssetData={setAssetToEdit}
           assetDataType={assetType}
+          setOwnershipsList={setOwnershipsList}
+          heirsList={heirsList}
         />
       ) : (
         <>
@@ -92,6 +96,8 @@ const NewInheritanceAssets = ({
                       setAssetsObj={setAssetsObj}
                       removeAsset={removeAsset}
                       editAsset={editAsset}
+                      setOwnershipsList={setOwnershipsList}
+                      heirsList={heirsList}
                     />
                   ))}
                 </div>
@@ -112,26 +118,8 @@ const NewInheritanceAssets = ({
                       assetsObj={assetsObj}
                       setAssetsObj={setAssetsObj}
                       removeAsset={removeAsset}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          {assetsObj.divisibleInChunksAssetsList &&
-            assetsObj.divisibleInChunksAssetsList.length > 0 && (
-              <>
-                <h3>
-                  Bienes divisibles en trozos:{' '}
-                  {assetsObj.divisibleInChunksAssetsList.length}
-                </h3>
-                <div className="assets-container">
-                  {assetsObj.divisibleInChunksAssetsList.map((asset, index) => (
-                    <DivisibleInChunksAsset
-                      key={asset.id}
-                      asset={asset}
-                      ownershipsList={ownershipsList}
-                      removeAsset={removeAsset}
-                      editAsset={editAsset}
+                      setOwnershipsList={setOwnershipsList}
+                      heirsList={heirsList}
                     />
                   ))}
                 </div>

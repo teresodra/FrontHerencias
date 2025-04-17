@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import messagesObj from '../schemas/messages';
 import NewInheritanceHeirs from '../Components/newInheritance/NewInheritanceHeirs';
 import NewInheritanceName from '../Components/newInheritance/NewInheritanceName';
-import NewInheritanceOwnerships from '../Components/newInheritance/NewInheritanceOwnerships';
 import NewInheritanceAssets from '../Components/newInheritance/NewInheritanceAssets';
 import NewInheritanceRegion from '../Components/newInheritance/NewInheritanceRegion';
 import CustomPagination from '../Components/utils/CustomPagination';
@@ -117,27 +116,20 @@ const NewHeritancePage = () => {
           />
         )}
 
-        {/*STEP 4: OWNERSHIP*/}
+        {/*STEP 4: ASSETS*/}
         {heirDataStep === 4 && (
-          <NewInheritanceOwnerships
-            ownershipsList={ownershipsList}
-            setOwnershipsList={setOwnershipsList}
-            heirsList={heirsList}
-          />
-        )}
-
-        {/*STEP 5: ASSETS*/}
-        {heirDataStep === 5 && (
           <NewInheritanceAssets
             assetsObj={assetsObj}
             setAssetsObj={setAssetsObj}
             ownershipsList={ownershipsList}
             setVisiblePagination={handleVisiblePagination}
+            setOwnershipsList={setOwnershipsList}
+            heirsList={heirsList}
           />
         )}
         {visiblePagination && (
           <CustomPagination
-            numSteps={5}
+            numSteps={4}
             currentStep={heirDataStep}
             setCurrentStep={setHeirDataStep}
             isNextButtonDisabled={isNextButtonDisabled}
