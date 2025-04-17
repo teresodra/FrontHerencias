@@ -160,13 +160,6 @@ const NewOwnershipForm = ({
   //     return true;
   // };
 
-  useEffect(() => {
-    heirsList.forEach((item) => {
-      console.log(ownershipsList);
-      debugger;
-    });
-  }, []);
-
   return (
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
@@ -188,10 +181,7 @@ const NewOwnershipForm = ({
               <label>Plena propiedad:</label>
               <input
                 type="text"
-                value={
-                  ownershipsList.find((item) => item.name === heir.id)
-                    ?.heirPercObj?.fullOwnership || 0
-                }
+                defaultValue={0}
                 min="0"
                 max="100"
                 onChange={(e) =>
@@ -206,10 +196,7 @@ const NewOwnershipForm = ({
               <label>Nuda propiedad:</label>
               <input
                 type="text"
-                value={
-                  ownershipsList.find((item) => item.name === heir.id)
-                    ?.heirPercObj?.bareOwnership || 0
-                }
+                defaultValue={0}
                 min="0"
                 max="100"
                 onChange={(e) =>
@@ -223,10 +210,7 @@ const NewOwnershipForm = ({
               <label>Usfructo vitalicio:</label>
               <input
                 type="text"
-                value={
-                  ownershipsList.find((item) => item.name === heir.id)
-                    ?.heirPercObj?.lifeUsufruct || 0
-                }
+                defaultValue={0}
                 min="0"
                 max="100"
                 onChange={(e) =>
