@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import NewAssetPage from '../assetCard/NewAssetPage';
 import DivisibleAsset from '../assetCard/DivisibleAsset';
 import IndivisibleAsset from '../assetCard/IndivisibleAsset';
-import DivisibleInChunksAsset from '../assetCard/DivisibleInChunksAsset';
 
 const NewInheritanceAssets = ({
   assetsObj,
@@ -10,7 +9,9 @@ const NewInheritanceAssets = ({
   ownershipsList,
   setVisiblePagination,
   setOwnershipsList,
-  heirsList
+  heirsList,
+  valuationObj,
+  setValuationObj
 }) => {
   const [assetToEdit, setAssetToEdit] = useState(null);
   const [addAssetPageOpen, setAddAssetPageOpen] = useState(false);
@@ -67,6 +68,8 @@ const NewInheritanceAssets = ({
           assetDataType={assetType}
           setOwnershipsList={setOwnershipsList}
           heirsList={heirsList}
+          valuationObj={valuationObj}
+          setValuationObj={setValuationObj}
         />
       ) : (
         <>

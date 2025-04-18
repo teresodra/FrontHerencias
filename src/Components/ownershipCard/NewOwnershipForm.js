@@ -130,8 +130,6 @@ const NewOwnershipForm = ({
     setOwnership({ ...ownership, heirPercObj: auxObj });
   };
 
-  const changeHeirsData = () => {};
-
   const handleInputChange = (heirId, field, value) => {
     setOwnership((prev) => ({
       ...prev,
@@ -139,7 +137,7 @@ const NewOwnershipForm = ({
         ...prev.heirPercObj,
         [heirId]: {
           ...prev.heirPercObj[heirId],
-          [field]: value
+          [field]: parseInt(value) || 0
         }
       }
     }));

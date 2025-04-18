@@ -15,7 +15,9 @@ const NewAssetPage = ({
   setAssetData,
   assetDataType, //these ones only used when editing an asset
   setOwnershipsList,
-  heirsList
+  heirsList,
+  valuationObj,
+  setValuationObj
 }) => {
   const [assetType, setAssetType] = useState(null);
 
@@ -72,6 +74,8 @@ const NewAssetPage = ({
               setAssetData={setAssetData}
               setOwnershipsList={setOwnershipsList}
               heirsList={heirsList}
+              valuationObj={valuationObj}
+              setValuationObj={setValuationObj}
             />
           )}
 

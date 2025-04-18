@@ -13,7 +13,9 @@ const AssetDivisibleForm = ({
   assetData,
   setAssetData,
   setOwnershipsList,
-  heirsList
+  heirsList,
+  valuationObj,
+  setValuationsObj
 }) => {
   const [asset, setAsset] = useState(assetData ? assetData : {});
   const [ownershipId, setOwnershipId] = useState(null);
@@ -25,7 +27,6 @@ const AssetDivisibleForm = ({
   const nameRef = React.createRef();
   const quantityRef = React.createRef();
   const refValueRef = React.createRef();
-  const accordCheckedref = React.createRef();
   const ownerShipOptions = ownershipsList.map(
     (ownership) => (ownership = { value: ownership.id, label: ownership.name })
   );
@@ -66,6 +67,11 @@ const AssetDivisibleForm = ({
     nameRef.current.value = assetData.name;
     quantityRef.current.value = assetData.quantity;
     refValueRef.current.value = assetData.refValue;
+    setAccordValue(
+      valuationObj.valuationObj.assetsValuationObj.find(
+        (item) => item.assetId === asset.id
+      ).agreedValue
+    );
     setOwnershipId(
       ownerShipOptions.some((owShip) => owShip.value === assetData.ownershipId)
     );
@@ -143,6 +149,29 @@ const AssetDivisibleForm = ({
   };
 
   const changeAccord = () => {
+    let auxValuationsObj = JSON.stringify(valuationsObj);
+    valuationsObj.forEach((valuation) => {
+      const myAsset =
+        valuation.valuationObj.assetsValuationObj.divisibleAssetsList;
+      const assetIndex =
+        valuation.valuationObj.assetsValuationObj.divisibleAssetsList.findIndex(
+          (divisibleAsset) => divisibleAsset.assetId === asset.id
+        );
+      if (myAsset.some((item) => item.assetId === asset.id)) {
+        valuation.valuationObj.assetsValuationObj.divisibleAssetsList[
+          assetIndex
+        ].agreedValue =
+          !valuation.valuationObj.assetsValuationObj.divisibleAssetsList[
+            assetIndex
+          ].agreedValue;
+      }
+    });
+    setValuationsObj({
+      ...auxValuationsObj,
+      valuationObj: {
+        assetsValuationsObj: {}
+      }
+    });
     setAccordValue(!accordValue);
   };
 
@@ -161,9 +190,7 @@ const AssetDivisibleForm = ({
     );
   };
 
-  // const updateAssetsObj = (ownId, event) => {
-  //   setAssetsObj;
-  // };
+  const triggerChangeValuationObj = () => {};
 
   return (
     <div>
@@ -313,9 +340,22 @@ const AssetDivisibleForm = ({
             <div className="form-group">
               {accordValue ? (
                 <>
-                  <label htmlFor="accord" className="labelled-checkbox-label">
-                    ¿Están todos los herederos de acuerdo en el valor?
-                  </label>
+                  <div className="heir-value-item">
+                    <label for={`commonheir`}>{`Valor acordado`}</label>
+                    <input
+                      type="text"
+                      name="value"
+                      id={`commonheir`}
+                      onChange={(e) => {
+                        triggerChangeValuationObj(e.target.value);
+                      }}
+                    />
+                    {validator.message(
+                      'quantity',
+                      asset.quantity,
+                      'required|numeric|min:0,num'
+                    )}
+                  </div>
                 </>
               ) : (
                 <>
@@ -324,13 +364,13 @@ const AssetDivisibleForm = ({
                     <div className="heir-value-item">
                       <label
                         for={`heir-${heir.id}`}
-                      >{`Valor por unidad para ${heir.name} (con id ${heir.id})`}</label>
+                      >{`Valor por unidad para ${heir.name}`}</label>
                       <input
                         type="text"
                         name="value"
                         id={`heir-${heir.id}`}
                         onChange={(e) => {
-                          // revisar apiAddValuation
+                          triggerChangeValuationObj(e.target.value, heir.id);
                         }}
                       />
                       {validator.message(

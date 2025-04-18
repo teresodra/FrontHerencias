@@ -30,6 +30,7 @@ const NewHeritancePage = () => {
   const [name, setName] = useState('');
   const [region, setRegion] = useState(null);
   const [visiblePagination, setVisiblePagination] = useState(true);
+  const [valuationObj, setValuationObj] = useState(null);
 
   const [heirDataStep, setHeirDataStep] = useState(1);
 
@@ -113,6 +114,8 @@ const NewHeritancePage = () => {
           <NewInheritanceHeirs
             heirsList={heirsList}
             setHeirsList={setHeirsList}
+            valuationObj={valuationObj}
+            setValuationObj={setValuationObj}
           />
         )}
 
@@ -125,6 +128,8 @@ const NewHeritancePage = () => {
             setVisiblePagination={handleVisiblePagination}
             setOwnershipsList={setOwnershipsList}
             heirsList={heirsList}
+            valuationObj={valuationObj}
+            setValuationObj={setValuationObj}
           />
         )}
         {visiblePagination && (
