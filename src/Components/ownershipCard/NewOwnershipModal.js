@@ -15,14 +15,9 @@ const NewOwnershipModal = ({
   ownershipData,
   setOwnershipData
 }) => {
-  useEffect(() => {
-    console.log(heirsList);
-  }, [ownershipData]);
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
-  console.log(ownershipsList);
 
   return (
     <Modal

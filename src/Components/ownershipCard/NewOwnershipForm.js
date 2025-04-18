@@ -84,9 +84,6 @@ const NewOwnershipForm = ({
     e.preventDefault();
     changeState();
 
-    console.log('Ownership:', ownership);
-    console.log('HeirPercObj:', ownership.heirPercObj);
-
     if (validator.allValid()) {
       if (ownershipData) {
         editOwnership();
@@ -181,7 +178,7 @@ const NewOwnershipForm = ({
               <label>Plena propiedad:</label>
               <input
                 type="text"
-                defaultValue={0}
+                value={ownership.heirPercObj?.[heir.id]?.fullOwnership || 0}
                 min="0"
                 max="100"
                 onChange={(e) =>
@@ -196,7 +193,7 @@ const NewOwnershipForm = ({
               <label>Nuda propiedad:</label>
               <input
                 type="text"
-                defaultValue={0}
+                value={ownership.heirPercObj?.[heir.id]?.bareOwnership || 0}
                 min="0"
                 max="100"
                 onChange={(e) =>
@@ -210,7 +207,7 @@ const NewOwnershipForm = ({
               <label>Usfructo vitalicio:</label>
               <input
                 type="text"
-                defaultValue={0}
+                value={ownership.heirPercObj?.[heir.id]?.lifeUsufruct || 0}
                 min="0"
                 max="100"
                 onChange={(e) =>

@@ -18,7 +18,6 @@ const NewAssetPage = ({
   heirsList
 }) => {
   const [assetType, setAssetType] = useState(null);
-  console.log(ownershipsList);
 
   const assetOptionsList = [
     { label: 'Divisible', value: 'divisible' },

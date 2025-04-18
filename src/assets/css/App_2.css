@@ -65,6 +65,10 @@
   color: red;
 }
 
+.--add-margin {
+  margin-top: 8px;
+}
+
 /* ############################################### */
 /* LOGIN */
 /* ############################################### */
@@ -495,6 +499,18 @@
   left: 0px;
   width: 100%;
   border-top: 0.5px solid #cbcbcb;
+}
+
+.inline-radio-group {
+  display: flex;
+  width: 100%;
+}
+
+.inline-radio-group .radio-container {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .radio-edit-container-last::after {

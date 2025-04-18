@@ -9,7 +9,7 @@ const AssetDivisibleForm = ({
   assetsObj,
   setAssetsObj,
   ownershipsList,
-  closeModal,
+  closePage,
   assetData,
   setAssetData,
   setOwnershipsList,
@@ -18,7 +18,7 @@ const AssetDivisibleForm = ({
   const [asset, setAsset] = useState(assetData ? assetData : {});
   const [ownershipId, setOwnershipId] = useState(null);
   const [category, setCategory] = useState(null);
-  const [accordValue, setAccordValue] = useState(null);
+  const [accordValue, setAccordValue] = useState(true);
   const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
 
@@ -26,7 +26,6 @@ const AssetDivisibleForm = ({
   const quantityRef = React.createRef();
   const refValueRef = React.createRef();
   const accordCheckedref = React.createRef();
-  console.log(ownershipsList);
   const ownerShipOptions = ownershipsList.map(
     (ownership) => (ownership = { value: ownership.id, label: ownership.name })
   );
@@ -36,7 +35,20 @@ const AssetDivisibleForm = ({
     { label: 'Otro', value: 'other' }
   ];
 
-  const [validator] = useState(new SimpleReactValidator());
+  const [validator] = useState(
+    new SimpleReactValidator({
+      validators: {
+        addOwnership: {
+          // Custom validator for matching passwords
+          message: 'Añade al menos una propiedad.',
+          rule: (validator) => {
+            return Boolean(validator);
+          },
+          required: true
+        }
+      }
+    })
+  );
 
   useEffect(() => {
     if (assetData) {
@@ -54,13 +66,13 @@ const AssetDivisibleForm = ({
     nameRef.current.value = assetData.name;
     quantityRef.current.value = assetData.quantity;
     refValueRef.current.value = assetData.refValue;
-    accordCheckedref.current.checked = assetData.accord;
     setOwnershipId(
-      ownerShipOptions.find((owShip) => owShip.value === assetData.ownershipId)
+      ownerShipOptions.some((owShip) => owShip.value === assetData.ownershipId)
     );
     setCategory(
       categoryOptionsList.find((cat) => cat.value === assetData.category)
     );
+    setAccordValue(true);
   };
 
   const handleSubmit = (e) => {
@@ -75,7 +87,7 @@ const AssetDivisibleForm = ({
       } else {
         addNewAsset();
       }
-      closeModal();
+      closePage();
     } else {
       validator.showMessages();
     }
@@ -104,7 +116,6 @@ const AssetDivisibleForm = ({
   };
 
   const addNewAsset = () => {
-    console.log(assetsObj);
     setAssetsObj({
       ...assetsObj,
       divisibleAssetsList: [
@@ -128,14 +139,11 @@ const AssetDivisibleForm = ({
       ownershipId: item
     });
     setOwnershipId(item);
+    validator.showMessageFor('ownership');
   };
 
   const changeAccord = () => {
     setAccordValue(!accordValue);
-    setAsset({
-      ...asset,
-      accord: !asset.accord
-    });
   };
 
   const editOwnership = (own) => {
@@ -153,10 +161,14 @@ const AssetDivisibleForm = ({
     );
   };
 
+  // const updateAssetsObj = (ownId, event) => {
+  //   setAssetsObj;
+  // };
+
   return (
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group --add-margin">
           <label htmlFor="name">Nombre del bien</label>
           <input type="text" name="name" ref={nameRef} onChange={changeState} />
           {validator.message('name', asset.name, 'required|alpha_num_space')}
@@ -214,6 +226,7 @@ const AssetDivisibleForm = ({
                 <div className="radio-container">
                   <input
                     type="radio"
+                    name="ownership"
                     checked={ownershipId === ownership.id}
                     onChange={() => {
                       changeOwnership(ownership.id);
@@ -263,30 +276,83 @@ const AssetDivisibleForm = ({
           >
             Añadir propiedad
           </button>
+          {validator.message('ownership', ownershipId, 'addOwnership')}
         </div>
+        {ownershipId && (
+          <>
+            <div className="form-group inline-radio-group">
+              <label htmlFor="accord" className="labelled-checkbox-label">
+                ¿Están todos los herederos de acuerdo en el valor?
+              </label>
+              <div className="inline-radio-group">
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    name="accord"
+                    checked={accordValue}
+                    onChange={changeAccord}
+                    classnamePrefix="react-radio"
+                    id={`accord-yes`}
+                  />
+                  <label for={`accord-yes`}>Sí</label>
+                </div>
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    name="accord"
+                    checked={!accordValue}
+                    onChange={changeAccord}
+                    classnamePrefix="react-radio"
+                    id={`accord-no`}
+                  />
+                  <label for={`accord-no`}>No</label>
+                </div>
+              </div>
+            </div>
 
-        <div className="form-group labelled-checkbox">
-          <input
-            type="checkbox"
-            ref={accordCheckedref}
-            checked={asset?.accord}
-            onChange={changeAccord}
-            value={accordValue}
-            classNamePrefix="react-checkbox"
-            id="accord"
-          />
-          <label htmlFor="accord" className="labelled-checkbox-label">
-            ¿Están todos los herederos de acuerdo en el valor?
-          </label>
-        </div>
+            <div className="form-group">
+              {accordValue ? (
+                <>
+                  <label htmlFor="accord" className="labelled-checkbox-label">
+                    ¿Están todos los herederos de acuerdo en el valor?
+                  </label>
+                </>
+              ) : (
+                <>
+                  <p>Valores</p>
+                  {heirsList.map((heir) => (
+                    <div className="heir-value-item">
+                      <label
+                        for={`heir-${heir.id}`}
+                      >{`Valor por unidad para ${heir.name} (con id ${heir.id})`}</label>
+                      <input
+                        type="text"
+                        name="value"
+                        id={`heir-${heir.id}`}
+                        onChange={(e) => {
+                          // revisar apiAddValuation
+                        }}
+                      />
+                      {validator.message(
+                        'quantity',
+                        asset.quantity,
+                        'required|numeric|min:0,num'
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
 
-        <div className="formGroup">
-          <div className="button-container">
-            <button className="custom-button" type="submit">
-              Guardar
-            </button>
-          </div>
-        </div>
+            <div className="formGroup">
+              <div className="button-container">
+                <button className="custom-button" type="submit">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </form>
 
       <NewOwnershipModal
