@@ -69,15 +69,17 @@ const NewHeirForm = ({
       ...heirsList,
       { ...heir, id: newId } // Create id so it has a reference to be edited
     ]);
-    setValuationObj({
+    setValuationObj([
       ...valuationObj,
-      heirId: newId,
-      valuationObj: {
+      {
         heirId: newId,
-        assetsValuationObj: { divisibleAssetsList: [] },
-        money: 0
+        valuationObj: {
+          heirId: newId,
+          assetsValuationObj: { divisibleAssetsList: [] },
+          money: 0
+        }
       }
-    });
+    ]);
     setHeir({});
   };
 

@@ -23,6 +23,7 @@ const AssetDivisibleForm = ({
   const [accordValue, setAccordValue] = useState(true);
   const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
+  const [unitValues, setUnitValues] = useState([]);
 
   const nameRef = React.createRef();
   const quantityRef = React.createRef();
@@ -54,6 +55,15 @@ const AssetDivisibleForm = ({
   useEffect(() => {
     if (assetData) {
       loadData();
+    } else {
+      const values = [];
+      valuationObj.forEach((valuation) => {
+        values.push({
+          unitValue: 0,
+          heirId: valuation.heirId
+        });
+      });
+      setUnitValues(values);
     }
   }, []);
 
@@ -67,8 +77,19 @@ const AssetDivisibleForm = ({
     nameRef.current.value = assetData.name;
     quantityRef.current.value = assetData.quantity;
     refValueRef.current.value = assetData.refValue;
+    const values = [];
+    valuationObj.forEach((valuation) => {
+      values.push({
+        unitValue:
+          valuation.valuationObj.assetsValuationObj.divisibleAssetsList.find(
+            (item) => item.assetId === asset.id
+          ).unitValue,
+        heirId: valuation.heirId
+      });
+    });
+    setUnitValues(values);
     setAccordValue(
-      valuationObj.valuationObj.assetsValuationObj.find(
+      valuationObj[0].valuationObj.assetsValuationObj.divisibleAssetsList.find(
         (item) => item.assetId === asset.id
       ).agreedValue
     );
@@ -78,7 +99,6 @@ const AssetDivisibleForm = ({
     setCategory(
       categoryOptionsList.find((cat) => cat.value === assetData.category)
     );
-    setAccordValue(true);
   };
 
   const handleSubmit = (e) => {
@@ -109,12 +129,37 @@ const AssetDivisibleForm = ({
   };
 
   const editAsset = () => {
+    debugger;
     // Find asset index from assetList
     const index = assetsObj.divisibleAssetsList.findIndex(
       (assetObj) => assetObj.id === asset.id
     );
     let auxAssetList = [...assetsObj.divisibleAssetsList];
     auxAssetList[index] = asset;
+    const auxValuationObj = JSON.parse(JSON.stringify(valuationObj));
+    valuationObj.forEach((item) => {
+      const auxValuationItemIndex = valuationObj.findIndex(
+        (valItem) => valItem.heirId === item.heirId
+      );
+      const auxValuationAssetsListIndex = valuationObj[
+        auxValuationItemIndex
+      ].valuationObj.assetsValuationObj.divisibleAssetsList.findIndex(
+        (item) => item.assetId === asset.id
+      );
+      auxValuationObj[
+        auxValuationItemIndex
+      ].valuationObj.assetsValuationObj.divisibleAssetsList[
+        auxValuationAssetsListIndex
+      ] = {
+        assetId: asset.id,
+        unitValue: Number(
+          unitValues.find((unitValue) => unitValue.heirId === item.heirId)
+            .unitValue
+        ),
+        agreedValue: accordValue
+      };
+    });
+    setValuationObj(auxValuationObj);
     setAssetsObj({
       ...assetsObj,
       divisibleAssetsList: auxAssetList
@@ -122,13 +167,28 @@ const AssetDivisibleForm = ({
   };
 
   const addNewAsset = () => {
+    const newUuid = uuidv4();
     setAssetsObj({
       ...assetsObj,
       divisibleAssetsList: [
         ...(assetsObj?.divisibleAssetsList || []), // Initially is undefined
-        { ...asset, id: uuidv4() } // Create id so it has a reference to be edited
+        { ...asset, id: newUuid } // Create id so it has a reference to be edited
       ]
     });
+    debugger;
+    const auxValuationObj = JSON.parse(JSON.stringify(valuationObj));
+    valuationObj.forEach((item) => {
+      auxValuationObj[
+        valuationObj.findIndex((valItem) => valItem.heirId === item.heirId)
+      ].valuationObj.assetsValuationObj.divisibleAssetsList.push({
+        unitValue: Number(
+          unitValues.find((item) => item.heirId === item.heirId).unitValue
+        ),
+        assetId: newUuid,
+        agreedValue: accordValue
+      });
+    });
+    setValuationObj(auxValuationObj);
   };
 
   const changeCategory = (event) => {
@@ -149,30 +209,15 @@ const AssetDivisibleForm = ({
   };
 
   const changeAccord = () => {
-    let auxValuationObj = JSON.stringify(valuationObj);
-    valuationObj.forEach((valuation) => {
-      const myAsset =
-        valuation.valuationObj.assetsValuationObj.divisibleAssetsList;
-      const assetIndex =
-        valuation.valuationObj.assetsValuationObj.divisibleAssetsList.findIndex(
-          (divisibleAsset) => divisibleAsset.assetId === asset.id
-        );
-      if (myAsset.some((item) => item.assetId === asset.id)) {
-        valuation.valuationObj.assetsValuationObj.divisibleAssetsList[
-          assetIndex
-        ].agreedValue =
-          !valuation.valuationObj.assetsValuationObj.divisibleAssetsList[
-            assetIndex
-          ].agreedValue;
-      }
-    });
-    setValuationObj({
-      ...auxValuationObj,
-      valuationObj: {
-        assetsValuationObj: {}
-      }
-    });
     setAccordValue(!accordValue);
+    setUnitValues(
+      unitValues.map((unitValue) => {
+        return {
+          ...unitValue,
+          unitValue: 0
+        };
+      })
+    );
   };
 
   const editOwnership = (own) => {
@@ -190,7 +235,28 @@ const AssetDivisibleForm = ({
     );
   };
 
-  const triggerChangeValuationObj = () => {};
+  const triggerChangeValuationObj = (value, heirId) => {
+    debugger;
+    if (heirId) {
+      setUnitValues(
+        unitValues.map((unitValue) => {
+          return {
+            ...unitValue,
+            unitValue: unitValue.heirId === heirId ? value : unitValue.unitValue
+          };
+        })
+      );
+    } else {
+      setUnitValues(
+        unitValues.map((unitValue) => {
+          return {
+            ...unitValue,
+            unitValue: value
+          };
+        })
+      );
+    }
+  };
 
   return (
     <div>
@@ -349,6 +415,7 @@ const AssetDivisibleForm = ({
                       onChange={(e) => {
                         triggerChangeValuationObj(e.target.value);
                       }}
+                      value={unitValues?.[0]?.unitValue || 0}
                     />
                     {validator.message(
                       'quantity',
@@ -372,6 +439,10 @@ const AssetDivisibleForm = ({
                         onChange={(e) => {
                           triggerChangeValuationObj(e.target.value, heir.id);
                         }}
+                        value={
+                          unitValues?.find((item) => item.heirId === heir.id)
+                            ?.unitValue || 0
+                        }
                       />
                       {validator.message(
                         'quantity',
