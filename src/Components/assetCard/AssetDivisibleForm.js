@@ -15,7 +15,7 @@ const AssetDivisibleForm = ({
   setOwnershipsList,
   heirsList,
   valuationObj,
-  setValuationsObj
+  setValuationObj
 }) => {
   const [asset, setAsset] = useState(assetData ? assetData : {});
   const [ownershipId, setOwnershipId] = useState(null);
@@ -149,8 +149,8 @@ const AssetDivisibleForm = ({
   };
 
   const changeAccord = () => {
-    let auxValuationsObj = JSON.stringify(valuationsObj);
-    valuationsObj.forEach((valuation) => {
+    let auxValuationObj = JSON.stringify(valuationObj);
+    valuationObj.forEach((valuation) => {
       const myAsset =
         valuation.valuationObj.assetsValuationObj.divisibleAssetsList;
       const assetIndex =
@@ -166,10 +166,10 @@ const AssetDivisibleForm = ({
           ].agreedValue;
       }
     });
-    setValuationsObj({
-      ...auxValuationsObj,
+    setValuationObj({
+      ...auxValuationObj,
       valuationObj: {
-        assetsValuationsObj: {}
+        assetsValuationObj: {}
       }
     });
     setAccordValue(!accordValue);
