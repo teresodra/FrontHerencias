@@ -24,6 +24,7 @@ const AssetDivisibleForm = ({
   const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
   const [unitValues, setUnitValues] = useState([]);
+  const [assignedValue, setAssignedValue] = useState(undefined);
 
   const nameRef = React.createRef();
   const quantityRef = React.createRef();
@@ -41,8 +42,14 @@ const AssetDivisibleForm = ({
     new SimpleReactValidator({
       validators: {
         addOwnership: {
-          // Custom validator for matching passwords
           message: 'Añade al menos una propiedad.',
+          rule: (validator) => {
+            return Boolean(validator);
+          },
+          required: true
+        },
+        addAssigned: {
+          message: 'Añade al menos un heredero.',
           rule: (validator) => {
             return Boolean(validator);
           },
@@ -77,6 +84,8 @@ const AssetDivisibleForm = ({
     nameRef.current.value = assetData.name;
     quantityRef.current.value = assetData.quantity;
     refValueRef.current.value = assetData.refValue;
+
+    setAssignedValue(assetData?.assignedTo || undefined);
     const values = [];
     valuationObj.forEach((valuation) => {
       values.push({
@@ -212,6 +221,17 @@ const AssetDivisibleForm = ({
   };
 
   const changeAccord = () => {
+    if (accordValue) {
+      setAsset({
+        ...asset,
+        assignedTo: undefined
+      });
+    } else if (!accordValue && assignedValue) {
+      setAsset({
+        ...asset,
+        assignedTo: assignedValue
+      });
+    }
     setAccordValue(!accordValue);
     setUnitValues(
       unitValues.map((unitValue) => {
@@ -258,6 +278,10 @@ const AssetDivisibleForm = ({
         })
       );
     }
+  };
+
+  const changeAssigned = (e) => {
+    setAssignedValue(e);
   };
 
   return (
@@ -455,6 +479,27 @@ const AssetDivisibleForm = ({
                 </>
               )}
             </div>
+            {accordValue && (
+              <div className="form-group">
+                <label htmlFor="assigned">¿Este bien está ya asignado?</label>
+                {heirsList.map((heir) => (
+                  <div className="radio-container">
+                    <input
+                      type="radio"
+                      name="assigned"
+                      checked={heir.id === assignedValue}
+                      onChange={() => {
+                        changeAssigned(heir.id);
+                      }}
+                      classnamePrefix="react-radio"
+                      id={`assigned-${heir.id}`}
+                    />
+                    <label for={`assigned-yes`}>{heir.name}</label>
+                  </div>
+                ))}
+                {validator.message('assigned', assignedValue, 'addAssigned')}
+              </div>
+            )}
 
             <div className="formGroup">
               <div className="button-container">
