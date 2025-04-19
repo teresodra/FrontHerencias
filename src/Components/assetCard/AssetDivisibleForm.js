@@ -47,13 +47,6 @@ const AssetDivisibleForm = ({
             return Boolean(validator);
           },
           required: true
-        },
-        addAssigned: {
-          message: 'Añade al menos un heredero.',
-          rule: (validator) => {
-            return Boolean(validator);
-          },
-          required: true
         }
       }
     })
@@ -97,11 +90,7 @@ const AssetDivisibleForm = ({
       });
     });
     setUnitValues(values);
-    setAccordValue(
-      valuationObj[0].valuationObj.assetsValuationObj.divisibleAssetsList.find(
-        (item) => item.assetId === asset.id
-      ).agreedValue
-    );
+    setAccordValue(assetData.agreedValue);
     setOwnershipId(
       ownerShipOptions.some((owShip) => owShip.value === assetData.ownershipId)
     );
@@ -163,9 +152,12 @@ const AssetDivisibleForm = ({
         unitValue: Number(
           unitValues.find((unitValue) => unitValue.heirId === item.heirId)
             .unitValue
-        ),
-        agreedValue: accordValue
+        )
       };
+    });
+    setAsset({
+      ...asset,
+      agreedValue: accordValue
     });
     setValuationObj(auxValuationObj);
     setAssetsObj({
@@ -196,9 +188,12 @@ const AssetDivisibleForm = ({
           unitValues.find((unitValue) => item.heirId === unitValue.heirId)
             .unitValue
         ),
-        assetId: newUuid,
-        agreedValue: accordValue
+        assetId: newUuid
       });
+    });
+    setAsset({
+      ...asset,
+      agreedValue: accordValue
     });
     setValuationObj(auxValuationObj);
   };
@@ -497,7 +492,6 @@ const AssetDivisibleForm = ({
                     <label for={`assigned-yes`}>{heir.name}</label>
                   </div>
                 ))}
-                {validator.message('assigned', assignedValue, 'addAssigned')}
               </div>
             )}
 
