@@ -137,7 +137,7 @@ const NewOwnershipForm = ({
         ...prev.heirPercObj,
         [heirId]: {
           ...prev.heirPercObj[heirId],
-          [field]: parseInt(value) || 0
+          [field]: value.replace(',', '.')
         }
       }
     }));

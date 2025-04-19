@@ -50,6 +50,7 @@ const NewInheritanceAssets = ({
             className="header-back-icon"
             onClick={() => {
               setAddAssetPageOpen(false);
+              setAssetToEdit(null);
             }}
           >
             <span className="material-symbols-outlined ">arrow_back</span>

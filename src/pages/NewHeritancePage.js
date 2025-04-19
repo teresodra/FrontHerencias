@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiSaveInheritance } from '../services/api';
+import { apiAddValuation, apiSaveInheritance } from '../services/api';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 import messagesObj from '../schemas/messages';
@@ -37,6 +37,21 @@ const NewHeritancePage = () => {
   const navigate = useNavigate();
 
   const handleSave = async () => {
+    debugger;
+    console.log(valuationObj);
+
+    const adaptOwnershipsList = (ownershipsList) => {
+      ownershipsList.forEach((item) => {
+        Object.values(item.heirPercObj).forEach((heirObj) => {
+          heirObj.fullOwnership = Number(heirObj.fullOwnership);
+          heirObj.bareOwnership = Number(heirObj.bareOwnership);
+          heirObj.lifeUsufruct = Number(heirObj.lifeUsufruct);
+        });
+      });
+      return ownershipsList;
+    };
+    const auxOwnershipsList = adaptOwnershipsList(ownershipsList);
+
     setIsSaving(true);
     const inheritanceId = uuidv4();
     const auxInheritance = {
@@ -44,7 +59,7 @@ const NewHeritancePage = () => {
       name: name,
       region: region,
       heirsList: heirsList,
-      ownershipsList: ownershipsList,
+      ownershipsList: auxOwnershipsList,
       assetsObj: assetsObj
     };
 
@@ -55,6 +70,14 @@ const NewHeritancePage = () => {
       console.log(result);
       setInheritancesList(null);
       setInheritancesAccessList(null);
+      for (const item of valuationObj) {
+        try {
+          const result = await apiAddValuation(inheritanceId, item);
+          console.log('Valuation added:', result);
+        } catch (error) {
+          console.error('Error adding valuation:', error);
+        }
+      }
       Swal.fire(messagesObj.newInheritanceSuccess);
       navigate(`/inheritance/${inheritanceId}`);
     } catch (err) {

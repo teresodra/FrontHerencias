@@ -129,7 +129,6 @@ const AssetDivisibleForm = ({
   };
 
   const editAsset = () => {
-    debugger;
     // Find asset index from assetList
     const index = assetsObj.divisibleAssetsList.findIndex(
       (assetObj) => assetObj.id === asset.id
@@ -166,6 +165,10 @@ const AssetDivisibleForm = ({
     });
   };
 
+  useEffect(() => {
+    console.log(unitValues);
+  }, [unitValues]);
+
   const addNewAsset = () => {
     const newUuid = uuidv4();
     setAssetsObj({
@@ -175,14 +178,14 @@ const AssetDivisibleForm = ({
         { ...asset, id: newUuid } // Create id so it has a reference to be edited
       ]
     });
-    debugger;
     const auxValuationObj = JSON.parse(JSON.stringify(valuationObj));
     valuationObj.forEach((item) => {
       auxValuationObj[
         valuationObj.findIndex((valItem) => valItem.heirId === item.heirId)
       ].valuationObj.assetsValuationObj.divisibleAssetsList.push({
         unitValue: Number(
-          unitValues.find((item) => item.heirId === item.heirId).unitValue
+          unitValues.find((unitValue) => item.heirId === unitValue.heirId)
+            .unitValue
         ),
         assetId: newUuid,
         agreedValue: accordValue
@@ -236,7 +239,6 @@ const AssetDivisibleForm = ({
   };
 
   const triggerChangeValuationObj = (value, heirId) => {
-    debugger;
     if (heirId) {
       setUnitValues(
         unitValues.map((unitValue) => {
@@ -270,7 +272,7 @@ const AssetDivisibleForm = ({
         <div className="form-group">
           <label htmlFor="cantidad">Cantidad</label>
           <input
-            type="text"
+            type="number"
             name="cantidad"
             ref={quantityRef}
             onChange={changeState}
@@ -285,7 +287,7 @@ const AssetDivisibleForm = ({
         <div className="form-group">
           <label htmlFor="refValue">Valor de referencia por unidad</label>
           <input
-            type="text"
+            type="number"
             name="refValue"
             ref={refValueRef}
             onChange={changeState}
@@ -409,7 +411,7 @@ const AssetDivisibleForm = ({
                   <div className="heir-value-item">
                     <label for={`commonheir`}>{`Valor acordado`}</label>
                     <input
-                      type="text"
+                      type="number"
                       name="value"
                       id={`commonheir`}
                       onChange={(e) => {
@@ -426,14 +428,13 @@ const AssetDivisibleForm = ({
                 </>
               ) : (
                 <>
-                  <p>Valores</p>
                   {heirsList.map((heir) => (
                     <div className="heir-value-item">
                       <label
                         for={`heir-${heir.id}`}
                       >{`Valor por unidad para ${heir.name}`}</label>
                       <input
-                        type="text"
+                        type="number"
                         name="value"
                         id={`heir-${heir.id}`}
                         onChange={(e) => {
