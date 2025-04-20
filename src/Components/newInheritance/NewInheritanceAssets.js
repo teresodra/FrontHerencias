@@ -122,6 +122,7 @@ const NewInheritanceAssets = ({
                       assetsObj={assetsObj}
                       setAssetsObj={setAssetsObj}
                       removeAsset={removeAsset}
+                      editAsset={editAsset}
                       setOwnershipsList={setOwnershipsList}
                       heirsList={heirsList}
                     />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DivisibleAsset = ({ asset, ownershipsList, removeAsset, editAsset }) => {
   console.log(asset);

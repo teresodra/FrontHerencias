@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const IndivisibleAsset = ({
   asset,
@@ -36,7 +36,7 @@ const IndivisibleAsset = ({
       <div className="card-data-content">
         <div className="card-data-item">
           <label>Nombre:</label>
-          <div>{asset.name}</div>
+          <div>{asset?.name}</div>
         </div>
 
         <div className="card-data-item">
@@ -46,7 +46,7 @@ const IndivisibleAsset = ({
 
         <div className="card-data-item">
           <label>Ownership:</label>
-          <div>{ownership.name}</div>
+          <div>{ownership?.name}</div>
         </div>
       </div>
     </div>

@@ -132,7 +132,11 @@ const AssetDivisibleForm = ({
       (assetObj) => assetObj.id === asset.id
     );
     let auxAssetList = [...assetsObj.divisibleAssetsList];
-    auxAssetList[index] = asset;
+    auxAssetList[index] = {
+      ...asset,
+      agreedValue: accordValue,
+      assignedTo: assignedValue
+    };
     const auxValuationObj = JSON.parse(JSON.stringify(valuationObj));
     valuationObj.forEach((item) => {
       const auxValuationItemIndex = valuationObj.findIndex(
@@ -157,7 +161,8 @@ const AssetDivisibleForm = ({
     });
     setAsset({
       ...asset,
-      agreedValue: accordValue
+      agreedValue: accordValue,
+      assignedTo: assignedValue
     });
     setValuationObj(auxValuationObj);
     setAssetsObj({
@@ -166,17 +171,18 @@ const AssetDivisibleForm = ({
     });
   };
 
-  useEffect(() => {
-    console.log(unitValues);
-  }, [unitValues]);
-
   const addNewAsset = () => {
     const newUuid = uuidv4();
     setAssetsObj({
       ...assetsObj,
       divisibleAssetsList: [
         ...(assetsObj?.divisibleAssetsList || []), // Initially is undefined
-        { ...asset, id: newUuid } // Create id so it has a reference to be edited
+        {
+          ...asset,
+          id: newUuid,
+          agreedValue: accordValue,
+          assignedTo: assignedValue
+        } // Create id so it has a reference to be edited
       ]
     });
     const auxValuationObj = JSON.parse(JSON.stringify(valuationObj));
@@ -193,7 +199,8 @@ const AssetDivisibleForm = ({
     });
     setAsset({
       ...asset,
-      agreedValue: accordValue
+      agreedValue: accordValue,
+      assignedTo: assignedValue
     });
     setValuationObj(auxValuationObj);
   };
@@ -327,7 +334,7 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="categry">Propiedades</label>
+          <label htmlFor="categry">Propiedad</label>
           {ownershipsList.length > 0 &&
             ownershipsList.map((ownership, index) => (
               <div
@@ -466,7 +473,8 @@ const AssetDivisibleForm = ({
                       />
                       {validator.message(
                         'quantity',
-                        asset.quantity,
+                        unitValues?.find((item) => item.heirId === heir.id)
+                          ?.unitValue || 0,
                         'required|numeric|min:0,num'
                       )}
                     </div>
@@ -477,6 +485,19 @@ const AssetDivisibleForm = ({
             {accordValue && (
               <div className="form-group">
                 <label htmlFor="assigned">¿Este bien está ya asignado?</label>
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    name="assigned"
+                    checked={assignedValue === 'not-assigned'}
+                    onChange={() => {
+                      changeAssigned('not-assigned');
+                    }}
+                    classnamePrefix="react-radio"
+                    id={`assigned-not-assigned`}
+                  />
+                  <label for={`assigned-not-assigned`}>No</label>
+                </div>
                 {heirsList.map((heir) => (
                   <div className="radio-container">
                     <input

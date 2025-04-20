@@ -87,6 +87,10 @@ const NewAssetPage = ({
               ownershipsList={ownershipsList}
               assetData={assetData}
               setAssetData={setAssetData}
+              setOwnershipsList={setOwnershipsList}
+              heirsList={heirsList}
+              valuationObj={valuationObj}
+              setValuationObj={setValuationObj}
             />
           )}
 

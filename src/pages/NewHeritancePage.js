@@ -37,7 +37,6 @@ const NewHeritancePage = () => {
   const navigate = useNavigate();
 
   const handleSave = async () => {
-    debugger;
     console.log(valuationObj);
 
     const adaptOwnershipsList = (ownershipsList) => {
