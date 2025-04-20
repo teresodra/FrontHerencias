@@ -7,14 +7,10 @@ const IndivisibleAssetValuation = ({
   setValuationObj
 }) => {
   const [isWrapped, setIsWrapped] = useState(true);
-  console.log(asset);
-  console.log(valuationObj);
   const [assetValue, setAssetValue] = useState(null);
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );
-
-  console.log(valuationObj);
 
   useEffect(() => {
     // Initialize value in case already valuated

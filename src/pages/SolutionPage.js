@@ -68,7 +68,6 @@ const SolutionPage = () => {
       setIsLoading(false);
       setInheritance(inheritanceAux);
       initializeValues(inheritanceAux);
-      console.log(inheritanceAux);
     } catch (err) {
       await handleError(err, navigate);
     }
@@ -101,7 +100,6 @@ const SolutionPage = () => {
     data.heirsList.map((heir) =>
       auxList.push({ value: heir.id, label: heir.name })
     );
-    console.log([...heirOptions, ...auxList]);
     setHeirOptions([
       { label: '- Valor de referencia -', value: 'refValue' },
       ...auxList

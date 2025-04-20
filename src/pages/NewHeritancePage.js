@@ -37,8 +37,6 @@ const NewHeritancePage = () => {
   const navigate = useNavigate();
 
   const handleSave = async () => {
-    console.log(valuationObj);
-
     const adaptOwnershipsList = (ownershipsList) => {
       ownershipsList.forEach((item) => {
         Object.values(item.heirPercObj).forEach((heirObj) => {
@@ -62,17 +60,13 @@ const NewHeritancePage = () => {
       assetsObj: assetsObj
     };
 
-    console.log(auxInheritance);
-    console.log(JSON.stringify(auxInheritance));
     try {
       const result = await apiSaveInheritance(auxInheritance);
-      console.log(result);
       setInheritancesList(null);
       setInheritancesAccessList(null);
       for (const item of valuationObj) {
         try {
           const result = await apiAddValuation(inheritanceId, item);
-          console.log('Valuation added:', result);
         } catch (error) {
           console.error('Error adding valuation:', error);
         }
@@ -80,7 +74,7 @@ const NewHeritancePage = () => {
       Swal.fire(messagesObj.newInheritanceSuccess);
       navigate(`/inheritance/${inheritanceId}`);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       handleError(err, navigate);
       // Swal.fire(messagesObj.newInheritanceError);
     }

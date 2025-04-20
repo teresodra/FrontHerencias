@@ -8,7 +8,6 @@ const DivisibleAssetValuation = ({
 }) => {
   const [isWrapped, setIsWrapped] = useState(true);
   const [assetValue, setAssetValue] = useState(null);
-  console.log(asset);
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );

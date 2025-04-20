@@ -64,7 +64,6 @@ const InheritancePage = () => {
       }
       setIsLoading(false);
       setInheritance(inheritanceAux);
-      console.log(inheritanceAux);
     } catch (err) {
       await handleError(err, navigate);
     }
@@ -89,7 +88,6 @@ const InheritancePage = () => {
       timerIdRef.current = setInterval(checkForSolution, timerInterval);
       Swal.fire(messagesObj.calculateSuccess);
     } catch (err) {
-      console.log(err);
       Swal.fire(messagesObj.calculateError);
       setIsCalculating(false);
     }
@@ -97,20 +95,15 @@ const InheritancePage = () => {
 
   const checkForSolution = async () => {
     try {
-      console.log('trying');
       let response = await apiGetSolution(inheritanceId);
-      console.log(response.status === 200);
       if (response.status === 200) {
-        console.log('entro');
         clearInterval(timerIdRef.current); // Access the timer ID from the ref
         timerIdRef.current = null; // Reset the ref
-        // console.log(timerId)
         setInheritance(response.data);
         setIsCalculating(false);
       }
-      console.log(response);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       Swal.fire(messagesObj.calculateError);
       clearInterval(timerIdRef.current); // Access the timer ID from the ref
       timerIdRef.current = null; // Reset the ref
@@ -139,12 +132,11 @@ const InheritancePage = () => {
       const inheritancesListFiltered = inheritancesList.filter(
         (inh) => inh.inheritanceId !== inheritanceId
       );
-      console.log(inheritancesListFiltered);
       setInheritancesList(inheritancesListFiltered);
       Swal.fire(messagesObj.deleteInheritanceSuccess);
       navigate('/home');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       handleError(err, navigate);
     }
     setIsDeleting(false);

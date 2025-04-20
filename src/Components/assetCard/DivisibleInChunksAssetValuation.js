@@ -7,8 +7,6 @@ const DivisibleInChunksAssetValuation = ({
   setValuationObj
 }) => {
   const [isWrapped, setIsWrapped] = useState(true);
-  console.log(ownershipsList);
-  console.log(asset);
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );

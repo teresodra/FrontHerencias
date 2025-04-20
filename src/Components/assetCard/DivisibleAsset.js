@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 const DivisibleAsset = ({ asset, ownershipsList, removeAsset, editAsset }) => {
-  console.log(asset);
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );
