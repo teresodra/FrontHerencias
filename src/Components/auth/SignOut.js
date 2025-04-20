@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../services/AuthContext'; // Assuming you have a context to manage user state
 import userPool from '../../services/cognitoConfig'; // Your Cognito configuration
 import { apiDeleteRefreshToken } from '../../services/api';
+import { useTranslation } from 'react-i18next';
 
 const SignOut = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { setInheritancesList, setInheritancesAccessList } =
     useContext(AuthContext);
 
@@ -52,9 +54,9 @@ const SignOut = () => {
         translate="no"
         aria-hidden="true"
       >
-        logout
+        {t('icon-logout')}
       </span>
-      <div className="hover-text">{'Cerrar Sesión'}</div>
+      <div className="hover-text">{t('main-logout')}</div>
     </div>
   );
 };

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignOut from '../auth/SignOut';
 import userPool from '../../services/cognitoConfig'; // Your Cognito configuration
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const cognitoUser = userPool.getCurrentUser();
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [language, setLanguage] = useState('es'); // Language state (default to Spanish)
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -69,8 +71,8 @@ const Header = () => {
         <div className="header-icon-container">
           <div className="language-selector">
             <select value={language} onChange={handleLanguageChange}>
-              <option value="es">Español</option>
-              <option value="en">English</option>
+              <option value="es">{t('header-spanish')}</option>
+              <option value="en">{t('header-english')}</option>
             </select>
           </div>
           <div>

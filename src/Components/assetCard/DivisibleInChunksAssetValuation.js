@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const DivisibleInChunksAssetValuation = ({
   asset,
@@ -10,6 +11,7 @@ const DivisibleInChunksAssetValuation = ({
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     // If it is cash value = ref value
@@ -49,32 +51,38 @@ const DivisibleInChunksAssetValuation = ({
     >
       <div className="card-data-button-container">
         <div>
-          <span className="material-symbols-outlined">arrow_drop_down</span>
+          <span className="material-symbols-outlined">
+            {t('icon-arrow-drop-down')}
+          </span>
         </div>
       </div>
 
       <div className="card-data-content">
         <div className="card-data-item">
-          <label>Nombre</label>
+          <label>{t('divisible-asset-name')}</label>
           <div>{asset.name}</div>
         </div>
 
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>Tamaño total ({asset.unitSize})</label>
+              <label>{`${t('divisible-asset-total-size')} (${
+                asset.unitSize
+              })`}</label>
               <div>{asset.totalSize}</div>
             </div>
 
             <div className="card-data-item">
-              <label>Valor de referncia por {asset.unitSize}</label>
+              <label>{`${t('divisible-asset-reference-unit-per')} ${
+                asset.unitSize
+              }`}</label>
               <div>
-                {asset.refValue} {'€'}
+                {asset.refValue} {t('main-euro-symbol')}
               </div>
             </div>
 
             <div className="card-data-item">
-              <label>Tamaño minimo de la parte</label>
+              <label>{t('divisible-asset-part-min-size')}</label>
               <div>
                 {asset.minimumSize} {asset.unitSize}
               </div>
@@ -88,13 +96,15 @@ const DivisibleInChunksAssetValuation = ({
                         )} */}
 
             <div className="card-data-item">
-              <label>Ownership</label>
+              <label>{t('divisible-asset-ownership')}</label>
               <div>{ownership.name}</div>
             </div>
 
             <div className="custom-form">
               <div className="form-group">
-                <label>Valoracion por {asset.unitSize}</label>
+                <label>{`${t('divisible-asset-valoration-per')} ${
+                  asset.unitSize
+                }`}</label>
                 <input
                   type="text"
                   onChange={handleInputChange}

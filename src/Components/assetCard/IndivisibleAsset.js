@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const IndivisibleAsset = ({
   asset,
-  assetsObj,
-  setAssetsObj,
   ownershipsList,
   removeAsset,
   editAsset
 }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );
+
+  const { t } = useTranslation();
 
   return (
     <div className="card-data-container">
@@ -21,7 +21,7 @@ const IndivisibleAsset = ({
             removeAsset(asset.id);
           }}
         >
-          <span className="material-symbols-outlined">close</span>
+          <span className="material-symbols-outlined">{t('icon-close')}</span>
         </div>
 
         <div
@@ -29,23 +29,23 @@ const IndivisibleAsset = ({
             editAsset(asset.id, 'indivisible');
           }}
         >
-          <span className="material-symbols-outlined">edit</span>
+          <span className="material-symbols-outlined">{t('icon-edit')}</span>
         </div>
       </div>
 
       <div className="card-data-content">
         <div className="card-data-item">
-          <label>Nombre:</label>
+          <label>{t('indivisible-asset-name')}:</label>
           <div>{asset?.name}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Valor de referencia:</label>
+          <label>{t('indivisible-asset-reference-value')}:</label>
           <div>{asset.refValue}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Ownership:</label>
+          <label>{t('indivisible-asset-ownership')}:</label>
           <div>{ownership?.name}</div>
         </div>
       </div>

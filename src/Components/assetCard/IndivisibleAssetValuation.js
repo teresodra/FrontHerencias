@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const IndivisibleAssetValuation = ({
   asset,
@@ -11,6 +12,7 @@ const IndivisibleAssetValuation = ({
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Initialize value in case already valuated
@@ -48,31 +50,33 @@ const IndivisibleAssetValuation = ({
     >
       <div className="card-data-button-container">
         <div>
-          <span className="material-symbols-outlined">arrow_drop_down</span>
+          <span className="material-symbols-outlined">
+            {t('icon-arrow-drop-down')}
+          </span>
         </div>
       </div>
 
       <div className="card-data-content">
         <div className="card-data-item">
-          <label>Nombre:</label>
+          <label>{t('indivisible-asset-name')}:</label>
           <div>{asset.name}</div>
         </div>
 
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>Valor de referencia:</label>
+              <label>{t('indivisible-asset-reference-value')}:</label>
               <div>{asset.refValue}</div>
             </div>
 
             <div className="card-data-item">
-              <label>Propiedad:</label>
+              <label>{t('indivisible-asset-property')}:</label>
               <div>{ownership.name}</div>
             </div>
 
             <div className="custom-form">
               <div className="form-group">
-                <label>Valoracion</label>
+                <label>{t('indivisible-asset-valoration')}</label>
                 <input
                   type="text"
                   onChange={addValuation}

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const DivisibleAsset = ({ asset, ownershipsList, removeAsset, editAsset }) => {
   const ownership = ownershipsList.find(
     (ownership) => ownership.id === asset.ownershipId
   );
+
+  const { t } = useTranslation();
 
   return (
     <div className="card-data-container">
@@ -13,7 +16,7 @@ const DivisibleAsset = ({ asset, ownershipsList, removeAsset, editAsset }) => {
             removeAsset(asset.id);
           }}
         >
-          <span className="material-symbols-outlined">close</span>
+          <span className="material-symbols-outlined">{t('icon-close')}</span>
         </div>
 
         {/* <div onClick={() => {setModalIsOpen(true);}}> */}
@@ -22,35 +25,35 @@ const DivisibleAsset = ({ asset, ownershipsList, removeAsset, editAsset }) => {
             editAsset(asset.id, 'divisible');
           }}
         >
-          <span className="material-symbols-outlined">edit</span>
+          <span className="material-symbols-outlined">{t('icon-edit')}</span>
         </div>
       </div>
 
       <div className="card-data-content">
         <div className="card-data-item">
-          <label>Nombre</label>
+          <label>{t('divisible-asset-name')}</label>
           <div>{asset.name}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Cantidad</label>
+          <label>{t('divisible-asset-quantity')}</label>
           <div>{asset.quantity}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Valor de referencia por unidad</label>
+          <label>{t('divisible-asset-reference-unit-value')}</label>
           <div>
-            {asset.refValue} {'€'}
+            {asset.refValue} {t('main-euro-symbol')}
           </div>
         </div>
 
         <div className="card-data-item">
-          <label>Categoría</label>
+          <label>{t('divisible-asset-category')}</label>
           <div>{asset.category}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Ownership</label>
+          <label>{t('divisible-asset-ownership')}</label>
           <div>{ownership.name}</div>
         </div>
       </div>

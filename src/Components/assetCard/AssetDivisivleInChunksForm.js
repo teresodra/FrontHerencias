@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
-import { useSearchParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 
 const AssetDivisivleInChunksForm = ({
   assetsObj,
@@ -17,10 +17,11 @@ const AssetDivisivleInChunksForm = ({
   const ownerShipOptions = ownershipsList.map(
     (ownership) => (ownership = { value: ownership.id, label: ownership.name })
   );
+  const { t } = useTranslation();
 
   const unitSizeOptions = [
-    { label: 'm2', value: 'm2' },
-    { label: 'hectareas', value: 'hect' }
+    { label: t('unit-size-m2'), value: 'm2' },
+    { label: t('unit-size-hect'), value: 'hect' }
   ];
 
   const [unitSize, setUnitSize] = useState(unitSizeOptions[0]);
@@ -121,24 +122,26 @@ const AssetDivisivleInChunksForm = ({
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nombre del bien</label>
+          <label htmlFor="name">{t('asset-form-name')}</label>
           <input type="text" name="name" ref={nameRef} onChange={changeState} />
           {validator.message('name', asset.name, 'required|alpha_num_space')}
         </div>
 
         <div className="form-group">
-          <label htmlFor="unitSize">Unidades</label>
+          <label htmlFor="unitSize">{t('asset-form-units')}</label>
           <Select
             name="unitSize"
             options={unitSizeOptions}
             value={unitSize}
             onChange={changeUnitSize}
-            placeholder="Seleccionar..."
+            placeholder={t('main-select-placeholder')}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="totalSize">Tamaño total en {unitSize.label}</label>
+          <label htmlFor="totalSize">{`${t('asset-form-total-size-in')} ${
+            unitSize.label
+          }`}</label>
           <input
             type="text"
             name="totalSize"
@@ -154,7 +157,7 @@ const AssetDivisivleInChunksForm = ({
 
         <div className="form-group">
           <label htmlFor="refValue">
-            Valor de referencia por {unitSize.label}
+            {`${t('asset-form-reference-value-per')} ${unitSize.label}`}
           </label>
           <input
             type="text"
@@ -167,7 +170,7 @@ const AssetDivisivleInChunksForm = ({
 
         <div className="form-group">
           <label htmlFor="minimumSize">
-            Tamaño minimo por parte en {unitSize.label}
+            {`${t('asset-form-part-min-size')} ${unitSize.label}`}
           </label>
           <input
             type="text"
@@ -183,7 +186,7 @@ const AssetDivisivleInChunksForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="categry">Propiedad</label>
+          <label htmlFor="categry">{t('asset-form-property')}</label>
           <Select
             options={ownerShipOptions}
             onChange={changeOwnership}
@@ -196,7 +199,7 @@ const AssetDivisivleInChunksForm = ({
         <div className="formGroup">
           <div className="button-container">
             <button className="custom-button" type="submit">
-              Guardar
+              {t('main-save')}
             </button>
           </div>
         </div>

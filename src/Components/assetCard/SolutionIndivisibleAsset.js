@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SolutionIndivisibleAsset = ({
   assetAllocation,
@@ -8,6 +9,7 @@ const SolutionIndivisibleAsset = ({
   editAsset
 }) => {
   const [isWrapped, setIsWrapped] = useState(true);
+  const { t } = useTranslation();
   // const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
 
   const asset = inheritance.assetsObj.indivisibleAssetsList.find(
@@ -23,27 +25,31 @@ const SolutionIndivisibleAsset = ({
     >
       <div className="card-data-button-container">
         <div>
-          <span className="material-symbols-outlined">arrow_drop_down</span>
+          <span className="material-symbols-outlined">
+            {t('icon-arrow-drop-down')}
+          </span>
         </div>
       </div>
 
       <div className="card-data-content">
         <div className="card-data-item">
-          <label>Nombre</label>
+          <label>{t('indivisible-asset-name')}</label>
           <div>{asset.name}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Valoracion</label>
-          <div>{assetAllocation.valuePOV} €</div>
+          <label>{t('indivisible-asset-valoration')}</label>
+          <div>
+            {assetAllocation.valuePOV} {t('main-euro-symbol')}
+          </div>
         </div>
 
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>Valor de referencia</label>
+              <label>{t('indivisible-asset-reference-value')}</label>
               <div>
-                {asset.refValue} {'€'}
+                {asset.refValue} {t('main-euro-symbol')}
               </div>
             </div>
             {/* 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
-import { useSearchParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import NewOwnershipModal from '../ownershipCard/NewOwnershipModal';
+import { useTranslation } from 'react-i18next';
 
 const AssetDivisibleForm = ({
   assetsObj,
@@ -25,6 +25,7 @@ const AssetDivisibleForm = ({
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
   const [unitValues, setUnitValues] = useState([]);
   const [assignedValue, setAssignedValue] = useState(undefined);
+  const { t } = useTranslation();
 
   const nameRef = React.createRef();
   const quantityRef = React.createRef();
@@ -290,13 +291,13 @@ const AssetDivisibleForm = ({
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
         <div className="form-group --add-margin">
-          <label htmlFor="name">Nombre del bien</label>
+          <label htmlFor="name">{t('asset-form-name')}</label>
           <input type="text" name="name" ref={nameRef} onChange={changeState} />
           {validator.message('name', asset.name, 'required|alpha_num_space')}
         </div>
 
         <div className="form-group">
-          <label htmlFor="cantidad">Cantidad</label>
+          <label htmlFor="cantidad">{t('asset-form-quantity')}</label>
           <input
             type="number"
             name="cantidad"
@@ -311,7 +312,9 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="refValue">Valor de referencia por unidad</label>
+          <label htmlFor="refValue">
+            {t('asset-form-unit-reference-value')}
+          </label>
           <input
             type="number"
             name="refValue"
@@ -322,19 +325,18 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="categry">Categoría</label>
+          <label htmlFor="categry">{t('asset-form-category')}</label>
           <Select
             options={categoryOptionsList}
             onChange={changeCategory}
             placeholder="Seleccionar..."
             value={category}
-            classNamePrefix="react-select" // Apply custom prefix
           />
           {validator.message('category', asset.category, 'required')}
         </div>
 
         <div className="form-group">
-          <label htmlFor="categry">Propiedad</label>
+          <label htmlFor="categry">{t('asset-form-property')}</label>
           {ownershipsList.length > 0 &&
             ownershipsList.map((ownership, index) => (
               <div
@@ -343,6 +345,7 @@ const AssetDivisibleForm = ({
                     ? 'radio-edit-container-last'
                     : ''
                 }`}
+                key={ownership.id}
               >
                 <div className="radio-container">
                   <input
@@ -352,10 +355,9 @@ const AssetDivisibleForm = ({
                     onChange={() => {
                       changeOwnership(ownership.id);
                     }}
-                    classnamePrefix="react-radio"
                     id={`ownership-${ownership.id}`}
                   />
-                  <label for={`ownership-${ownership.id}`}>
+                  <label htmlFor={`ownership-${ownership.id}`}>
                     {ownership.name}
                   </label>
                 </div>
@@ -369,7 +371,7 @@ const AssetDivisibleForm = ({
                       }}
                     >
                       <span className="material-symbols-outlined radio-delete-icon action-icon">
-                        delete
+                        {t('icon-delete')}
                       </span>
                     </button>
                   )}
@@ -381,7 +383,7 @@ const AssetDivisibleForm = ({
                     }}
                   >
                     <span className="material-symbols-outlined action-icon">
-                      edit
+                      {t('icon-edit')}
                     </span>
                   </button>
                 </div>
@@ -395,7 +397,7 @@ const AssetDivisibleForm = ({
               setOwnershipModalIsOpen(true);
             }}
           >
-            Añadir propiedad
+            {t('asset-form-add-property')}
           </button>
           {validator.message('ownership', ownershipId, 'addOwnership')}
         </div>
@@ -403,7 +405,7 @@ const AssetDivisibleForm = ({
           <>
             <div className="form-group inline-radio-group">
               <label htmlFor="accord" className="labelled-checkbox-label">
-                ¿Están todos los herederos de acuerdo en el valor?
+                {t('asset-form-heirs-accord')}
               </label>
               <div className="inline-radio-group">
                 <div className="radio-container">
@@ -412,10 +414,9 @@ const AssetDivisibleForm = ({
                     name="accord"
                     checked={accordValue}
                     onChange={changeAccord}
-                    classnamePrefix="react-radio"
                     id={`accord-yes`}
                   />
-                  <label for={`accord-yes`}>Sí</label>
+                  <label htmlFor={`accord-yes`}>{t('main-yes')}</label>
                 </div>
                 <div className="radio-container">
                   <input
@@ -423,10 +424,9 @@ const AssetDivisibleForm = ({
                     name="accord"
                     checked={!accordValue}
                     onChange={changeAccord}
-                    classnamePrefix="react-radio"
                     id={`accord-no`}
                   />
-                  <label for={`accord-no`}>No</label>
+                  <label htmlFor={`accord-no`}>{t('main-no')}</label>
                 </div>
               </div>
             </div>
@@ -435,7 +435,9 @@ const AssetDivisibleForm = ({
               {accordValue ? (
                 <>
                   <div className="heir-value-item">
-                    <label for={`commonheir`}>{`Valor acordado`}</label>
+                    <label htmlFor={`commonheir`}>
+                      {t('asset-form-accord-value')}
+                    </label>
                     <input
                       type="number"
                       name="value"
@@ -455,10 +457,10 @@ const AssetDivisibleForm = ({
               ) : (
                 <>
                   {heirsList.map((heir) => (
-                    <div className="heir-value-item">
-                      <label
-                        for={`heir-${heir.id}`}
-                      >{`Valor por unidad para ${heir.name}`}</label>
+                    <div className="heir-value-item" key={heir.id}>
+                      <label htmlFor={`heir-${heir.id}`}>{`${t(
+                        'asset-form-unit-value-for'
+                      )} ${heir.name}`}</label>
                       <input
                         type="number"
                         name="value"
@@ -484,7 +486,7 @@ const AssetDivisibleForm = ({
             </div>
             {accordValue && (
               <div className="form-group">
-                <label htmlFor="assigned">¿Este bien está ya asignado?</label>
+                <label htmlFor="assigned">{t('asset-form-is-assigned')}</label>
                 <div className="radio-container">
                   <input
                     type="radio"
@@ -493,13 +495,14 @@ const AssetDivisibleForm = ({
                     onChange={() => {
                       changeAssigned('not-assigned');
                     }}
-                    classnamePrefix="react-radio"
                     id={`assigned-not-assigned`}
                   />
-                  <label for={`assigned-not-assigned`}>No</label>
+                  <label htmlFor={`assigned-not-assigned`}>
+                    {t('main-no')}
+                  </label>
                 </div>
                 {heirsList.map((heir) => (
-                  <div className="radio-container">
+                  <div className="radio-container" key={heir.id}>
                     <input
                       type="radio"
                       name="assigned"
@@ -507,10 +510,9 @@ const AssetDivisibleForm = ({
                       onChange={() => {
                         changeAssigned(heir.id);
                       }}
-                      classnamePrefix="react-radio"
                       id={`assigned-${heir.id}`}
                     />
-                    <label for={`assigned-yes`}>{heir.name}</label>
+                    <label htmlFor={`assigned-yes`}>{heir.name}</label>
                   </div>
                 ))}
               </div>
@@ -519,7 +521,7 @@ const AssetDivisibleForm = ({
             <div className="formGroup">
               <div className="button-container">
                 <button className="custom-button" type="submit">
-                  Guardar
+                  {t('main-save')}
                 </button>
               </div>
             </div>

@@ -1,50 +1,72 @@
-import React from "react";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const DivisibleInChunksAsset = ({asset, ownershipsList, removeAsset, editAsset}) => {
+const DivisibleInChunksAsset = ({
+  asset,
+  ownershipsList,
+  removeAsset,
+  editAsset
+}) => {
+  const ownership = ownershipsList.find(
+    (ownership) => ownership.id === asset.ownershipId
+  );
+  const { t } = useTranslation();
 
-    const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId )
-
-    return (
-        <div className='card-data-container'>
-            <div className='card-data-button-container'>
-                <div onClick={() => {removeAsset(asset.id);}}>
-                    <span className="material-symbols-outlined">close</span>
-                </div>
-
-                <div onClick={() => {editAsset(asset.id, 'divisibleInChunks');}}>
-                    <span className="material-symbols-outlined">edit</span>
-                </div>
-            </div>
-
-            <div className='card-data-content'>
-                <div className='card-data-item'>
-                    <label>Nombre</label>
-                    <div>{asset.name}</div>
-                </div>
-
-                <div className='card-data-item'>
-                    <label>Tamaño total ({asset.unitSize})</label>
-                    <div>{asset.totalSize}</div>
-                </div>
-
-                <div className='card-data-item'>
-                    <label>Valor de referencia por {asset.unitSize}</label>
-                    <div>{asset.refValue} {"€"}</div>
-                </div>
-
-                <div className='card-data-item'>
-                    <label>Tamaño mínimo ({asset.unitSize})</label>
-                    <div>{asset.minimumSize}</div>
-                </div>
-
-                <div className='card-data-item'>
-                    <label>Ownership</label>
-                    <div>{ownership.name}</div>
-                </div>
-            </div>
-
-
+  return (
+    <div className="card-data-container">
+      <div className="card-data-button-container">
+        <div
+          onClick={() => {
+            removeAsset(asset.id);
+          }}
+        >
+          <span className="material-symbols-outlined">{t('icon-close')}</span>
         </div>
-    )
+
+        <div
+          onClick={() => {
+            editAsset(asset.id, 'divisibleInChunks');
+          }}
+        >
+          <span className="material-symbols-outlined">{t('icon-edit')}</span>
+        </div>
+      </div>
+
+      <div className="card-data-content">
+        <div className="card-data-item">
+          <label>{t('divisible-asset-name')}</label>
+          <div>{asset.name}</div>
+        </div>
+
+        <div className="card-data-item">
+          <label>{`${t('divisible-asset-total-size')} (${
+            asset.unitSize
+          })`}</label>
+          <div>{asset.totalSize}</div>
+        </div>
+
+        <div className="card-data-item">
+          <label>{`${t('divisible-asset-reference-unit-per')} ${
+            asset.unitSize
+          }`}</label>
+          <div>
+            {asset.refValue} {t('main-euro-symbol')}
+          </div>
+        </div>
+
+        <div className="card-data-item">
+          <label>{`${t('divisible-asset-min-size')} (${
+            asset.unitSize
+          })`}</label>
+          <div>{asset.minimumSize}</div>
+        </div>
+
+        <div className="card-data-item">
+          <label>{t('divisible-asset-ownership')}</label>
+          <div>{ownership.name}</div>
+        </div>
+      </div>
+    </div>
+  );
 };
 export default DivisibleInChunksAsset;

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import NewHeirForm from '../heirCards/NewHeirForm';
-import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
 import AssetDivisibleForm from './AssetDivisibleForm';
 import AssetIndivisibleForm from './AssetIndivisibleForm';
-import AssetDivisivleInChunksForm from './AssetDivisivleInChunksForm';
+import { useTranslation } from 'react-i18next';
 
 const NewAssetPage = ({
   setAddAssetPageOpen,
@@ -20,10 +18,11 @@ const NewAssetPage = ({
   setValuationObj
 }) => {
   const [assetType, setAssetType] = useState(null);
+  const { t } = useTranslation();
 
   const assetOptionsList = [
-    { label: 'Divisible', value: 'divisible' },
-    { label: 'Indivisible', value: 'indivisible' }
+    { label: t('new-asset-divisible'), value: 'divisible' },
+    { label: t('new-asset-indivisible'), value: 'indivisible' }
   ];
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const NewAssetPage = ({
       <div className="add-asset-content-container">
         <div className="add-asset-content">
           <div className="form-group">
-            <label>Tipo bien:</label>
+            <label>{t('new-asset-asset-type')}:</label>
             <Select
               options={assetOptionsList}
               value={assetType}

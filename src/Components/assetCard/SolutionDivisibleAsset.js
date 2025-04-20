@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SolutionDivisibleAsset = ({
   assetAllocation,
@@ -8,7 +9,7 @@ const SolutionDivisibleAsset = ({
   editAsset
 }) => {
   const [isWrapped, setIsWrapped] = useState(true);
-  // const ownership = ownershipsList.find(ownership => ownership.id === asset.ownershipId );
+  const { t } = useTranslation();
 
   const asset = inheritance.assetsObj.divisibleAssetsList.find(
     (asst) => asst.id === assetAllocation.assetId
@@ -23,39 +24,43 @@ const SolutionDivisibleAsset = ({
     >
       <div className="card-data-button-container">
         <div>
-          <span className="material-symbols-outlined">arrow_drop_down</span>
+          <span className="material-symbols-outlined">
+            {t('icon-arrow-drop-down')}
+          </span>
         </div>
       </div>
 
       <div className="card-data-content">
         <div className="card-data-item">
-          <label>Nombre</label>
+          <label>{t('divisible-asset-name')}</label>
           <div>{asset.name}</div>
         </div>
 
         <div className="card-data-item">
-          <label>Valoracion total</label>
-          <div>{assetAllocation.valuePOV} €</div>
+          <label>{t('divisible-asset-total-valoration')}</label>
+          <div>
+            {assetAllocation.valuePOV} {t('main-euro-symbol')}
+          </div>
         </div>
 
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>Cantidad</label>
+              <label>{t('divisible-asset-quantity')}</label>
               <div>{assetAllocation.quantity}</div>
             </div>
 
             <div className="card-data-item">
-              <label>Valor de referencia por unidad</label>
+              <label>{t('divisible-asset-reference-unit-value')}</label>
               <div>
-                {asset.refValue} {'€'}
+                {asset.refValue} {t('main-euro-symbol')}
               </div>
             </div>
 
             {asset.category === 'cash' && (
               <div className="card-data-item">
-                <label>Categoría</label>
-                <div>Dinero</div>
+                <label>{t('divisible-asset-category')}</label>
+                <div>{t('divisible-asset-money')}</div>
               </div>
             )}
             {/* 

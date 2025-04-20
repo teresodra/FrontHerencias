@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import Select from 'react-select';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 
 const NewHeirForm = ({
   heirsList,
@@ -14,6 +15,7 @@ const NewHeirForm = ({
 }) => {
   const [heir, setHeir] = useState(heirData ? heirData : {});
   const [heirType, setHeirType] = useState(null);
+  const { t } = useTranslation();
 
   const nameRef = React.createRef();
   const ageRef = React.createRef();
@@ -104,13 +106,13 @@ const NewHeirForm = ({
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nombre</label>
+          <label htmlFor="name">{t('heir-data-name')}</label>
           <input type="text" name="name" ref={nameRef} onChange={changeState} />
           {validator.message('name', heir.name, 'required|alpha_num_space')}
         </div>
 
         <div className="form-group">
-          <label htmlFor="age">Edad</label>
+          <label htmlFor="age">{t('heir-data-age')}</label>
           <input type="text" name="age" ref={ageRef} onChange={changeState} />
           {validator.message(
             'age',
@@ -120,7 +122,7 @@ const NewHeirForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="type">Tipo</label>
+          <label htmlFor="type">{t('heir-data-type')}</label>
           <Select
             options={typeOptions}
             onChange={changeHeirType}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NewAssetPage from '../assetCard/NewAssetPage';
 import DivisibleAsset from '../assetCard/DivisibleAsset';
 import IndivisibleAsset from '../assetCard/IndivisibleAsset';
+import { useTranslation } from 'react-i18next';
 
 const NewInheritanceAssets = ({
   assetsObj,
@@ -16,6 +17,7 @@ const NewInheritanceAssets = ({
   const [assetToEdit, setAssetToEdit] = useState(null);
   const [addAssetPageOpen, setAddAssetPageOpen] = useState(false);
   const [assetType, setAssetType] = useState(null);
+  const { t } = useTranslation();
 
   const removeAsset = (assetId) => {
     let auxAssetsObj = { ...assetsObj };
@@ -53,10 +55,16 @@ const NewInheritanceAssets = ({
               setAssetToEdit(null);
             }}
           >
-            <span className="material-symbols-outlined ">arrow_back</span>
+            <span className="material-symbols-outlined ">
+              {t('icon-arrow-back')}
+            </span>
           </button>
         )}
-        <h2>{addAssetPageOpen ? 'Nuevo bien' : 'Bienes'}</h2>
+        <h2>
+          {addAssetPageOpen
+            ? t('new-inheritance-new-asset')
+            : t('new-inheritance-assets')}
+        </h2>
       </div>
       {addAssetPageOpen ? (
         <NewAssetPage
@@ -81,14 +89,15 @@ const NewInheritanceAssets = ({
                 setAddAssetPageOpen(true);
               }}
             >
-              Añadir bien
+              {t('new-inheritance-add-asset')}
             </button>
           </div>
           {assetsObj.divisibleAssetsList &&
             assetsObj.divisibleAssetsList.length > 0 && (
               <>
                 <h3>
-                  Bienes divisibles: {assetsObj.divisibleAssetsList.length}
+                  {t('new-inheritance-divisible-assets')}:{' '}
+                  {assetsObj.divisibleAssetsList.length}
                 </h3>
                 <div className="card-container">
                   {assetsObj.divisibleAssetsList.map((asset, index) => (
@@ -111,10 +120,11 @@ const NewInheritanceAssets = ({
             assetsObj.indivisibleAssetsList.length > 0 && (
               <>
                 <h3>
-                  Bienes indivisibles: {assetsObj.indivisibleAssetsList.length}
+                  {t('new-inheritance-indivisible-assets')}:{' '}
+                  {assetsObj.indivisibleAssetsList.length}
                 </h3>
                 <div className="card-container">
-                  {assetsObj.indivisibleAssetsList.map((asset, index) => (
+                  {assetsObj.indivisibleAssetsList.map((asset) => (
                     <IndivisibleAsset
                       key={asset.id}
                       asset={asset}
