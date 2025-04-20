@@ -155,7 +155,7 @@ const SolutionPage = () => {
               </div>
             )}
 
-            {showTables ? (
+            {showTables || heirPOV?.value === 'refValue' ? (
               <>
                 <h3>{t('solution-page-expected-values')}</h3>
                 <CustomTable

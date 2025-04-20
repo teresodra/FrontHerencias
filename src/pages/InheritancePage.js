@@ -6,7 +6,6 @@ import {
   apiGetInheritancesList,
   apiGetSolution
 } from '../services/api';
-import HeirWrap from '../Components/HeirWrap';
 import Swal from 'sweetalert2';
 import messagesObj from '../schemas/messages';
 import handleError from '../services/handleError';
@@ -69,16 +68,16 @@ const InheritancePage = () => {
     }
   };
 
-  const isAllValuated = () => {
-    if (!inheritance?.heirValuationsObj) {
-      return true;
-    }
+  // const isAllValuated = () => {
+  //   if (!inheritance?.heirValuationsObj) {
+  //     return true;
+  //   }
 
-    return (
-      inheritance?.heirsList.length !==
-      Object.keys(inheritance?.heirValuationsObj).length
-    );
-  };
+  //   return (
+  //     inheritance?.heirsList.length !==
+  //     Object.keys(inheritance?.heirValuationsObj).length
+  //   );
+  // };
 
   const calculateInheritance = async () => {
     try {
@@ -171,26 +170,10 @@ const InheritancePage = () => {
                     </button>
                 </div> */}
 
-        <div className="list-heirs-container">
-          <h3 className="num-items-title">
-            {t('inheritance-page-heirs-valorations')} (
-            {inheritance?.heirsList.length})
-          </h3>
-          <div className="list-heirs-container-content">
-            {inheritance?.heirsList.map((heir) => (
-              <HeirWrap
-                key={heir.id}
-                heirId={heir.id}
-                inheritance={inheritance}
-              />
-            ))}
-          </div>
-        </div>
-
         <div className="button-container">
           <button
             className="custom-button"
-            disabled={isAllValuated() || isCalculating}
+            disabled={false}
             onClick={calculateInheritance}
           >
             {!isCalculating ? (

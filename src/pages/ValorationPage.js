@@ -164,7 +164,7 @@ const ValuationPage = () => {
   return (
     <div className="center">
       <div className="content">
-        <h2>{`Valoracion ${
+        <h2>{`${t('valoration-page-valoration')} ${
           inheritance.heirsList.find((heir) => heir.id === heirId).name
         }`}</h2>
 
