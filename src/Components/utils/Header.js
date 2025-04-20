@@ -7,6 +7,7 @@ const Header = () => {
   const cognitoUser = userPool.getCurrentUser();
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [language, setLanguage] = useState('es'); // Language state (default to Spanish)
 
   const navigate = useNavigate();
 
@@ -42,6 +43,11 @@ const Header = () => {
     navigate('/home');
   };
 
+  // Handle language change
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
   return (
     <div className="header">
       <div className="header-icon-container">
@@ -61,6 +67,12 @@ const Header = () => {
 
       {cognitoUser && (
         <div className="header-icon-container">
+          <div className="language-selector">
+            <select value={language} onChange={handleLanguageChange}>
+              <option value="es">Español</option>
+              <option value="en">English</option>
+            </select>
+          </div>
           <div>
             {lastName}, {name}
           </div>

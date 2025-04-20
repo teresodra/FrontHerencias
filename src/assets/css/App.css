@@ -291,6 +291,33 @@ input[type='number']::-webkit-outer-spin-button {
   position: relative; /* Needed to position the title absolutely */
 }
 
+.language-selector select {
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  margin-left: 12px;
+  border-radius: 5px;
+  border: 1px solid #ddd; /* Ligeramente visible, pero suave */
+  background-color: #f4f4f4; /* Fondo suave, casi blanco */
+  color: #333; /* Color del texto */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.language-selector select:focus {
+  outline: none;
+  border-color: #007bff; /* Borde visible solo al hacer focus */
+  background-color: #ffffff; /* Fondo blanco al hacer focus */
+}
+
+.language-selector select option {
+  background-color: #f4f4f4; /* Fondo consistente para las opciones */
+  color: #333; /* Color de las opciones */
+}
+
+.language-selector select option:hover {
+  background-color: #e0e0e0; /* Color al pasar el ratón sobre las opciones */
+}
+
 .modal-title {
   position: absolute;
   left: 50%;
