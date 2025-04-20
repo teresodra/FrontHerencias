@@ -11,6 +11,7 @@ import NewInheritanceRegion from '../Components/newInheritance/NewInheritanceReg
 import CustomPagination from '../Components/utils/CustomPagination';
 import handleError from '../services/handleError';
 import AuthContext from '../services/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const NewHeritancePage = () => {
   const { setInheritancesList, setInheritancesAccessList } =
@@ -31,6 +32,7 @@ const NewHeritancePage = () => {
   const [region, setRegion] = useState(null);
   const [visiblePagination, setVisiblePagination] = useState(true);
   const [valuationObj, setValuationObj] = useState(null);
+  const { t } = useTranslation();
 
   const [heirDataStep, setHeirDataStep] = useState(1);
 
@@ -61,12 +63,12 @@ const NewHeritancePage = () => {
     };
 
     try {
-      const result = await apiSaveInheritance(auxInheritance);
+      await apiSaveInheritance(auxInheritance);
       setInheritancesList(null);
       setInheritancesAccessList(null);
       for (const item of valuationObj) {
         try {
-          const result = await apiAddValuation(inheritanceId, item);
+          await apiAddValuation(inheritanceId, item);
         } catch (error) {
           console.error('Error adding valuation:', error);
         }
@@ -112,7 +114,7 @@ const NewHeritancePage = () => {
         {name && name !== '' && heirDataStep !== 1 ? (
           <h1>{name}</h1>
         ) : (
-          <h1>Nueva herencia</h1>
+          <h1>{t('new-inheritance-new-heir')}</h1>
         )}
 
         {/*STEP 1: NAME*/}

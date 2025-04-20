@@ -35,8 +35,8 @@ const AssetDivisibleForm = ({
   );
 
   const categoryOptionsList = [
-    { label: 'Dinero', value: 'cash' },
-    { label: 'Otro', value: 'other' }
+    { label: t('asset-form-money'), value: 'cash' },
+    { label: t('asset-form-other'), value: 'other' }
   ];
 
   const [validator] = useState(
@@ -329,7 +329,7 @@ const AssetDivisibleForm = ({
           <Select
             options={categoryOptionsList}
             onChange={changeCategory}
-            placeholder="Seleccionar..."
+            placeholder={t('main-select-placeholder')}
             value={category}
           />
           {validator.message('category', asset.category, 'required')}

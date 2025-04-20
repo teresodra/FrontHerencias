@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../services/AuthContext';
 import { apiGetInheritancesList } from '../services/api';
 import Select from 'react-select';
@@ -7,6 +7,7 @@ import handleError from '../services/handleError';
 import CustomTable from '../Components/CustomTable';
 import SolutionDivisibleAsset from '../Components/assetCard/SolutionDivisibleAsset';
 import SolutionIndivisibleAsset from '../Components/assetCard/SolutionIndivisibleAsset';
+import { useTranslation } from 'react-i18next';
 
 const SolutionPage = () => {
   const {
@@ -25,9 +26,10 @@ const SolutionPage = () => {
 
   const [showTables, setShowTables] = useState(false);
 
+  const { t } = useTranslation();
+
   const { inheritanceId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   // TODO poner que si solucion no existe de error y te lleve a pagina herencia
 
@@ -101,7 +103,7 @@ const SolutionPage = () => {
       auxList.push({ value: heir.id, label: heir.name })
     );
     setHeirOptions([
-      { label: '- Valor de referencia -', value: 'refValue' },
+      { label: `- ${t('solution-page-reference-value')} -`, value: 'refValue' },
       ...auxList
     ]);
   };
@@ -122,16 +124,15 @@ const SolutionPage = () => {
   return (
     <div className="center">
       <div className="content">
-        <h1>Solucion</h1>
+        <h1>{t('solution-page-solution')}</h1>
 
-        <h3>Punto de vista</h3>
+        <h3>{t('solution-page-point-of-view')}</h3>
         <form className="custom-form">
           <Select
             options={heirOptions}
             onChange={changeHeirPOV}
             value={heirPOV}
-            placeholder="Seleccionar..."
-            classNamePrefix="react-select" // Apply custom prefix
+            placeholder={t('main-select-placeholder')}
           />
         </form>
 
@@ -143,20 +144,20 @@ const SolutionPage = () => {
                   className={!showTables ? 'tab active' : 'tab'}
                   onClick={() => setShowTables(false)}
                 >
-                  Bienes
+                  {t('solution-page-assets')}
                 </div>
                 <div
                   className={showTables ? 'tab active' : 'tab'}
                   onClick={() => setShowTables(true)}
                 >
-                  Valores
+                  {t('solution-page-values')}
                 </div>
               </div>
             )}
 
             {showTables ? (
               <>
-                <h3>Valores esperados</h3>
+                <h3>{t('solution-page-expected-values')}</h3>
                 <CustomTable
                   inheritance={inheritance}
                   valuesObj={
@@ -166,7 +167,7 @@ const SolutionPage = () => {
                   heirPOV={heirPOV?.value}
                 />
 
-                <h3>Valores recibidos</h3>
+                <h3>{t('solution-page-received-values')}</h3>
                 <CustomTable
                   inheritance={inheritance}
                   valuesObj={
@@ -182,27 +183,32 @@ const SolutionPage = () => {
                       <div className="aux-flex-row">
                         <div className="bold-text">
                           {heirAllocation.moneyReceived <= 0
-                            ? 'Aporta a la herencia:'
-                            : 'Recibe de la herencia:'}
+                            ? `${t('solution-page-inheritance-contribute')}:`
+                            : `${t('solution-page-inheritance-receives')}:`}
                         </div>
                         <div>
-                          {Math.abs(heirAllocation.moneyReceived).toFixed(2)} €
-                        </div>
-                      </div>
-
-                      <div className="aux-flex-row">
-                        <div className="bold-text">Impuesto de herencias</div>
-                        <div>
-                          {heirAllocation.inheritanceTaxReceived.toFixed(2)} €
+                          {Math.abs(heirAllocation.moneyReceived).toFixed(2)}{' '}
+                          {t('main-euro-symbol')}
                         </div>
                       </div>
 
                       <div className="aux-flex-row">
                         <div className="bold-text">
-                          Impuesto de compra-venta
+                          {t('solution-page-inheritances-tax')}
                         </div>
                         <div>
-                          {heirAllocation.buySellTaxReceived.toFixed(2)} €
+                          {heirAllocation.inheritanceTaxReceived.toFixed(2)}{' '}
+                          {t('main-euro-symbol')}
+                        </div>
+                      </div>
+
+                      <div className="aux-flex-row">
+                        <div className="bold-text">
+                          {t('solution-page-buy-sell-tax')}
+                        </div>
+                        <div>
+                          {heirAllocation.buySellTaxReceived.toFixed(2)}{' '}
+                          {t('main-euro-symbol')}
                         </div>
                       </div>
                     </div>
@@ -213,9 +219,10 @@ const SolutionPage = () => {
               <>
                 {heirPOV?.value !== 'refValue' && (
                   <>
-                    <h2>Bienes</h2>
+                    <h2>{t('solution-page-assets')}</h2>
                     <h3>
-                      Divisibles ({heirAllocation?.divisibleAssetsList.length})
+                      {t('solution-page-divisibles')} (
+                      {heirAllocation?.divisibleAssetsList.length})
                     </h3>
                     <div className="card-container">
                       {heirAllocation?.divisibleAssetsList.map((assetAlloc) => (
@@ -228,7 +235,7 @@ const SolutionPage = () => {
                     </div>
 
                     <h3>
-                      Inivisibles (
+                      {t('solution-page-indivisibles')} (
                       {heirAllocation?.indivisibleAssetsList.length})
                     </h3>
                     <div className="card-container">

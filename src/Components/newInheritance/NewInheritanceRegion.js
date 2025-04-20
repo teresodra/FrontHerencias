@@ -1,32 +1,38 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 import Select from 'react-select';
-import regionsList from "../../schemas/regionsList";
+import regionsList from '../../schemas/regionsList';
+import { useTranslation } from 'react-i18next';
 
+const NewInheritanceRegion = ({ region, setRegion }) => {
+  const [selectedRegion, setSelectedRegion] = useState(
+    regionsList.find((reg) => reg.value === region)
+  );
+  const { t } = useTranslation();
 
-const NewInheritanceRegion = ({region, setRegion}) => {
-    
-    const [selectedRegion, setSelectedRegion] = useState(regionsList.find(reg => reg.value === region));
+  const updateRegion = (e) => {
+    setSelectedRegion(e);
+    setRegion(e.value);
+  };
 
-    const updateRegion = (e) => {
-        setSelectedRegion(e);
-        setRegion(e.value);
-    }
-
-    return (
-        <>
-            <h2>Comunidad autónoma</h2>
-            <form className='custom-form' onSubmit={(e) => {e.preventDefault()}}>
-                <div className="form-group">
-                <Select
-                    options={regionsList}
-                    onChange={updateRegion}
-                    value={selectedRegion}
-                    placeholder={"Seleciona comunidad..."}
-                    classNamePrefix="react-select" // Apply custom prefix
-                />
-                </div>
-            </form>
-        </>
-    )
+  return (
+    <>
+      <h2>{t('new-inheritance-community')}</h2>
+      <form
+        className="custom-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="form-group">
+          <Select
+            options={regionsList}
+            onChange={updateRegion}
+            value={selectedRegion}
+            placeholder={`${t('new-inheritance-choose-community')}...`}
+          />
+        </div>
+      </form>
+    </>
+  );
 };
 export default NewInheritanceRegion;

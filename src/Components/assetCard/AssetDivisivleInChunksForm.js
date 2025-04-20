@@ -190,7 +190,7 @@ const AssetDivisivleInChunksForm = ({
           <Select
             options={ownerShipOptions}
             onChange={changeOwnership}
-            placeholder="Seleccionar..."
+            placeholder={t('main-select-placeholder')}
             value={ownershipId}
           />
           {validator.message('ownership', asset.ownershipId, 'required')}

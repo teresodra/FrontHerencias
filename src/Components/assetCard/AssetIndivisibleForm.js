@@ -271,7 +271,7 @@ const AssetIndivisibleForm = ({
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
         <div className="form-group --add-margin">
-          <label htmlFor="name">Nombre del bien</label>
+          <label htmlFor="name">{t('asset-form-name')}</label>
           <input type="text" name="name" ref={nameRef} onChange={changeState} />
           {validator.message('name', asset.name, 'required|alpha_num_space')}
         </div>

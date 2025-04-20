@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   apiCalculate,
   apiDeleteInheritance,
-  apiGetInheritance,
   apiGetInheritancesList,
   apiGetSolution
 } from '../services/api';
@@ -13,6 +12,7 @@ import messagesObj from '../schemas/messages';
 import handleError from '../services/handleError';
 import AuthContext from '../services/AuthContext';
 import { ClipLoader } from 'react-spinners';
+import { useTranslation } from 'react-i18next';
 
 const InheritancePage = () => {
   const {
@@ -25,12 +25,12 @@ const InheritancePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
+  const { t } = useTranslation();
 
   const [inheritance, setInheritance] = useState(null);
   const { inheritanceId } = useParams();
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const timerInterval = 1 * 1000; // 10 secs (in ms)
   const timerIdRef = useRef(null); // Using a ref to store the timer ID
@@ -100,7 +100,14 @@ const InheritancePage = () => {
         clearInterval(timerIdRef.current); // Access the timer ID from the ref
         timerIdRef.current = null; // Reset the ref
         setInheritance(response.data);
-        setIsCalculating(false);
+        try {
+          const response = await apiGetInheritancesList();
+          setInheritancesList(response.inheritancesList);
+          setInheritancesAccessList(response.inheritancesAccessList);
+          setIsCalculating(false);
+        } catch (err) {
+          await handleError(err, navigate);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -166,7 +173,8 @@ const InheritancePage = () => {
 
         <div className="list-heirs-container">
           <h3 className="num-items-title">
-            Valoraciones herederos ({inheritance?.heirsList.length})
+            {t('inheritance-page-heirs-valorations')} (
+            {inheritance?.heirsList.length})
           </h3>
           <div className="list-heirs-container-content">
             {inheritance?.heirsList.map((heir) => (
@@ -186,7 +194,7 @@ const InheritancePage = () => {
             onClick={calculateInheritance}
           >
             {!isCalculating ? (
-              'Calcular'
+              t('main-calculate')
             ) : (
               <div className="custom-button-spinner-container">
                 <ClipLoader
@@ -202,7 +210,7 @@ const InheritancePage = () => {
             disabled={!inheritance?.solution || isCalculating}
             onClick={goToSolutionPage}
           >
-            Ver solucion
+            {t('inheritance-page-see-solution')}
           </button>
 
           <button
@@ -211,7 +219,7 @@ const InheritancePage = () => {
             disabled={isDeleting}
           >
             {!isDeleting ? (
-              'Eliminar'
+              t('main-delete')
             ) : (
               <div className="custom-button-spinner-container">
                 <ClipLoader

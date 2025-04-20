@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import SimpleReactValidator from 'simple-react-validator';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,13 +14,13 @@ const NewOwnershipForm = ({
   const [ownership, setOwnership] = useState(
     ownershipData ? ownershipData : {}
   );
-  // const [heirPercObj, setHeirPercObj] = useState({});
+  const { t } = useTranslation();
 
   const [validator] = useState(
     new SimpleReactValidator({
       validators: {
         allFilled: {
-          message: 'Please fill all heir percentage inputs.',
+          message: t('new-inheritance-fill-percentage-inputs'),
           rule: (val) => {
             const { heirPercObj } = val;
             for (let heirId in heirPercObj) {
@@ -37,8 +38,7 @@ const NewOwnershipForm = ({
           required: true
         },
         sumOne: {
-          message:
-            'The sum of all full ownership and bare ownership must add 1',
+          message: t('new-inheritance-ownership-sum'),
           rule: (val) => {
             const { heirPercObj } = val;
             let total = 0;
@@ -52,8 +52,7 @@ const NewOwnershipForm = ({
           required: true
         },
         sumEqual: {
-          message:
-            'The sum of all life usufruct and bare ownership must be the same',
+          message: t('new-inheritance-usufruct-sum'),
           rule: (val) => {
             const { heirPercObj } = val;
             let totaLife = 0;
@@ -159,7 +158,7 @@ const NewOwnershipForm = ({
     <div>
       <form className="modal-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nombre</label>
+          <label htmlFor="name">{t('new-inheritance-name')}</label>
           <input type="text" name="name" ref={nameRef} onChange={changeState} />
           {validator.message(
             'name',
@@ -173,7 +172,7 @@ const NewOwnershipForm = ({
             <div>{heir.name}</div>
 
             <div className="ownership-values-container">
-              <label>Plena propiedad:</label>
+              <label>{t('new-inheritance-full-ownership')}:</label>
               <input
                 type="text"
                 value={ownership.heirPercObj?.[heir.id]?.fullOwnership || 0}
@@ -188,7 +187,7 @@ const NewOwnershipForm = ({
             </div>
 
             <div className="ownership-values-container">
-              <label>Nuda propiedad:</label>
+              <label>{t('new-inheritance-bare-ownership')}:</label>
               <input
                 type="text"
                 value={ownership.heirPercObj?.[heir.id]?.bareOwnership || 0}
@@ -202,7 +201,7 @@ const NewOwnershipForm = ({
             </div>
 
             <div className="ownership-values-container">
-              <label>Usfructo vitalicio:</label>
+              <label>{t('new-inheritance-life-usufruct')}:</label>
               <input
                 type="text"
                 value={ownership.heirPercObj?.[heir.id]?.lifeUsufruct || 0}
@@ -221,7 +220,7 @@ const NewOwnershipForm = ({
         {validator.message('sumEqualValidation', ownership, 'sumEqual')}
 
         <button type="submit" className="custom-button">
-          Guardar
+          {t('main-save')}
         </button>
       </form>
     </div>

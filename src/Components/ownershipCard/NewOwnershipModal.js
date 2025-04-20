@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
-import NewHeirForm from '../heirCards/NewHeirForm';
-import SimpleReactValidator from 'simple-react-validator';
 import NewOwnershipForm from './NewOwnershipForm';
+import { useTranslation } from 'react-i18next';
 
 Modal.setAppElement('#root'); // Required for accessibility
 
@@ -18,6 +17,7 @@ const NewOwnershipModal = ({
   const closeModal = () => {
     setModalIsOpen(false);
   };
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -33,7 +33,7 @@ const NewOwnershipModal = ({
           className="modal-close-button-container"
           onClick={() => setModalIsOpen(false)}
         >
-          <span className="material-symbols-outlined">close</span>
+          <span className="material-symbols-outlined">{t('icon-close')}</span>
         </div>
       </div>
 

@@ -8,22 +8,31 @@ const Header = () => {
   const cognitoUser = userPool.getCurrentUser();
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [language, setLanguage] = useState('es'); // Language state (default to Spanish)
-  const { t } = useTranslation();
+  const [language, setLanguage] = useState(); // Language state (default to Spanish)
+  const { t, i18n } = useTranslation();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const language = localStorage.getItem('herenciaideal-language');
+    if (language) {
+      setLanguage(language);
+    } else {
+      localStorage.setItem('herenciaideal-language', 'es');
+    }
+  }, []);
 
   useEffect(() => {
     if (cognitoUser) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          console.error('Error getting session:', err);
+          console.error(`${t('header-getting-session-error')}:`, err);
           return;
         }
         // Fetch user attributes
         cognitoUser.getUserAttributes((err, attributes) => {
           if (err) {
-            console.error('Error getting attributes:', err);
+            console.error(`${t('header-getting-attributes-error')}:`, err);
             return;
           }
 
@@ -38,7 +47,7 @@ const Header = () => {
         });
       });
     } else {
-      console.log('No user is currently signed in.');
+      console.error(t('header-no-user-error'));
     }
   }, [cognitoUser]);
   const goHome = () => {
@@ -47,7 +56,10 @@ const Header = () => {
 
   // Handle language change
   const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
+    const newLang = event.target.value;
+    setLanguage(newLang);
+    localStorage.setItem('herenciaideal-language', event.target.value);
+    i18n.changeLanguage(newLang); // Cambia el idioma activamente
   };
 
   return (
@@ -59,22 +71,24 @@ const Header = () => {
           aria-hidden="true" // prevent problems with translators
           onClick={goHome}
         >
-          home
+          {t('icon-home')}
         </span>
       </div>
 
       <div className="header-title-container">
-        <h2 translate="no">{'herenciaideal'}</h2>
+        <h2 translate="no">{t('main-page-title')}</h2>
       </div>
 
       {cognitoUser && (
         <div className="header-icon-container">
-          <div className="language-selector">
-            <select value={language} onChange={handleLanguageChange}>
-              <option value="es">{t('header-spanish')}</option>
-              <option value="en">{t('header-english')}</option>
-            </select>
-          </div>
+          {language && (
+            <div className="language-selector">
+              <select value={language} onChange={handleLanguageChange}>
+                <option value="es">{t('header-spanish')}</option>
+                <option value="en">{t('header-english')}</option>
+              </select>
+            </div>
+          )}
           <div>
             {lastName}, {name}
           </div>

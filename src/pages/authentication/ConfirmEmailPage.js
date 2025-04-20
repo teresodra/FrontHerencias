@@ -1,129 +1,140 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import {confirmUser, resendConfirmationCode} from '../../services/createAccount';
+import {
+  confirmUser,
+  resendConfirmationCode
+} from '../../services/createAccount';
 import { ClipLoader } from 'react-spinners';
-import Swal from "sweetalert2";
-import messagesObj from "../../schemas/messages";
-
+import Swal from 'sweetalert2';
+import messagesObj from '../../schemas/messages';
+import { useTranslation } from 'react-i18next';
 
 const ConfirmEmailPage = () => {
+  const [verificationCode, setVerificationCode] = useState('');
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email');
+  const { t } = useTranslation();
 
-    const [verificationCode, setVerificationCode] = useState('');
-    const [searchParams] = useSearchParams();
-    const email = searchParams.get('email');
-    
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const navigate = useNavigate();
-  
-    useEffect(() => {
-        if (!email) {
-            navigate('/login')
-        }    
-    }, [])
-    
-    const handleVerify = async (event) => {
-        event.preventDefault();
-        setIsLoading(true);
-        try {
-            const result = await confirmUser(email, verificationCode);
-            console.log(result)
-            Swal.fire(messagesObj.emailVerifiedSuccess)
-                .then((result) => {
-                    if (result.isConfirmed || result.dismiss === Swal.DismissReason.close) {
-                        navigate('/login');
-                    }
-                }
-            );
-        } catch (err) {
-            console.log(err);
-            if (err.code === 'ExpiredCodeException'){
-                setError("El código ha expirado, solicita uno nuevo")
-            } else if (err.code === 'CodeMismatchException' || err.code === "InvalidParameterException") {
-                setError("El código no coincide");
-            } else if (err.code === 'UserNotFoundException') {
-                Swal.fire(messagesObj.UserNotFoundException)
-                    .then((result) => {
-                        if (result.isConfirmed || result.dismiss === Swal.DismissReason.close) {
-                            navigate('/login');
-                        }
-                    }
-                );
-            } else if (err.code === "LimitExceededException"){
-                setError("Has excedido el número de intentos, inténtalo más tarde");
-                console.log('entro')
-            } else if (err.code === "NotAuthorizedException"){
-                Swal.fire(messagesObj.emailVerifiedSuccess)
-                    .then((result) => {
-                        if (result.isConfirmed || result.dismiss === Swal.DismissReason.close) {
-                            navigate('/login');
-                        }
-                    }
-            );
-            }
-        }
-        setIsLoading(false);
-        
-    };
+  const navigate = useNavigate();
 
-    const sendNewCode = async () => {
-        setError(null);
-        try {
-            const result = await resendConfirmationCode(email)
-            console.log(result)
-        } catch (err) {
-            console.log(err)
-        }
+  useEffect(() => {
+    if (!email) {
+      navigate('/login');
     }
+  }, []);
 
-    
-    return (
-        <div id="search-page" className="center">
-            <section className="content">
-                <h1>{"Confirmar email"}</h1>
-                 
-                <form onSubmit={handleVerify} className='login-form'>
-                    
-                    <div className='text-container mt-1 mb-2'>
-                        {"Se ha enviado un código de verificación a:"}
-                        <b>{email}</b>
-                    </div>
-                    
-                    <div className='form-group'>
-                        <label htmlFor="verificationCode">{"Código de verificación"}</label>
-                        <input
-                            type="text"
-                            name="verificationCode"
-                            placeholder={"Código de verificación"}
-                            value={verificationCode}
-                            onChange={(e) => setVerificationCode(e.target.value)}
-                        />
-                    </div>
-                    <div className='text-icon-container'>
-                        Send a new code
-                        <div className="custom-button-icon" onClick={sendNewCode}>
-                            <span className="material-symbols-outlined" translate="no" aria-hidden="true">
-                                sync
-                            </span>
-                        </div>
-                    </div>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                
-                    <div className="button-container">
-                        <button className="custom-button" type="submit" disabled={isLoading}>
-                            {"Verificar"}
-                        </button>
-                    </div>
-                </form>
+  const handleVerify = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      await confirmUser(email, verificationCode);
+      Swal.fire(messagesObj.emailVerifiedSuccess).then((result) => {
+        if (result.isConfirmed || result.dismiss === Swal.DismissReason.close) {
+          navigate('/login');
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      if (err.code === 'ExpiredCodeException') {
+        setError(t('confirm-email-page-expired-code'));
+      } else if (
+        err.code === 'CodeMismatchException' ||
+        err.code === 'InvalidParameterException'
+      ) {
+        setError(t('confirm-email-page-code-unmatch'));
+      } else if (err.code === 'UserNotFoundException') {
+        Swal.fire(messagesObj.UserNotFoundException).then((result) => {
+          if (
+            result.isConfirmed ||
+            result.dismiss === Swal.DismissReason.close
+          ) {
+            navigate('/login');
+          }
+        });
+      } else if (err.code === 'LimitExceededException') {
+        setError(t('confirm-email-page-passed-tries'));
+      } else if (err.code === 'NotAuthorizedException') {
+        Swal.fire(messagesObj.emailVerifiedSuccess).then((result) => {
+          if (
+            result.isConfirmed ||
+            result.dismiss === Swal.DismissReason.close
+          ) {
+            navigate('/login');
+          }
+        });
+      }
+    }
+    setIsLoading(false);
+  };
 
-                <div className="loader-clip-container">
-                    <ClipLoader className="custom-spinner-clip" loading={isLoading} />
-                </div>        
-                
-            </section>
+  const sendNewCode = async () => {
+    setError(null);
+    try {
+      await resendConfirmationCode(email);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div id="search-page" className="center">
+      <section className="content">
+        <h1>{t('confirm-email-page-confirm-email')}</h1>
+
+        <form onSubmit={handleVerify} className="login-form">
+          <div className="text-container mt-1 mb-2">
+            {`${t('confirm-email-page-verification-send')}:`}
+            <b>{email}</b>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="verificationCode">
+              {t('confirm-email-page-verification-code')}
+            </label>
+            <input
+              type="text"
+              name="verificationCode"
+              placeholder={t(
+                'confirm-email-page-verificacion-code-placeholder'
+              )}
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+            />
+          </div>
+          <div className="text-icon-container">
+            {t('confirm-email-page-send-new-code')}
+            <div className="custom-button-icon" onClick={sendNewCode}>
+              <span
+                className="material-symbols-outlined"
+                translate="no"
+                aria-hidden="true"
+              >
+                {t('icon-sync')}
+              </span>
+            </div>
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+
+          <div className="button-container">
+            <button
+              className="custom-button"
+              type="submit"
+              disabled={isLoading}
+            >
+              {t('main-check')}
+            </button>
+          </div>
+        </form>
+
+        <div className="loader-clip-container">
+          <ClipLoader className="custom-spinner-clip" loading={isLoading} />
         </div>
+      </section>
+    </div>
   );
-}
+};
 
 export default ConfirmEmailPage;

@@ -23,10 +23,10 @@ const NewHeirForm = ({
   const [validator] = useState(new SimpleReactValidator());
 
   const typeOptions = [
-    { label: 'Tipo I', value: 1 },
-    { label: 'Tipo II', value: 2 },
-    { label: 'Tipo III', value: 3 },
-    { label: 'Tipo IV', value: 4 }
+    { label: `${t('heir-data-type')} I`, value: 1 },
+    { label: `${t('heir-data-type')} II`, value: 2 },
+    { label: `${t('heir-data-type')} III`, value: 3 },
+    { label: `${t('heir-data-type')} IIII`, value: 4 }
   ];
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const NewHeirForm = ({
           <Select
             options={typeOptions}
             onChange={changeHeirType}
-            placeholder="Seleccionar..."
+            placeholder={t('main-select-placeholder')}
             value={heirType}
             classNamePrefix="react-select" // Apply custom prefix
           />
@@ -134,7 +134,7 @@ const NewHeirForm = ({
         </div>
 
         <button type="submit" className="custom-button">
-          Guardar
+          {t('main-save')}
         </button>
       </form>
     </div>

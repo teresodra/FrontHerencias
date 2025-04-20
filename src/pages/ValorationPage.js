@@ -3,11 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
 import DivisibleAssetValuation from '../Components/assetCard/DivisibleAssetValuation';
 import IndivisibleAssetValuation from '../Components/assetCard/IndivisibleAssetValuation';
-import {
-  apiGetInheritance,
-  apiGetInheritancesList,
-  apiAddValuation
-} from '../services/api';
+import { apiGetInheritancesList, apiAddValuation } from '../services/api';
 import Swal from 'sweetalert2';
 import messagesObj from '../schemas/messages';
 import DivisibleInChunksAssetValuation from '../Components/assetCard/DivisibleInChunksAssetValuation';
@@ -15,6 +11,7 @@ import CustomPagination from '../Components/utils/CustomPagination';
 import AuthContext from '../services/AuthContext';
 import handleError from '../services/handleError';
 import { ClipLoader } from 'react-spinners';
+import { useTranslation } from 'react-i18next';
 
 const ValuationPage = () => {
   const {
@@ -31,7 +28,7 @@ const ValuationPage = () => {
   const [valuationObj, setValuationObj] = useState({});
   const [money, setMoney] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
-  const [stepList, setStepList] = useState([1, 2, 3, 4, 5]); // Only steps with assets to valuate;
+  const { t } = useTranslation();
 
   // const numSteps = Object.keys(inheritance.assetsObj).length + 1; // +1 because in first step they ask about money
   const [numSteps, setNumSteps] = useState(1);
@@ -95,9 +92,6 @@ const ValuationPage = () => {
 
   const saveValuation = async () => {
     setIsSaving(true);
-    console.log('save');
-    console.log(valuationObj);
-    console.log(JSON.stringify(valuationObj));
 
     try {
       await apiAddValuation(inheritanceId, {
@@ -177,7 +171,9 @@ const ValuationPage = () => {
         {currentStep === 1 && (
           <form className="custom-form">
             <div className="form-group">
-              <label>Dinero dispuesto a invertir (€)</label>
+              <label>
+                {t('valoration-page-invest-money')} ({t('main-euro-symbol')})
+              </label>
               <input
                 type="number"
                 name="money"
@@ -191,7 +187,7 @@ const ValuationPage = () => {
 
         {currentStep === 2 && (
           <>
-            <h2>Bienes divisibles</h2>
+            <h2>{'valoration-page-divisible-assets'}</h2>
             {inheritance.assetsObj.divisibleAssetsList ? (
               <div className="card-container">
                 {inheritance.assetsObj.divisibleAssetsList.map((asset) => (
@@ -205,14 +201,14 @@ const ValuationPage = () => {
                 ))}
               </div>
             ) : (
-              <div>No hay bienes de este tipo</div>
+              <div>{t('valoration-page-no-assets')}</div>
             )}
           </>
         )}
 
         {currentStep === 3 && (
           <>
-            <h2>Bienes indivisibles</h2>
+            <h2>{t('valoration-page-indivisible-assets')}</h2>
             {inheritance.assetsObj.indivisibleAssetsList ? (
               <div className="card-container">
                 {inheritance.assetsObj.indivisibleAssetsList.map((asset) => (
@@ -226,25 +222,25 @@ const ValuationPage = () => {
                 ))}
               </div>
             ) : (
-              <div>No hay bienes de este tipo</div>
+              <div>{t('valoration-page-no-assets')}</div>
             )}
           </>
         )}
 
         {currentStep === 4 && (
           <>
-            <h2>Bienes divisibles por partes</h2>
+            <h2>{t('valoration-page-divisible-assets-by-parts')}</h2>
             {inheritance.assetsObj.divisibleInPartsAssetsList ? (
               <div></div>
             ) : (
-              <div>No hay bienes de este tipo</div>
+              <div>{t('valoration-page-no-assets')}</div>
             )}
           </>
         )}
 
         {currentStep === 5 && (
           <>
-            <h2>Bienes divisibles por trozos</h2>
+            <h2>{t('valoration-page-divisible-assets-by-pieces')}</h2>
             {inheritance.assetsObj.divisibleInChunksAssetsList ? (
               <div className="card-container">
                 {inheritance.assetsObj.divisibleInChunksAssetsList.map(
@@ -260,7 +256,7 @@ const ValuationPage = () => {
                 )}
               </div>
             ) : (
-              <div>No hay bienes de este tipo</div>
+              <div>{t('valoration-page-no-assets')}</div>
             )}
           </>
         )}

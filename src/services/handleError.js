@@ -1,5 +1,3 @@
-import React from 'react';
-import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import { logout } from './logout';
 import Swal from 'sweetalert2';
 import messagesObj from '../schemas/messages';

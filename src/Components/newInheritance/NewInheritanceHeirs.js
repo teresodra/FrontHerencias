@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import HeirData from '../heirCards/HeirData';
 import NewHeirModal from '../heirCards/NewHeirModal';
+import { useTranslation } from 'react-i18next';
 const NewInheritanceHeirs = ({
   heirsList,
   setHeirsList,
@@ -9,6 +10,7 @@ const NewInheritanceHeirs = ({
 }) => {
   const [heirModalIsOpen, setHeirModalIsOpen] = useState(false);
   const [heirToEdit, setHeirToEdit] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!valuationObj) {
@@ -44,7 +46,7 @@ const NewInheritanceHeirs = ({
 
   return (
     <>
-      <h2>Herederos</h2>
+      <h2>{t('new-inheritance-heirs')}</h2>
       {heirsList.length > 0 && (
         <div className="card-container">
           {heirsList.map((heir) => (
@@ -65,7 +67,7 @@ const NewInheritanceHeirs = ({
             setHeirModalIsOpen(true);
           }}
         >
-          Añadir heredero
+          {t('new-inheritance-add-heir')}
         </button>
       </div>
 

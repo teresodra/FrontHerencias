@@ -1,212 +1,238 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {signUp} from '../../services/createAccount';
+import { signUp } from '../../services/createAccount';
 import SimpleReactValidator from 'simple-react-validator';
 // import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
 import TermsModal from '../../Components/utils/TermsModal';
+import { useTranslation } from 'react-i18next';
 
 function SignUpPage() {
+  const [name, setName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isAccepted, setIsAccepted] = useState(false);
+  const { t } = useTranslation();
 
-    const [name, setName] = useState('');
-    const [lastName, setlastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [isAccepted, setIsAccepted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const [error, setError] = useState(null);
-    const [visible, setVisible] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+  const terms = `
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
+    `;
 
-    const terms = `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin imperdiet nulla at tortor elementum, a malesuada tortor dapibus. Curabitur aliquet, neque non tempor hendrerit, metus ipsum tincidunt mi, at aliquam nulla ipsum non mi. Nulla facilisi. Aenean vel sagittis sapien. Praesent commodo purus nec diam vestibulum, non suscipit risus luctus. \n
-    `
-
-    // const { t, i18n } = useTranslation('login'); // Load translations from the 'login' namespace
+  // const { t, i18n } = useTranslation('login'); // Load translations from the 'login' namespace
 
   // Initialize simple-react-validator
-    const [validator, setValidator] = useState(
-        new SimpleReactValidator({
-            validators: {
-                passwordMatch: {  // Custom validator for matching passwords
-                    message: 'Las contraseñas no coinciden',
-                    rule: (val, params, validator) => {
-                        return val === params[0]; // params[0] is newPassword passed in the validation rule
-                    },
-                    required: true,
-                },
-                passwordStrength: {
-                    message: 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial.',
-                    rule: (val) => {
-                        // Ensure at least: one lowercase letter, one uppercase leater, one number and one special character
-                        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
-                        return regex.test(val);
-                    },
-                    required: true,
-                },
-                alpha_space_accents: {
-                    message: 'Solo puede contener letras.',
-                    rule: (val) => {
-                        const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
-                        return regex.test(val);
-                    },
-                    required: true
-                }
-            },
-            messages: {
-                required: "Este campo es obligatorio.",
-                email: "Debe ser una dirección de correo válida.",
-            },
-        })
-    );
-    const [, forceUpdate] = useState('')
-    const navigate = useNavigate();
-
-    const handleSignUp = async (event) => {
-        event.preventDefault();
-
-        if (validator.allValid()){
-            setIsLoading(true);
-            await signUpWithCognito(); 
-        } else {
-            validator.showMessages()
-            forceUpdate(false)
+  const [validator] = useState(
+    new SimpleReactValidator({
+      validators: {
+        passwordMatch: {
+          // Custom validator for matching passwords
+          message: t('signup-page-passwords-unmatch'),
+          rule: (val, params) => {
+            return val === params[0]; // params[0] is newPassword passed in the validation rule
+          },
+          required: true
+        },
+        passwordStrength: {
+          message: t('signup-page-password-should'),
+          rule: (val) => {
+            // Ensure at least: one lowercase letter, one uppercase leater, one number and one special character
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+            return regex.test(val);
+          },
+          required: true
+        },
+        alpha_space_accents: {
+          message: t('signup-page-only-letters'),
+          rule: (val) => {
+            const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+            return regex.test(val);
+          },
+          required: true
         }
-    };
+      },
+      messages: {
+        required: t('signup-page-mandatory-field'),
+        email: t('signup-page-email-should-valid')
+      }
+    })
+  );
+  const [, forceUpdate] = useState('');
+  const navigate = useNavigate();
 
-    const signUpWithCognito = async () => {
-        try {
-            const result = await signUp(email, password, name, lastName);
-            console.log(result)
-            navigate(`/confirm-email?email=${email}`);
-        } catch (err) {
-            console.log(err);
-            if (err.code === 'UsernameExistsException') {
-                setError("Este email ya está registrado")
-            }
-            setIsLoading(false);
-        }
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+
+    if (validator.allValid()) {
+      setIsLoading(true);
+      await signUpWithCognito();
+    } else {
+      validator.showMessages();
+      forceUpdate(false);
     }
+  };
 
-    const togglePassword = () => {
-        setVisible(!visible);
+  const signUpWithCognito = async () => {
+    try {
+      const result = await signUp(email, password, name, lastName);
+      console.log(result);
+      navigate(`/confirm-email?email=${email}`);
+    } catch (err) {
+      console.log(err);
+      if (err.code === 'UsernameExistsException') {
+        setError(t('signup-page-registered-email'));
+      }
+      setIsLoading(false);
     }
+  };
 
+  const togglePassword = () => {
+    setVisible(!visible);
+  };
 
-    return (
-        <div id="search-page" className="center">
-            <section className="content">
-                <h1>{"Crear Cuenta"}</h1>
-                
-                <form onSubmit={handleSignUp} className='login-form'>
-                    <div className='form-group'>
-                        <label htmlFor="name">{"Nombre"}</label>
-                        <input
-                            type="text"
-                            name="name"
-                            autoComplete="name"
-                            placeholder={"Nombre"}
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            onBlur={() => validator.showMessageFor('name')}
-                        />
-                        {validator.message('name', name, 'required|alpha_space_accents')}
-                    </div>
+  return (
+    <div id="search-page" className="center">
+      <section className="content">
+        <h1>{t('signup-page-create-account')}</h1>
 
-                    <div className='form-group'>
-                        <label htmlFor="lastName">{"Apellido(s)"}</label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            autoComplete="lastName"
-                            placeholder={"Apellido(s)"}
-                            value={lastName}
-                            onChange={(e) => setlastName(e.target.value)}
-                            onBlur={() => validator.showMessageFor('name')}
-                        />
-                        {validator.message('lastName', lastName, 'required|alpha_space_accents')}
-                    </div>
-                    
-                    <div className='form-group'>
-                        <label htmlFor="email">{'Email'}</label>
-                        <input
-                            type="text"
-                            name="email"
-                            autoComplete="email"
-                            placeholder={'Email'}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onBlur={() => validator.showMessageFor('email')}
-                        />
-                        {error && <p style={{ color: 'red' }}>{error}</p>}
-                        {validator.message('email', email, 'required|email')}
-                    </div>
-        
-                    <div className='form-group'>
-                        <label htmlFor="password">{"Contraseña"}</label>
-                        <input
-                            type={visible ? 'text' : 'password'}
-                            name="password"
-                            // autoComplete="password"
-                            placeholder={"Contraseña"}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onBlur={() => validator.showMessageFor('password')}
-                        />
-                        <div className='show-password-container'>
-                            <input type='checkbox' onChange={togglePassword}/>
-                            <div>{"Mostrar contraseña"}</div>
-                        </div>
-                        {validator.message('password', password, 'required|passwordStrength|min:8')}
-                    </div>
+        <form onSubmit={handleSignUp} className="login-form">
+          <div className="form-group">
+            <label htmlFor="name">{t('signup-page-name')}</label>
+            <input
+              type="text"
+              name="name"
+              autoComplete="name"
+              placeholder={t('signup-page-name-placeholder')}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onBlur={() => validator.showMessageFor('name')}
+            />
+            {validator.message('name', name, 'required|alpha_space_accents')}
+          </div>
 
-                    <div className='form-group'>
-                        <label htmlFor="confirmPassword">{"Confirmar contraseña"}</label>
-                        <input
-                            type={visible ? 'text' : 'password'}
-                            name="confirmPassword"
-                            placeholder={"Confirmar contraseña"}
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            onBlur={() => validator.showMessageFor('confirmPassword')}
-                        />
+          <div className="form-group">
+            <label htmlFor="lastName">{t('signup-page-surname')}</label>
+            <input
+              type="text"
+              name="lastName"
+              autoComplete="lastName"
+              placeholder={t('signup-page-surname-placeholder')}
+              value={lastName}
+              onChange={(e) => setlastName(e.target.value)}
+              onBlur={() => validator.showMessageFor('name')}
+            />
+            {validator.message(
+              'lastName',
+              lastName,
+              'required|alpha_space_accents'
+            )}
+          </div>
 
-                        {validator.message('confirmPassword', confirmPassword, `required|passwordMatch:${password}`)}
-                    </div>
+          <div className="form-group">
+            <label htmlFor="email">{t('signup-page-email')}</label>
+            <input
+              type="text"
+              name="email"
+              autoComplete="email"
+              placeholder={t('signup-page-email-placeholder')}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={() => validator.showMessageFor('email')}
+            />
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {validator.message('email', email, 'required|email')}
+          </div>
 
-                    <div className='form-group terms-container mt-1'>
-                        <input type="checkbox" onChange={() => {setIsAccepted(!isAccepted);}}/>
-                        <div>{"He leído y acepto los"}&nbsp;</div>
-                        <div className='login-link' onClick={() => setIsModalOpen(true)}>{"términos y condiciones"}</div>
-                        <TermsModal
-                            modalIsOpen={isModalOpen}
-                            setModalIsOpen={setIsModalOpen}
-                            title={"Términos y condiciones"}
-                            content={terms}
-                        />
-                    </div>
-                
-                    <div className="button-container">
-                        <button className="custom-button" type="submit" disabled={isLoading || !isAccepted}>
-                            {"Crear Cuenta"}
-                        </button>
-                    </div>
-                </form>
+          <div className="form-group">
+            <label htmlFor="password">{t('signup-page-password')}</label>
+            <input
+              type={visible ? 'text' : 'password'}
+              name="password"
+              // autoComplete="password"
+              placeholder={t('signup-page-password-placeholder')}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onBlur={() => validator.showMessageFor('password')}
+            />
+            <div className="show-password-container">
+              <input type="checkbox" onChange={togglePassword} />
+              <div>{t('signup-page-see-password')}</div>
+            </div>
+            {validator.message(
+              'password',
+              password,
+              'required|passwordStrength|min:8'
+            )}
+          </div>
 
-                <div className="loader-clip-container">
-                    <ClipLoader className="custom-spinner-clip" loading={isLoading} />
-                </div>        
-            </section>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">
+              {t('signup-page-confirm-password')}
+            </label>
+            <input
+              type={visible ? 'text' : 'password'}
+              name="confirmPassword"
+              placeholder={t('signup-page-confirm-password-placeholdedr')}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onBlur={() => validator.showMessageFor('confirmPassword')}
+            />
+
+            {validator.message(
+              'confirmPassword',
+              confirmPassword,
+              `required|passwordMatch:${password}`
+            )}
+          </div>
+
+          <div className="form-group terms-container mt-1">
+            <input
+              type="checkbox"
+              onChange={() => {
+                setIsAccepted(!isAccepted);
+              }}
+            />
+            <div>{t('signup-page-read-terms')}&nbsp;</div>
+            <div className="login-link" onClick={() => setIsModalOpen(true)}>
+              {t('signup-page-terms-and-conditions-link')}
+            </div>
+            <TermsModal
+              modalIsOpen={isModalOpen}
+              setModalIsOpen={setIsModalOpen}
+              title={t('signup-page-terms-and-conditions')}
+              content={terms}
+            />
+          </div>
+
+          <div className="button-container">
+            <button
+              className="custom-button"
+              type="submit"
+              disabled={isLoading || !isAccepted}
+            >
+              {t('signup-page-create-account')}
+            </button>
+          </div>
+        </form>
+
+        <div className="loader-clip-container">
+          <ClipLoader className="custom-spinner-clip" loading={isLoading} />
         </div>
+      </section>
+    </div>
   );
 }
 
