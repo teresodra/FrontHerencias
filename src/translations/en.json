@@ -66,6 +66,7 @@
   "new-inheritance-full-ownership": "Full ownership",
   "new-inheritance-bare-ownership": "Bare ownership",
   "new-inheritance-life-usufruct": "Life usufruct",
+  "new-inheritance-title-tooltip-text": "Create new inheritance",
   "inheritance-page-heirs-valorations": "Heirs' valuations",
   "inheritance-page-see-solution": "View solution",
   "ownership-data-name": "Name",

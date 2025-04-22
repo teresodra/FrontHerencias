@@ -518,3 +518,14 @@ input[type='number']::-webkit-outer-spin-button {
   text-decoration: underline;
   font-weight: bold;
 }
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.tooltip-container {
+  position: relative;
+}

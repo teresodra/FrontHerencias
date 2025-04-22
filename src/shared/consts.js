@@ -7,5 +7,6 @@ export const ICON_NAMES = {
   ARROW_BACK: 'arrow_back',
   HOME: 'home',
   ADD: 'add',
-  SYNC: 'sync'
+  SYNC: 'sync',
+  INFO: 'info'
 };

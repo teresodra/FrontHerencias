@@ -66,6 +66,7 @@
   "new-inheritance-full-ownership": "Plena propiedad",
   "new-inheritance-bare-ownership": "Nuda propiedad",
   "new-inheritance-life-usufruct": "Usufructo vitalicio.",
+  "new-inheritance-title-tooltip-text": "Crear nueva herencia",
   "inheritance-page-heirs-valorations": "Valoradiones herederos",
   "inheritance-page-see-solution": "Ver solución",
   "ownership-data-name": "Nombre",

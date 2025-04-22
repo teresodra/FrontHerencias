@@ -12,6 +12,7 @@ import CustomPagination from '../Components/utils/CustomPagination';
 import handleError from '../services/handleError';
 import AuthContext from '../services/AuthContext';
 import { useTranslation } from 'react-i18next';
+import InfoTooltip from '../Components/infoTooltip/infoTooltip';
 
 const NewHeritancePage = () => {
   const { setInheritancesList, setInheritancesAccessList } =
@@ -114,7 +115,16 @@ const NewHeritancePage = () => {
         {name && name !== '' && heirDataStep !== 1 ? (
           <h1>{name}</h1>
         ) : (
-          <h1>{t('new-inheritance-new-inheritance')}</h1>
+          <div className="title">
+            <div className="tooltip-container">
+              <h1>{t('new-inheritance-new-inheritance')}</h1>
+              <InfoTooltip
+                text={t('new-inheritance-title-tooltip-text')}
+                size={24}
+                relative
+              />
+            </div>
+          </div>
         )}
 
         {/*STEP 1: NAME*/}
