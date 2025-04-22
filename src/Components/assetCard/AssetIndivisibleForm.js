@@ -3,6 +3,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import { v4 as uuidv4 } from 'uuid';
 import NewOwnershipModal from '../ownershipCard/NewOwnershipModal';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const AssetIndivisibleForm = ({
   assetsObj,
@@ -22,7 +23,7 @@ const AssetIndivisibleForm = ({
   const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
   const [unitValues, setUnitValues] = useState([]);
-  const [assignedValue, setAssignedValue] = useState(undefined);
+  const [assignedValue, setAssignedValue] = useState('not-assigned');
   const ownerShipOptions = ownershipsList.map(
     (ownership) => (ownership = { value: ownership.id, label: ownership.name })
   );
@@ -69,7 +70,7 @@ const AssetIndivisibleForm = ({
     nameRef.current.value = assetData.name;
     refValueRef.current.value = assetData.refValue;
 
-    setAssignedValue(assetData?.assignedTo || undefined);
+    setAssignedValue(assetData?.assignedTo || 'not-assigned');
     const values = [];
     valuationObj.forEach((valuation) => {
       values.push({
@@ -207,7 +208,7 @@ const AssetIndivisibleForm = ({
     if (accordValue) {
       setAsset({
         ...asset,
-        assignedTo: undefined
+        assignedTo: 'not-assigned'
       });
     } else if (!accordValue && assignedValue) {
       setAsset({
@@ -323,7 +324,7 @@ const AssetIndivisibleForm = ({
                       }}
                     >
                       <span className="material-symbols-outlined radio-delete-icon action-icon">
-                        {t('icon-delete')}
+                        {ICON_NAMES.DELETE}
                       </span>
                     </button>
                   )}
@@ -335,7 +336,7 @@ const AssetIndivisibleForm = ({
                     }}
                   >
                     <span className="material-symbols-outlined action-icon">
-                      {t('icon-edit')}
+                      {ICON_NAMES.EDIT}
                     </span>
                   </button>
                 </div>

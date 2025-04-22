@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const OwnershipData = ({
   ownership,
@@ -16,7 +17,7 @@ const OwnershipData = ({
             removeOwnership(ownership.id);
           }}
         >
-          <span className="material-symbols-outlined">{t('icon-close')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.CLOSE}</span>
         </div>
 
         <div
@@ -24,7 +25,7 @@ const OwnershipData = ({
             editOwnership(ownership.id);
           }}
         >
-          <span className="material-symbols-outlined">{t('icon-edit')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.EDIT}</span>
         </div>
       </div>
 

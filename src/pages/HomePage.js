@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import handleError from '../services/handleError';
 import { apiGetInheritancesList } from '../services/api';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../shared/consts';
 
 const HomePage = () => {
   const { inheritancesList, setInheritancesList, setInheritancesAccessList } =
@@ -92,7 +93,7 @@ const HomePage = () => {
               translate="no"
               aria-hidden="true"
             >
-              {t('icon-add')}
+              {ICON_NAMES.ADD}
             </span>
             {t('home-page-new-inheritance')}
           </button>

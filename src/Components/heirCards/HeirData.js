@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const HeirData = ({ heir, removeHeir, editHeir }) => {
   const [heirType, setHeirType] = useState(null);
@@ -24,7 +25,7 @@ const HeirData = ({ heir, removeHeir, editHeir }) => {
             removeHeir(heir.id);
           }}
         >
-          <span className="material-symbols-outlined">{t('icon-close')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.CLOSE}</span>
         </div>
 
         <div
@@ -32,7 +33,7 @@ const HeirData = ({ heir, removeHeir, editHeir }) => {
             editHeir(heir.id);
           }}
         >
-          <span className="material-symbols-outlined">{t('icon-edit')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.EDIT}</span>
         </div>
       </div>
 

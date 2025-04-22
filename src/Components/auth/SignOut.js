@@ -4,6 +4,7 @@ import AuthContext from '../../services/AuthContext'; // Assuming you have a con
 import userPool from '../../services/cognitoConfig'; // Your Cognito configuration
 import { apiDeleteRefreshToken } from '../../services/api';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const SignOut = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const SignOut = () => {
         translate="no"
         aria-hidden="true"
       >
-        {t('icon-logout')}
+        {ICON_NAMES.LOGOUT}
       </span>
       <div className="hover-text">{t('main-logout')}</div>
     </div>

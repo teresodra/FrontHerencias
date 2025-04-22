@@ -8,6 +8,7 @@ import { ClipLoader } from 'react-spinners';
 import Swal from 'sweetalert2';
 import messagesObj from '../../schemas/messages';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const ConfirmEmailPage = () => {
   const [verificationCode, setVerificationCode] = useState('');
@@ -112,7 +113,7 @@ const ConfirmEmailPage = () => {
                 translate="no"
                 aria-hidden="true"
               >
-                {t('icon-sync')}
+                {ICON_NAMES.SYNC}
               </span>
             </div>
           </div>

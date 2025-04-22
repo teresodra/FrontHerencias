@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const IndivisibleAsset = ({
   asset,
@@ -21,7 +22,7 @@ const IndivisibleAsset = ({
             removeAsset(asset.id);
           }}
         >
-          <span className="material-symbols-outlined">{t('icon-close')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.CLOSE}</span>
         </div>
 
         <div
@@ -29,7 +30,7 @@ const IndivisibleAsset = ({
             editAsset(asset.id, 'indivisible');
           }}
         >
-          <span className="material-symbols-outlined">{t('icon-edit')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.EDIT}</span>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const DivisibleAssetValuation = ({
   asset,
@@ -59,7 +60,7 @@ const DivisibleAssetValuation = ({
       <div className="card-data-button-container">
         <div>
           <span className="material-symbols-outlined">
-            {t('icon-arrow-drop-down')}
+            {ICON_NAMES.ARROW_DROP_DOWN}
           </span>
         </div>
       </div>

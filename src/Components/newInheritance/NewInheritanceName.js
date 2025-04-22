@@ -11,7 +11,7 @@ const NewInheritanceName = ({ name, setName }) => {
       }}
     >
       <div className="form-group">
-        <label>{t('new-inheritance-heir-name')}</label>
+        <label>{t('new-inheritance-inheritance-name')}</label>
         <input
           type="text"
           name="name"

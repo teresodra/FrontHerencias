@@ -1,10 +1,8 @@
-import { useTranslation } from 'react-i18next';
 import Modal from 'react-modal';
+import { ICON_NAMES } from '../../shared/consts';
 Modal.setAppElement('#root'); // Required for accessibility
 
 const TermsModal = ({ modalIsOpen, setModalIsOpen, title, content }) => {
-  const { t } = useTranslation();
-
   return (
     <Modal
       className="custom-item-modal"
@@ -24,7 +22,7 @@ const TermsModal = ({ modalIsOpen, setModalIsOpen, title, content }) => {
             translate="no"
             aria-hidden="true"
           >
-            {t('icon-close')}
+            {ICON_NAMES.CLOSE}
           </span>
         </div>
       </div>

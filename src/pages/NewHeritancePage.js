@@ -114,7 +114,7 @@ const NewHeritancePage = () => {
         {name && name !== '' && heirDataStep !== 1 ? (
           <h1>{name}</h1>
         ) : (
-          <h1>{t('new-inheritance-new-heir')}</h1>
+          <h1>{t('new-inheritance-new-inheritance')}</h1>
         )}
 
         {/*STEP 1: NAME*/}

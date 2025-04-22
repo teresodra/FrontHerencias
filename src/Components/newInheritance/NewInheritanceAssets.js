@@ -3,6 +3,7 @@ import NewAssetPage from '../assetCard/NewAssetPage';
 import DivisibleAsset from '../assetCard/DivisibleAsset';
 import IndivisibleAsset from '../assetCard/IndivisibleAsset';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const NewInheritanceAssets = ({
   assetsObj,
@@ -56,7 +57,7 @@ const NewInheritanceAssets = ({
             }}
           >
             <span className="material-symbols-outlined ">
-              {t('icon-arrow-back')}
+              {ICON_NAMES.ARROW_BACK}
             </span>
           </button>
         )}

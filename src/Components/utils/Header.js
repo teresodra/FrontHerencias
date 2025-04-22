@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SignOut from '../auth/SignOut';
 import userPool from '../../services/cognitoConfig'; // Your Cognito configuration
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const Header = () => {
   const cognitoUser = userPool.getCurrentUser();
@@ -71,7 +72,7 @@ const Header = () => {
           aria-hidden="true" // prevent problems with translators
           onClick={goHome}
         >
-          {t('icon-home')}
+          {ICON_NAMES.HOME}
         </span>
       </div>
 

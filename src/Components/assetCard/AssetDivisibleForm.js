@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { v4 as uuidv4 } from 'uuid';
 import NewOwnershipModal from '../ownershipCard/NewOwnershipModal';
 import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 const AssetDivisibleForm = ({
   assetsObj,
@@ -24,7 +25,7 @@ const AssetDivisibleForm = ({
   const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
   const [unitValues, setUnitValues] = useState([]);
-  const [assignedValue, setAssignedValue] = useState(undefined);
+  const [assignedValue, setAssignedValue] = useState('not-assigned');
   const { t } = useTranslation();
 
   const nameRef = React.createRef();
@@ -79,7 +80,7 @@ const AssetDivisibleForm = ({
     quantityRef.current.value = assetData.quantity;
     refValueRef.current.value = assetData.refValue;
 
-    setAssignedValue(assetData?.assignedTo || undefined);
+    setAssignedValue(assetData?.assignedTo || 'not-assigned');
     const values = [];
     valuationObj.forEach((valuation) => {
       values.push({
@@ -227,7 +228,7 @@ const AssetDivisibleForm = ({
     if (accordValue) {
       setAsset({
         ...asset,
-        assignedTo: undefined
+        assignedTo: 'not-assigned'
       });
     } else if (!accordValue && assignedValue) {
       setAsset({
@@ -371,7 +372,7 @@ const AssetDivisibleForm = ({
                       }}
                     >
                       <span className="material-symbols-outlined radio-delete-icon action-icon">
-                        {t('icon-delete')}
+                        {ICON_NAMES.DELETE}
                       </span>
                     </button>
                   )}
@@ -383,7 +384,7 @@ const AssetDivisibleForm = ({
                     }}
                   >
                     <span className="material-symbols-outlined action-icon">
-                      {t('icon-edit')}
+                      {ICON_NAMES.EDIT}
                     </span>
                   </button>
                 </div>

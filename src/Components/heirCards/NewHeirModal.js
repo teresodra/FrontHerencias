@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import NewHeirForm from './NewHeirForm';
-import { useTranslation } from 'react-i18next';
+import { ICON_NAMES } from '../../shared/consts';
 
 Modal.setAppElement('#root'); // Required for accessibility
 
@@ -18,7 +18,6 @@ const NewHeirModal = ({
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  const { t } = useTranslation();
 
   return (
     <Modal
@@ -34,7 +33,7 @@ const NewHeirModal = ({
           className="modal-close-button-container"
           onClick={() => setModalIsOpen(false)}
         >
-          <span className="material-symbols-outlined">{t('icon-close')}</span>
+          <span className="material-symbols-outlined">{ICON_NAMES.CLOSE}</span>
         </div>
       </div>
 
