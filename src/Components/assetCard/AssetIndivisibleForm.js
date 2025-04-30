@@ -35,7 +35,7 @@ const AssetIndivisibleForm = ({
     new SimpleReactValidator({
       validators: {
         addOwnership: {
-          message: 'Añade al menos una propiedad.',
+          message: t('asset-form-at-least-one'),
           rule: (validator) => {
             return Boolean(validator);
           },

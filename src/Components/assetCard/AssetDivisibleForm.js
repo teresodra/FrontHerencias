@@ -437,7 +437,7 @@ const AssetDivisibleForm = ({
                 <>
                   <div className="heir-value-item">
                     <label htmlFor={`commonheir`}>
-                      {t('asset-form-accord-value')}
+                      {t('asset-form-unit-value')}
                     </label>
                     <input
                       type="number"

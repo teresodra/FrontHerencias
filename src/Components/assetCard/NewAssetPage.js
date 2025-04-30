@@ -94,7 +94,7 @@ const NewAssetPage = ({
           )}
 
           {/* {assetType && assetType.value === 'divisibleInChunks' && (
-            <AssetDivisivleInChunksForm
+            <AssetDivisibleInChunksForm
               assetsObj={assetsObj}
               setAssetsObj={setAssetsObj}
               closePage={closePage}

@@ -7,6 +7,7 @@ import SimpleReactValidator from 'simple-react-validator'
 import { ClipLoader } from 'react-spinners';
 import Swal from 'sweetalert2';
 import messagesObj from '../../schemas/messages';
+import { useTranslation } from 'react-i18next';
 
 const ChangePasswordPage = () => {
 
@@ -14,6 +15,7 @@ const ChangePasswordPage = () => {
     const { userAttributes } = useContext(AuthContext); // Retrieve user attributes from context
     const { setUser } = useContext(AuthContext);
     const { setUserAttributes } = useContext(AuthContext);
+    const { t } = useTranslation();
 
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -109,13 +111,13 @@ const ChangePasswordPage = () => {
     return (
         <div id="search-page" className="center">
             <section className="content">
-                <h1>{"Crear Contraseña"}</h1>
+                <h1>{t('confirm-password-create-password')}</h1>
 
                 {error && <p style={{ color: 'red' }}>{error}</p>}
             
                 <form onSubmit={handleChangePassword} className='change-password-form'>
                     <div className='form-group'>
-                        <label htmlFor="new-password">{"Nueva contraseña"}</label>
+                        <label htmlFor="new-password">{t('confirm-password-new-password')}</label>
                         
                         <input
                             type={visible ? 'text' : 'password'}
@@ -129,11 +131,11 @@ const ChangePasswordPage = () => {
                     </div>
         
                     <div className='form-group'>
-                        <label htmlFor="confirmPassword">{"Confirmar contraseña"}</label>
+                        <label htmlFor="confirmPassword">{t('confirm-password-confirm-password')}</label>
                         <input
                             type={visible ? 'text' : 'password'}
                             name="confirmPassword"
-                            placeholder={"Confirmar contraseña"}
+                            placeholder={t('confirm-password-confirm-password')}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             onBlur={() => validator.showMessageFor('confirmPassword')}
@@ -141,7 +143,7 @@ const ChangePasswordPage = () => {
 
                         <div className='show-password-container'>
                             <input type='checkbox' onChange={togglePassword}/>
-                            <div>{"Mostrar contraseña"}</div>
+                            <div>{t('confirm-password-show-password')}</div>
                         </div>
 
                         {validator.message('confirmPassword', confirmPassword, `required|passwordMatch:${newPassword}`)}
@@ -149,7 +151,7 @@ const ChangePasswordPage = () => {
 
                     <div className='button-container'>
                         <button type="submit" className='custom-button' disabled={isLoading}>
-                            {"Crear Contraseña"}
+                            {t('confirm-password-create-password')}
                         </button>
                     </div>
 
