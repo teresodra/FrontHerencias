@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import HeirData from '../heirCards/HeirData';
 import NewHeirModal from '../heirCards/NewHeirModal';
 import { useTranslation } from 'react-i18next';
+import InfoTooltip from '../infoTooltip/infoTooltip';
 const NewInheritanceHeirs = ({
   heirsList,
   setHeirsList,
@@ -47,6 +48,11 @@ const NewInheritanceHeirs = ({
   return (
     <>
       <h2>{t('new-inheritance-heirs')}</h2>
+      <InfoTooltip
+                text={t('new-inheritance-title-tooltip-text')}
+                size={24}
+                relative
+      />
       {heirsList.length > 0 && (
         <div className="card-container">
           {heirsList.map((heir) => (
