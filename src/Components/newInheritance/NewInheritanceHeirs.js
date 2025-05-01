@@ -47,12 +47,14 @@ const NewInheritanceHeirs = ({
 
   return (
     <>
-      <h2>{t('new-inheritance-heirs')}</h2>
-      <InfoTooltip
-                text={t('new-inheritance-title-tooltip-text')}
-                size={24}
-                relative
-      />
+      <div className="tooltip-container">
+        <h2>{t('new-inheritance-heirs')}</h2>
+        <InfoTooltip
+          text={t('new-inheritance-heirs-tooltip')}
+          size={24}
+          relative
+        />
+      </div>
       {heirsList.length > 0 && (
         <div className="card-container">
           {heirsList.map((heir) => (

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import NewOwnershipModal from '../ownershipCard/NewOwnershipModal';
 import { useTranslation } from 'react-i18next';
 import { ICON_NAMES } from '../../shared/consts';
+import InfoTooltip from '../infoTooltip/infoTooltip';
 
 const AssetIndivisibleForm = ({
   assetsObj,
@@ -289,7 +290,14 @@ const AssetIndivisibleForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="categry">{t('asset-form-property')}</label>
+          <div className="tooltip-container">
+            <label htmlFor="categry">{t('asset-form-property')}</label>
+            <InfoTooltip
+              text={t('asset-form-property-tooltip')}
+              size={20}
+              relative
+            />
+          </div>
           {ownershipsList.length > 0 &&
             ownershipsList.map((ownership, index) => (
               <div

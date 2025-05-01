@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import NewOwnershipModal from '../ownershipCard/NewOwnershipModal';
 import { useTranslation } from 'react-i18next';
 import { ICON_NAMES } from '../../shared/consts';
+import InfoTooltip from '../infoTooltip/infoTooltip';
 
 const AssetDivisibleForm = ({
   assetsObj,
@@ -298,7 +299,14 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
+        <div className="tooltip-container">
           <label htmlFor="cantidad">{t('asset-form-quantity')}</label>
+          <InfoTooltip
+            text={t('asset-form-quantity-tooltip')}
+            size={20}
+            relative
+          />
+        </div>
           <input
             type="number"
             name="cantidad"
@@ -313,9 +321,16 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
+        <div className="tooltip-container">
           <label htmlFor="refValue">
             {t('asset-form-unit-reference-value')}
           </label>
+          <InfoTooltip
+            text={t('asset-form-unit-reference-value-tooltip')}
+            size={20}
+            relative
+          />
+        </div>
           <input
             type="number"
             name="refValue"
@@ -337,7 +352,14 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
-          <label htmlFor="categry">{t('asset-form-property')}</label>
+          <div className="tooltip-container">
+            <label htmlFor="categry">{t('asset-form-property')}</label>
+            <InfoTooltip
+              text={t('asset-form-property-tooltip')}
+              size={20}
+              relative
+            />
+          </div>
           {ownershipsList.length > 0 &&
             ownershipsList.map((ownership, index) => (
               <div
