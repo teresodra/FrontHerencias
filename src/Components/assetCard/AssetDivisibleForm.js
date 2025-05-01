@@ -299,14 +299,14 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
-        <div className="tooltip-container">
-          <label htmlFor="cantidad">{t('asset-form-quantity')}</label>
-          <InfoTooltip
-            text={t('asset-form-quantity-tooltip')}
-            size={20}
-            relative
-          />
-        </div>
+          <div className="tooltip-container">
+            <label htmlFor="cantidad">{t('asset-form-quantity')}</label>
+            <InfoTooltip
+              text={t('asset-form-quantity-tooltip')}
+              size={20}
+              relative
+            />
+          </div>
           <input
             type="number"
             name="cantidad"
@@ -321,16 +321,16 @@ const AssetDivisibleForm = ({
         </div>
 
         <div className="form-group">
-        <div className="tooltip-container">
-          <label htmlFor="refValue">
-            {t('asset-form-unit-reference-value')}
-          </label>
-          <InfoTooltip
-            text={t('asset-form-unit-reference-value-tooltip')}
-            size={20}
-            relative
-          />
-        </div>
+          <div className="tooltip-container">
+            <label htmlFor="refValue">
+              {t('asset-form-unit-reference-value')}
+            </label>
+            <InfoTooltip
+              text={t('asset-form-unit-reference-value-tooltip')}
+              size={20}
+              relative
+            />
+          </div>
           <input
             type="number"
             name="refValue"

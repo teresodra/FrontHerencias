@@ -77,7 +77,10 @@ const NewHeirForm = ({
         heirId: newId,
         valuationObj: {
           heirId: newId,
-          assetsValuationObj: { divisibleAssetsList: [] },
+          assetsValuationObj: {
+            divisibleAssetsList: [],
+            indivisibleAssetsList: []
+          },
           money: 0
         }
       }

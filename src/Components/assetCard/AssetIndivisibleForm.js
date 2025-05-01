@@ -23,7 +23,7 @@ const AssetIndivisibleForm = ({
   const [accordValue, setAccordValue] = useState(true);
   const [ownershipModalIsOpen, setOwnershipModalIsOpen] = useState(false);
   const [ownershipToEdit, setOwnershipToEdit] = useState(null);
-  const [unitValues, setUnitValues] = useState([]);
+  const [wholeAssetValues, setWholeAssetValues] = useState([]);
   const [assignedValue, setAssignedValue] = useState('not-assigned');
   const ownerShipOptions = ownershipsList.map(
     (ownership) => (ownership = { value: ownership.id, label: ownership.name })
@@ -53,11 +53,11 @@ const AssetIndivisibleForm = ({
       const values = [];
       valuationObj.forEach((valuation) => {
         values.push({
-          unitValue: 0,
+          wholeAssetValue: 0,
           heirId: valuation.heirId
         });
       });
-      setUnitValues(values);
+      setWholeAssetValues(values);
     }
   }, []);
 
@@ -75,14 +75,14 @@ const AssetIndivisibleForm = ({
     const values = [];
     valuationObj.forEach((valuation) => {
       values.push({
-        unitValue:
-          valuation.valuationObj.assetsValuationObj.divisibleAssetsList.find(
+        wholeAssetValue:
+          valuation.valuationObj.assetsValuationObj.indivisibleAssetsList.find(
             (item) => item.assetId === asset.id
-          ).unitValue,
+          ).wholeAssetValue,
         heirId: valuation.heirId
       });
     });
-    setUnitValues(values);
+    setWholeAssetValues(values);
     setAccordValue(assetData.agreedValue);
     setOwnershipId(
       ownerShipOptions.find((owShip) => owShip.value === assetData.ownershipId)
@@ -126,18 +126,19 @@ const AssetIndivisibleForm = ({
       );
       const auxValuationAssetsListIndex = valuationObj[
         auxValuationItemIndex
-      ].valuationObj.assetsValuationObj.divisibleAssetsList.findIndex(
+      ].valuationObj.assetsValuationObj.indivisibleAssetsList.findIndex(
         (item) => item.assetId === asset.id
       );
       auxValuationObj[
         auxValuationItemIndex
-      ].valuationObj.assetsValuationObj.divisibleAssetsList[
+      ].valuationObj.assetsValuationObj.indivisibleAssetsList[
         auxValuationAssetsListIndex
       ] = {
         assetId: asset.id,
-        unitValue: Number(
-          unitValues.find((unitValue) => unitValue.heirId === item.heirId)
-            .unitValue
+        wholeAssetValue: Number(
+          wholeAssetValues.find(
+            (wholeAssetValue) => wholeAssetValue.heirId === item.heirId
+          ).wholeAssetValue
         )
       };
     });
@@ -171,10 +172,11 @@ const AssetIndivisibleForm = ({
     valuationObj.forEach((item) => {
       auxValuationObj[
         valuationObj.findIndex((valItem) => valItem.heirId === item.heirId)
-      ].valuationObj.assetsValuationObj.divisibleAssetsList.push({
-        unitValue: Number(
-          unitValues.find((unitValue) => item.heirId === unitValue.heirId)
-            .unitValue
+      ].valuationObj.assetsValuationObj.indivisibleAssetsList.push({
+        wholeAssetValue: Number(
+          wholeAssetValues.find(
+            (wholeAssetValue) => item.heirId === wholeAssetValue.heirId
+          ).wholeAssetValue
         ),
         assetId: newUuid
       });
@@ -218,11 +220,11 @@ const AssetIndivisibleForm = ({
       });
     }
     setAccordValue(!accordValue);
-    setUnitValues(
-      unitValues.map((unitValue) => {
+    setWholeAssetValues(
+      wholeAssetValues.map((wholeAssetValue) => {
         return {
-          ...unitValue,
-          unitValue: 0
+          ...wholeAssetValue,
+          wholeAssetValue: 0
         };
       })
     );
@@ -245,20 +247,23 @@ const AssetIndivisibleForm = ({
 
   const triggerChangeValuationObj = (value, heirId) => {
     if (heirId) {
-      setUnitValues(
-        unitValues.map((unitValue) => {
+      setWholeAssetValues(
+        wholeAssetValues.map((wholeAssetValue) => {
           return {
-            ...unitValue,
-            unitValue: unitValue.heirId === heirId ? value : unitValue.unitValue
+            ...wholeAssetValue,
+            wholeAssetValue:
+              wholeAssetValue.heirId === heirId
+                ? value
+                : wholeAssetValue.wholeAssetValue
           };
         })
       );
     } else {
-      setUnitValues(
-        unitValues.map((unitValue) => {
+      setWholeAssetValues(
+        wholeAssetValues.map((wholeAssetValue) => {
           return {
-            ...unitValue,
-            unitValue: value
+            ...wholeAssetValue,
+            wholeAssetValue: value
           };
         })
       );
@@ -407,11 +412,11 @@ const AssetIndivisibleForm = ({
                       onChange={(e) => {
                         triggerChangeValuationObj(e.target.value);
                       }}
-                      value={unitValues?.[0]?.unitValue || 0}
+                      value={wholeAssetValues?.[0]?.wholeAssetValue || 0}
                     />
                     {validator.message(
                       'quantity',
-                      unitValues?.[0]?.unitValue || 0,
+                      wholeAssetValues?.[0]?.wholeAssetValue || 0,
                       'required|numeric|min:0,num'
                     )}
                   </div>
@@ -431,14 +436,16 @@ const AssetIndivisibleForm = ({
                           triggerChangeValuationObj(e.target.value, heir.id);
                         }}
                         value={
-                          unitValues?.find((item) => item.heirId === heir.id)
-                            ?.unitValue || 0
+                          wholeAssetValues?.find(
+                            (item) => item.heirId === heir.id
+                          )?.wholeAssetValue || 0
                         }
                       />
                       {validator.message(
                         'quantity',
-                        unitValues?.find((item) => item.heirId === heir.id)
-                          ?.unitValue || 0,
+                        wholeAssetValues?.find(
+                          (item) => item.heirId === heir.id
+                        )?.wholeAssetValue || 0,
                         'required|numeric|min:0,num'
                       )}
                     </div>

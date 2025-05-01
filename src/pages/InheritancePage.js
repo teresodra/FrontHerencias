@@ -107,6 +107,10 @@ const InheritancePage = () => {
         } catch (err) {
           await handleError(err, navigate);
         }
+      } else {
+        Swal.fire(messagesObj.calculateError);
+        clearInterval(timerIdRef.current); // Access the timer ID from the ref
+        timerIdRef.current = null; // Reset the ref
       }
     } catch (err) {
       console.error(err);

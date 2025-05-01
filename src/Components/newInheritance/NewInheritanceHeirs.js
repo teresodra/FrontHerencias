@@ -22,7 +22,8 @@ const NewInheritanceHeirs = ({
             valuationObj: {
               heirId: heir.id,
               assetsValuationObj: {
-                divisibleAssetsList: []
+                divisibleAssetsList: [],
+                indivisibleAssetsList: []
               },
               money: 0
             }
