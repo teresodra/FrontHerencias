@@ -11,7 +11,7 @@
   "asset-form-unit-reference-value-tooltip": "Reference value per unit in euros (per hectare, per m2, etc.)",
   "asset-form-category": "Category",
   "asset-form-property": "Rights over the asset",
-  "asset-form-property-tooltip": "Detail the rights that each heir has over the asset",
+  "asset-form-property-tooltip": "Detail the rights that each heir has over the asset (separate property, community property, etc.)",
   "asset-form-add-property": "Add a new type of right",
   "asset-form-heirs-accord": "Do all heirs agree?",
   "asset-form-heirs-accord-value": "Do all heirs agree on the value?",

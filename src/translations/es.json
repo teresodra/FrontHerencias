@@ -11,7 +11,7 @@
   "asset-form-unit-reference-value-tooltip": "Valor de referencia en euros por unidad (por hectarea, por m2, por dolar, etc.)",
   "asset-form-category": "Categoría",
   "asset-form-property": "Derechos sobre el bien",
-  "asset-form-property-tooltip": "Especifica los derechos que cada heredero tiene sobre el bien.",
+  "asset-form-property-tooltip": "Especifica los derechos que cada heredero tiene sobre el bien (privativo, ganancial, etc.)",
   "asset-form-add-property": "Añadir tipo de derecho",
   "asset-form-heirs-accord": "¿Están todos los herederos de acuerdo?",
   "asset-form-heirs-accord-value": "¿Están todos los herederos de acuerdo en el valor?",
