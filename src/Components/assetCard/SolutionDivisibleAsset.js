@@ -40,7 +40,7 @@ const SolutionDivisibleAsset = ({
         <div className="card-data-item">
           <label>{t('divisible-asset-total-valoration')}</label>
           <div>
-            {assetAllocation.valuePOV} {t('main-euro-symbol')}
+            {assetAllocation?.valuePOV || 0} {t('main-euro-symbol')}
           </div>
         </div>
 
