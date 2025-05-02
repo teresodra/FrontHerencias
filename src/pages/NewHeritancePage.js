@@ -48,8 +48,14 @@ const NewHeritancePage = () => {
       });
       return ownershipsList;
     };
+    const adaptAssetsObj = (assetsObj) => {
+      return {
+        divisibleAssetsList: assetsObj?.divisibleAssetsList || [],
+        indivisibleAssetsList: assetsObj?.indivisibleAssetsList || []
+      };
+    };
     const auxOwnershipsList = adaptOwnershipsList(ownershipsList);
-
+    debugger;
     setIsSaving(true);
     const inheritanceId = uuidv4();
     const auxInheritance = {
@@ -58,7 +64,7 @@ const NewHeritancePage = () => {
       region: region,
       heirsList: heirsList,
       ownershipsList: auxOwnershipsList,
-      assetsObj: assetsObj
+      assetsObj: adaptAssetsObj(assetsObj)
     };
 
     try {

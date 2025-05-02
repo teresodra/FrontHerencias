@@ -222,24 +222,26 @@ const SolutionPage = () => {
                     <h2>{t('solution-page-assets')}</h2>
                     <h3>
                       {t('solution-page-divisibles')} (
-                      {heirAllocation?.divisibleAssetsList.length})
+                      {(heirAllocation?.divisibleAssetsList || []).length})
                     </h3>
                     <div className="card-container">
-                      {heirAllocation?.divisibleAssetsList.map((assetAlloc) => (
-                        <SolutionDivisibleAsset
-                          key={assetAlloc.assetId}
-                          assetAllocation={assetAlloc}
-                          inheritance={inheritance}
-                        />
-                      ))}
+                      {(heirAllocation?.divisibleAssetsList || []).map(
+                        (assetAlloc) => (
+                          <SolutionDivisibleAsset
+                            key={assetAlloc.assetId}
+                            assetAllocation={assetAlloc}
+                            inheritance={inheritance}
+                          />
+                        )
+                      )}
                     </div>
 
                     <h3>
                       {t('solution-page-indivisibles')} (
-                      {heirAllocation?.indivisibleAssetsList.length})
+                      {(heirAllocation?.indivisibleAssetsList || []).length})
                     </h3>
                     <div className="card-container">
-                      {heirAllocation?.indivisibleAssetsList.map(
+                      {(heirAllocation?.indivisibleAssetsList || []).map(
                         (assetAlloc) => (
                           <SolutionIndivisibleAsset
                             key={assetAlloc.assetId}
