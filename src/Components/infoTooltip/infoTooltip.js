@@ -6,14 +6,18 @@ const InfoTooltip = ({
   icon = ICON_NAMES.INFO,
   text = 'change this dummy text by setting the text prop to the component',
   size = 24,
-  relative = false
+  relative = false,
+  top = undefined
 }) => {
   if (!icon || !text) return null;
 
   return (
     <div
       className={`info-tooltip ${relative ? '--relative' : ''}`}
-      style={{ right: `-${size + 6}px` }}
+      style={{
+        right: `-${size + 6}px`,
+        top: relative ? (top ? top + '%' : '40%') : ''
+      }}
     >
       <span
         className="material-symbols-outlined tooltip-icon"

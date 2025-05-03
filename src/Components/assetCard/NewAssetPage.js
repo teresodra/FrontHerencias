@@ -92,17 +92,6 @@ const NewAssetPage = ({
               setValuationObj={setValuationObj}
             />
           )}
-
-          {/* {assetType && assetType.value === 'divisibleInChunks' && (
-            <AssetDivisibleInChunksForm
-              assetsObj={assetsObj}
-              setAssetsObj={setAssetsObj}
-              closePage={closePage}
-              ownershipsList={ownershipsList}
-              assetData={assetData}
-              setAssetData={setAssetData}
-            />
-          )} */}
         </div>
       </div>
     </>

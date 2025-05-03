@@ -302,6 +302,7 @@ const AssetIndivisibleForm = ({
               text={t('asset-form-property-tooltip')}
               size={20}
               relative
+              top={10}
             />
           </div>
           {ownershipsList.length > 0 &&
