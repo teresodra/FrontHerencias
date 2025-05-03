@@ -42,9 +42,16 @@ const DivisibleAsset = ({ asset, ownershipsList, removeAsset, editAsset }) => {
         </div>
 
         <div className="card-data-item">
-          <label>{t('divisible-asset-reference-unit-value')}</label>
+          <label>{t('divisible-asset-reference-min-unit-value')}</label>
           <div>
-            {asset.refValue} {t('main-euro-symbol')}
+            {asset.minRefValue} {t('main-euro-symbol')}
+          </div>
+        </div>
+
+        <div className="card-data-item">
+          <label>{t('divisible-asset-reference-max-unit-value')}</label>
+          <div>
+            {asset.maxRefValue} {t('main-euro-symbol')}
           </div>
         </div>
 

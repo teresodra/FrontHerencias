@@ -25,7 +25,7 @@ const DivisibleAssetValuation = ({
 
     // If it is cash value = ref value
     if (asset.category === 'cash') {
-      addValuation(asset.refValue);
+      addValuation(asset.minRefValue);
     }
   }, []);
 
@@ -79,9 +79,16 @@ const DivisibleAssetValuation = ({
             </div>
 
             <div className="card-data-item">
-              <label>{t('divisible-asset-reference-unit-value')}</label>
+              <label>{t('divisible-asset-reference-min-unit-value')}</label>
               <div>
-                {asset.refValue} {t('main-euro-symbol')}
+                {asset.minRefValue} {t('main-euro-symbol')}
+              </div>
+            </div>
+
+            <div className="card-data-item">
+              <label>{t('divisible-asset-reference-max-unit-value')}</label>
+              <div>
+                {asset.maxRefValue} {t('main-euro-symbol')}
               </div>
             </div>
 
@@ -101,7 +108,11 @@ const DivisibleAssetValuation = ({
               <div className="form-group">
                 <label>{t('divisible-asset-valoration')}</label>
                 {asset.category === 'cash' ? (
-                  <input type="number" disabled={true} value={asset.refValue} />
+                  <input
+                    type="number"
+                    disabled={true}
+                    value={asset.minRefValue}
+                  />
                 ) : (
                   <input
                     type="text"

@@ -41,8 +41,17 @@ const IndivisibleAsset = ({
         </div>
 
         <div className="card-data-item">
-          <label>{t('indivisible-asset-reference-value')}:</label>
-          <div>{asset.refValue}</div>
+          <label>{t('indivisible-asset-min-reference-value')}:</label>
+          <div>
+            {asset.minRefValue} {t('main-euro-symbol')}
+          </div>
+        </div>
+
+        <div className="card-data-item">
+          <label>{t('indivisible-asset-max-reference-value')}:</label>
+          <div>
+            {asset.maxRefValue} {t('main-euro-symbol')}
+          </div>
         </div>
 
         <div className="card-data-item">

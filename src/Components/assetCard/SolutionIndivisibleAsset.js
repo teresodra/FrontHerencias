@@ -48,16 +48,17 @@ const SolutionIndivisibleAsset = ({
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>{t('indivisible-asset-reference-value')}</label>
+              <label>{t('indivisible-asset-min-reference-value')}</label>
               <div>
-                {asset.refValue} {t('main-euro-symbol')}
+                {asset.minRefValue} {t('main-euro-symbol')}
               </div>
             </div>
-            {/* 
-                        <div className='card-data-item'>
-                            <label>Propiedad</label>
-                            <div>{ownership.name}</div>
-                        </div> */}
+            <div className="card-data-item">
+              <label>{t('indivisible-asset-max-reference-value')}</label>
+              <div>
+                {asset.maxRefValue} {t('main-euro-symbol')}
+              </div>
+            </div>
           </div>
         )}
       </div>

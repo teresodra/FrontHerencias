@@ -17,7 +17,7 @@ const DivisibleInChunksAssetValuation = ({
   useEffect(() => {
     // If it is cash value = ref value
     if (asset.category === 'cash') {
-      addValuation(asset.refValue);
+      addValuation(asset.minRefValue);
     }
   }, []);
 
@@ -78,7 +78,7 @@ const DivisibleInChunksAssetValuation = ({
                 asset.unitSize
               }`}</label>
               <div>
-                {asset.refValue} {t('main-euro-symbol')}
+                {asset.minRefValue} {t('main-euro-symbol')}
               </div>
             </div>
 

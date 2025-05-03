@@ -66,8 +66,13 @@ const IndivisibleAssetValuation = ({
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>{t('indivisible-asset-reference-value')}:</label>
-              <div>{asset.refValue}</div>
+              <label>{t('indivisible-asset-min-reference-value')}:</label>
+              <div>{asset.minRefValue}</div>
+            </div>
+
+            <div className="card-data-item">
+              <label>{t('indivisible-asset-max-reference-value')}:</label>
+              <div>{asset.maxRefValue}</div>
             </div>
 
             <div className="card-data-item">

@@ -529,3 +529,20 @@ input[type='number']::-webkit-outer-spin-button {
 .tooltip-container {
   position: relative;
 }
+
+.ref-values-inputs-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.ref-values-inputs-container > .form-group {
+  width: 100%;
+}
+
+.ref-value-title-container {
+  align-self: flex-start;
+  margin-bottom: -12px;
+}

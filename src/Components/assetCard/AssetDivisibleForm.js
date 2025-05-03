@@ -31,7 +31,8 @@ const AssetDivisibleForm = ({
 
   const nameRef = React.createRef();
   const quantityRef = React.createRef();
-  const refValueRef = React.createRef();
+  const minRefValueRef = React.createRef();
+  const maxRefValueRef = React.createRef();
   const ownerShipOptions = ownershipsList.map(
     (ownership) => (ownership = { value: ownership.id, label: ownership.name })
   );
@@ -48,6 +49,15 @@ const AssetDivisibleForm = ({
           message: 'Añade al menos una propiedad.',
           rule: (validator) => {
             return Boolean(validator);
+          },
+          required: true
+        },
+        greaterThanMin: {
+          message: 'El valor máximo debe ser mayor que el mínimo.',
+          rule: (val, params, validatorInstance) => {
+            const minValue = parseFloat(params[0]);
+            const maxValue = parseFloat(val);
+            return !isNaN(minValue) && !isNaN(maxValue) && maxValue >= minValue;
           },
           required: true
         }
@@ -79,7 +89,8 @@ const AssetDivisibleForm = ({
   const loadData = () => {
     nameRef.current.value = assetData.name;
     quantityRef.current.value = assetData.quantity;
-    refValueRef.current.value = assetData.refValue;
+    minRefValueRef.current.value = assetData.minRefValue;
+    maxRefValueRef.current.value = assetData.maxRefValue;
 
     setAssignedValue(assetData?.assignedTo || 'not-assigned');
     const values = [];
@@ -125,7 +136,8 @@ const AssetDivisibleForm = ({
       ...asset,
       name: nameRef.current.value,
       quantity: quantityRef.current.value,
-      refValue: refValueRef.current.value
+      minRefValue: minRefValueRef.current.value,
+      maxRefValue: maxRefValueRef.current.value
     });
   };
 
@@ -322,25 +334,52 @@ const AssetDivisibleForm = ({
           )}
         </div>
 
-        <div className="form-group">
-          <div className="tooltip-container">
-            <label htmlFor="refValue">
-              {t('asset-form-unit-reference-value')}
-            </label>
-            <InfoTooltip
-              text={t('asset-form-unit-reference-value-tooltip')}
-              size={20}
-              relative
-              top={10}
-            />
-          </div>
-          <input
-            type="number"
-            name="refValue"
-            ref={refValueRef}
-            onChange={changeState}
+        <div className="tooltip-container ref-value-title-container">
+          <label>{t('asset-form-unit-reference-value')}</label>
+          <InfoTooltip
+            text={t('asset-form-unit-reference-value-tooltip')}
+            size={20}
+            relative
+            top={10}
           />
-          {validator.message('refValue', asset.refValue, 'required|numeric')}
+        </div>
+
+        <div className="ref-values-inputs-container">
+          <div className="form-group">
+            <div className="tooltip-container">
+              <label htmlFor="minRefValue">
+                {t('asset-form-unit-min-reference-value')}
+              </label>
+            </div>
+            <input
+              type="number"
+              name="minRefValue"
+              ref={minRefValueRef}
+              onChange={changeState}
+            />
+            {validator.message(
+              'minRefValue',
+              asset.minRefValue,
+              'required|numeric'
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="maxRefValue">
+              {t('asset-form-unit-max-reference-value')}
+            </label>
+            <input
+              type="number"
+              name="maxRefValue"
+              ref={maxRefValueRef}
+              onChange={changeState}
+            />
+            {validator.message(
+              'maxRefValue',
+              asset.maxRefValue,
+              `required|numeric|greaterThanMin:${asset.minRefValue}`
+            )}
+          </div>
         </div>
 
         <div className="form-group">
