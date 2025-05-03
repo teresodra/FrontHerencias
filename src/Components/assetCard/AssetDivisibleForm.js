@@ -53,11 +53,17 @@ const AssetDivisibleForm = ({
           required: true
         },
         greaterThanMin: {
-          message: 'El valor máximo debe ser mayor que el mínimo.',
+          message:
+            'El valor máximo debe ser mayor que el mínimo, y no superior al doble.',
           rule: (val, params, validatorInstance) => {
             const minValue = parseFloat(params[0]);
             const maxValue = parseFloat(val);
-            return !isNaN(minValue) && !isNaN(maxValue) && maxValue >= minValue;
+            return (
+              !isNaN(minValue) &&
+              !isNaN(maxValue) &&
+              maxValue >= minValue &&
+              maxValue <= minValue * 2
+            );
           },
           required: true
         }

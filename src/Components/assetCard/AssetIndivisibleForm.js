@@ -48,7 +48,12 @@ const AssetIndivisibleForm = ({
           rule: (val, params, validatorInstance) => {
             const minValue = parseFloat(params[0]);
             const maxValue = parseFloat(val);
-            return !isNaN(minValue) && !isNaN(maxValue) && maxValue >= minValue;
+            return (
+              !isNaN(minValue) &&
+              !isNaN(maxValue) &&
+              maxValue >= minValue &&
+              maxValue <= minValue * 2
+            );
           },
           required: true
         }
