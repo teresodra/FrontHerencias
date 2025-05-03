@@ -9,6 +9,7 @@ const NewOwnershipForm = ({
   heirsList,
   ownershipData,
   setOwnershipData,
+  changeOwnership,
   closeModal
 }) => {
   const [ownership, setOwnership] = useState(
@@ -105,10 +106,12 @@ const NewOwnershipForm = ({
   };
 
   const addNewOwnership = () => {
+    const newId = uuidv4();
     setOwnershipsList([
       ...ownershipsList,
-      { ...ownership, id: uuidv4() } // Create id so it has a reference to be edited
+      { ...ownership, id: newId } // Create id so it has a reference to be edited
     ]);
+    changeOwnership(newId);
   };
 
   const editOwnership = () => {

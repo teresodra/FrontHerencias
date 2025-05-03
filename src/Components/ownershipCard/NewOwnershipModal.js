@@ -12,7 +12,8 @@ const NewOwnershipModal = ({
   setOwnershipsList,
   heirsList,
   ownershipData,
-  setOwnershipData
+  setOwnershipData,
+  changeOwnership
 }) => {
   const closeModal = () => {
     setModalIsOpen(false);
@@ -44,6 +45,7 @@ const NewOwnershipModal = ({
             ownershipData={ownershipData}
             setOwnershipData={setOwnershipData}
             heirsList={heirsList}
+            changeOwnership={changeOwnership}
             closeModal={closeModal}
           />
         </div>

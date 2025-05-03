@@ -237,12 +237,13 @@ const AssetIndivisibleForm = ({
   };
 
   const removeOwnership = (own) => {
-    if (own === ownershipId) {
-      changeOwnership(ownershipsList[0].id);
-    }
-    setOwnershipsList(
-      ownershipsList.filter((ownership) => ownership.id !== own)
+    const newOwnershipsList = ownershipsList.filter(
+      (ownership) => ownership.id !== own
     );
+    if (own === ownershipId) {
+      changeOwnership(newOwnershipsList[0].id);
+    }
+    setOwnershipsList(newOwnershipsList);
   };
 
   const triggerChangeValuationObj = (value, heirId) => {
@@ -504,6 +505,7 @@ const AssetIndivisibleForm = ({
         setOwnershipsList={setOwnershipsList}
         heirsList={heirsList}
         ownershipData={ownershipToEdit}
+        changeOwnership={changeOwnership}
         setOwnershipData={setOwnershipToEdit}
       />
     </div>
