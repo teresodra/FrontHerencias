@@ -34,7 +34,8 @@ const SolutionDivisibleAsset = ({ assetAllocation, inheritance }) => {
         <div className="card-data-item">
           <label>{t('divisible-asset-total-valoration')}</label>
           <div>
-            {(assetAllocation.quantity || 1) * (asset.refValue || 1)}{' '}
+            {(parseFloat(assetAllocation.quantity) || 0) *
+              (parseFloat(asset.refValue) || 0).toFixed(3)}{' '}
             {t('main-euro-symbol')}
           </div>
         </div>
@@ -43,7 +44,11 @@ const SolutionDivisibleAsset = ({ assetAllocation, inheritance }) => {
           <div className="unwrapped-content">
             <div className="card-data-item">
               <label>{t('divisible-asset-quantity')}</label>
-              <div>{assetAllocation.quantity}</div>
+              <div>
+                {assetAllocation.quantity}
+                {` `}
+                {t('main-euro-symbol')}
+              </div>
             </div>
 
             <div className="card-data-item">
