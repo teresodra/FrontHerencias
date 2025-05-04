@@ -40,7 +40,8 @@ const SolutionDivisibleAsset = ({
         <div className="card-data-item">
           <label>{t('divisible-asset-total-valoration')}</label>
           <div>
-            {assetAllocation?.valuePOV || 0} {t('main-euro-symbol')}
+            {(assetAllocation.quantity || 1) * (asset.refValue || 1)}{' '}
+            {t('main-euro-symbol')}
           </div>
         </div>
 
@@ -52,16 +53,9 @@ const SolutionDivisibleAsset = ({
             </div>
 
             <div className="card-data-item">
-              <label>{t('divisible-asset-reference-min-unit-value')}</label>
+              <label>{t('divisible-asset-reference-unit-value')}</label>
               <div>
-                {asset.minRefValue} {t('main-euro-symbol')}
-              </div>
-            </div>
-
-            <div className="card-data-item">
-              <label>{t('divisible-asset-reference-max-unit-value')}</label>
-              <div>
-                {asset.maxRefValue} {t('main-euro-symbol')}
+                {asset.refValue} {t('main-euro-symbol')}
               </div>
             </div>
 
