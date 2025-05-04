@@ -332,11 +332,12 @@ const AssetDivisibleForm = ({
             name="cantidad"
             ref={quantityRef}
             onChange={changeState}
+            step="any"
           />
           {validator.message(
             'quantity',
             asset.quantity,
-            'required|numeric|min:0,num'
+            'required|numeric|min:0'
           )}
         </div>
 
@@ -362,6 +363,7 @@ const AssetDivisibleForm = ({
               name="minRefValue"
               ref={minRefValueRef}
               onChange={changeState}
+              step="any"
             />
             {validator.message(
               'minRefValue',
@@ -379,6 +381,7 @@ const AssetDivisibleForm = ({
               name="maxRefValue"
               ref={maxRefValueRef}
               onChange={changeState}
+              step="any"
             />
             {validator.message(
               'maxRefValue',
@@ -514,6 +517,7 @@ const AssetDivisibleForm = ({
                       type="number"
                       name="value"
                       id={`commonheir`}
+                      step="any"
                       onChange={(e) => {
                         triggerChangeValuationObj(e.target.value);
                       }}
@@ -522,7 +526,7 @@ const AssetDivisibleForm = ({
                     {validator.message(
                       'quantity',
                       asset.quantity,
-                      'required|numeric|min:0,num'
+                      'required|numeric|min:0'
                     )}
                   </div>
                 </>
@@ -537,6 +541,7 @@ const AssetDivisibleForm = ({
                         type="number"
                         name="value"
                         id={`heir-${heir.id}`}
+                        step="any"
                         onChange={(e) => {
                           triggerChangeValuationObj(e.target.value, heir.id);
                         }}
@@ -549,7 +554,7 @@ const AssetDivisibleForm = ({
                         'quantity',
                         unitValues?.find((item) => item.heirId === heir.id)
                           ?.unitValue || 0,
-                        'required|numeric|min:0,num'
+                        'required|numeric|min:0'
                       )}
                     </div>
                   ))}

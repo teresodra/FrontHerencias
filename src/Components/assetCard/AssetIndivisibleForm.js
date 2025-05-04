@@ -322,6 +322,7 @@ const AssetIndivisibleForm = ({
               name="minRefValue"
               ref={minRefValueRef}
               onChange={changeState}
+              step="any"
             />
             {validator.message(
               'minRefValue',
@@ -339,6 +340,7 @@ const AssetIndivisibleForm = ({
               name="maxRefValue"
               ref={maxRefValueRef}
               onChange={changeState}
+              step="any"
             />
             {validator.message(
               'maxRefValue',
@@ -464,6 +466,7 @@ const AssetIndivisibleForm = ({
                       type="number"
                       name="value"
                       id={`commonheir`}
+                      step="any"
                       onChange={(e) => {
                         triggerChangeValuationObj(e.target.value);
                       }}
@@ -472,7 +475,7 @@ const AssetIndivisibleForm = ({
                     {validator.message(
                       'quantity',
                       wholeAssetValues?.[0]?.wholeAssetValue || 0,
-                      'required|numeric|min:0,num'
+                      'required|numeric|min:0'
                     )}
                   </div>
                 </>
@@ -485,6 +488,7 @@ const AssetIndivisibleForm = ({
                       )} ${heir.name}`}</label>
                       <input
                         type="number"
+                        step="any"
                         name="value"
                         id={`heir-${heir.id}`}
                         onChange={(e) => {
@@ -501,7 +505,7 @@ const AssetIndivisibleForm = ({
                         wholeAssetValues?.find(
                           (item) => item.heirId === heir.id
                         )?.wholeAssetValue || 0,
-                        'required|numeric|min:0,num'
+                        'required|numeric|min:0'
                       )}
                     </div>
                   ))}

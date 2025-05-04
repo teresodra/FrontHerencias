@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ICON_NAMES } from '../../shared/consts';
 
-const SolutionDivisibleAsset = ({
-  assetAllocation,
-  inheritance,
-  ownershipsList,
-  removeAsset,
-  editAsset
-}) => {
+const SolutionDivisibleAsset = ({ assetAllocation, inheritance }) => {
   const [isWrapped, setIsWrapped] = useState(true);
   const { t } = useTranslation();
 
