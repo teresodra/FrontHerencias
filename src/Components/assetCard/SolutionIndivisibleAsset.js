@@ -42,7 +42,7 @@ const SolutionIndivisibleAsset = ({
           <label>{t('indivisible-asset-valoration')}</label>
           <div>
             {(parseFloat(assetAllocation.quantity) || 0) *
-              (parseFloat(asset.refValue) || 0).toFixed(3)}{' '}
+              (parseFloat(assetAllocation.refValue) || 0).toFixed(3)}{' '}
             {t('main-euro-symbol')}
           </div>
         </div>
@@ -52,7 +52,7 @@ const SolutionIndivisibleAsset = ({
             <div className="card-data-item">
               <label>{t('indivisible-asset-reference-value')}</label>
               <div>
-                {asset.refValue} {t('main-euro-symbol')}
+                {assetAllocation.refValue} {t('main-euro-symbol')}
               </div>
             </div>
           </div>
