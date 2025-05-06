@@ -41,22 +41,18 @@ const SolutionIndivisibleAsset = ({
         <div className="card-data-item">
           <label>{t('indivisible-asset-valoration')}</label>
           <div>
-            {assetAllocation.valuePOV} {t('main-euro-symbol')}
+            {(parseFloat(assetAllocation.quantity) || 0) *
+              (parseFloat(asset.refValue) || 0).toFixed(3)}{' '}
+            {t('main-euro-symbol')}
           </div>
         </div>
 
         {!isWrapped && (
           <div className="unwrapped-content">
             <div className="card-data-item">
-              <label>{t('indivisible-asset-min-reference-value')}</label>
+              <label>{t('indivisible-asset-reference-value')}</label>
               <div>
-                {asset.minRefValue} {t('main-euro-symbol')}
-              </div>
-            </div>
-            <div className="card-data-item">
-              <label>{t('indivisible-asset-max-reference-value')}</label>
-              <div>
-                {asset.maxRefValue} {t('main-euro-symbol')}
+                {asset.refValue} {t('main-euro-symbol')}
               </div>
             </div>
           </div>

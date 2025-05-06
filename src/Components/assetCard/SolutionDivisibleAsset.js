@@ -44,11 +44,7 @@ const SolutionDivisibleAsset = ({ assetAllocation, inheritance }) => {
           <div className="unwrapped-content">
             <div className="card-data-item">
               <label>{t('divisible-asset-quantity')}</label>
-              <div>
-                {assetAllocation.quantity}
-                {` `}
-                {t('main-euro-symbol')}
-              </div>
+              <div>{assetAllocation.quantity}</div>
             </div>
 
             <div className="card-data-item">
